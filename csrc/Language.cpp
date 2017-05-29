@@ -1,5 +1,5 @@
 /***** CLAIRE Compilation of file Language.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:56 2017 *****/
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:43 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -274,7 +274,7 @@ void LanguageClass::metaLoad() {
   	NEW_ALLOC+SLOT_UPDATE,_function_(self_print_Call_plus_Language,"self_print_Call+_Language"));
   
   Core.self_eval->addMethod(list::domain(1,Language._Call),Kernel._any,
-  	NEW_ALLOC,_function_(self_eval_Call,"self_eval_Call"));
+  	SAFE_GC,_function_(self_eval_Call,"self_eval_Call"));
   
   Core.self_eval->addMethod(list::domain(1,Language._Call_plus),Kernel._any,
   	NEW_ALLOC+SLOT_UPDATE,_function_(self_eval_Call_plus,"self_eval_Call+"));
@@ -473,7 +473,7 @@ void LanguageClass::metaLoad() {
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(printelse_If,"printelse_If"));
   
   Core.self_eval->addMethod(list::domain(1,Language._If),Kernel._any,
-  	NEW_ALLOC,_function_(self_eval_If,"self_eval_If"));
+  	SAFE_GC,_function_(self_eval_If,"self_eval_If"));
   
   { (Language._Do = ClaireClass::make("Do",Language._Control_structure,claire.it));
     CL_ADD_SLOT(Language._Do,Do,Core.args,args,Kernel._list,CNULL);
@@ -490,7 +490,7 @@ void LanguageClass::metaLoad() {
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(printblock_any,"printblock_any"));
   
   Core.self_eval->addMethod(list::domain(1,Language._Do),Kernel._any,
-  	NEW_ALLOC,_function_(self_eval_Do,"self_eval_Do"));
+  	SAFE_GC,_function_(self_eval_Do,"self_eval_Do"));
   
   { (Language._Let = ClaireClass::make("Let",Language._Instruction_with_var,claire.it));
     CL_ADD_SLOT(Language._Let,Let,Kernel.value,value,Kernel._any,CNULL);

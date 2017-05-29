@@ -1,13 +1,3 @@
-/** @package 
-
-        clString.cpp
-        
-        Copyright(c) self 2000
-        
-        Author: YVES CASEAU
-        Created: YC  23/01/2006 07:04:26
-	Last change: YC 23/01/2006 07:42:23
-*/
 /***********************************************************************/
 /**   microCLAIRE                                       Yves Caseau    */
 /**   clString.cpp                                                     */
@@ -40,8 +30,8 @@
 
 // make a local copy of a string
 char *copy_string(char *s)
-{int i;
-  int j = strlen(s);
+{Cint i;
+  Cint j = strlen(s);
   char *a = ClAlloc->makeString(1 + (j+1) / 4);
   for (i = 0; s[i] != '\0'; i++) a[i] = s[i];
   a[i] = '\0';
@@ -80,19 +70,19 @@ char *append_string(char *ss1, char *ss2)
   return ClEnv->bufferCopy();}
 
 // finds the integer value
-int integer_I_string(char *s)
+Cint integer_I_string(char *s)
 { return strtol(s,NULL,10);}
 
 // create a substring from a string
-char *substring_string(char *ss, int n, int m)
-{int i,l = 10000000; // TEST (was) strlen(ss);
+char *substring_string(char *ss, Cint n, Cint m)
+{Cint i,l = 10000000; // TEST (was) strlen(ss);
   ClEnv->bufferStart();
   if ((n >= 1) && (n <= l))
      for (i = n-1; ((ss[i] != '\0') && (i < m)); i++) ClEnv->pushChar(ss[i]);
   return ClEnv->bufferCopy();}
 
 // look for th eposition of the CHAR c in s
-int get_string(char *ss, ClaireChar *c)
+Cint get_string(char *ss, ClaireChar *c)
 { OID i;
   char c2 = (char) c->ascii;
   for (i=0; ss[i] != '\0'; i++) if (ss[i] == c2) return(i+1);
@@ -100,15 +90,15 @@ int get_string(char *ss, ClaireChar *c)
 
 // compare two strings
 ClaireBoolean *_less_string(char *s1, char *s2)
-{int i;
+{Cint i;
  for (i = 0; s1[i] != '\0'; i++)
     {if (s1[i] < s2[i]) return(CTRUE);
      else if (s1[i] > s2[i]) return (CFALSE);}           // include s2[i] = '0' !!!
  return CTRUE;}                                          // v3.1.12 ????
 
 // test is a string is included into another
-int included_string(char *s1, char *s2,ClaireBoolean *p)
-{int c,i,j;
+Cint included_string(char *s1, char *s2,ClaireBoolean *p)
+{Cint c,i,j;
   for (i = 0; s1[i] != '\0'; i++)
     for (j = 0;; j++)
       { c = s1[i+j] - s2[j];
@@ -120,18 +110,18 @@ int included_string(char *s1, char *s2,ClaireBoolean *p)
   return 0;}
 
 // get the CHAR at the i-th place in s
-ClaireChar *nth_string (char *ss, int n)
-{ if (n <= strlen(ss)) return char_I_integer((int) ss[n-1]);      // v3.2.44
+ClaireChar *nth_string (char *ss, Cint n)
+{ if (n <= strlen(ss)) return char_I_integer((Cint) ss[n-1]);      // v3.2.44
   else Cerror(11,n,_string_(ss)); return ClRes->ascii[1];}
 
 // set the char at the i_th place in s
-void nth_set_string (char *ss, int n, ClaireChar *c)
+void nth_set_string (char *ss, Cint n, ClaireChar *c)
 {if (n <= strlen(ss)) 
          ss[n-1] = (char) c->ascii;
  else Cerror(11,n,_string_(ss));}
 
 // shrinks a string by placing the '\0' marker
-char *shrink_string(char *ss, int n)
+char *shrink_string(char *ss, Cint n)
 {if (n <= strlen(ss)) ss[n] = '\0';         // v3.1.10  allows identity ...
  else Cerror(11,n,_string_(ss));
  return ss;}
@@ -154,7 +144,7 @@ OID get_symbol_module(module *m, char *name)
    else return _oid_(s);}
 
 // new: return the current date
-char *date_I_integer(int i)
+char *date_I_integer(Cint i)
 {struct tm *newtime;
  time_t aclock;
  time(&aclock);
@@ -191,9 +181,9 @@ module *module::make(char *s, module *sup)
 
 
 // hash function.
-unsigned module::hash(register char *s)
-{unsigned val;
-  for (val= (int) this; *s != '\0'; s++)
+unsigned Cint module::hash(register char *s)
+{unsigned Cint val;
+  for (val= ccast(this); *s != '\0'; s++)
       val = *s + 31 * val;
   return val & ClAlloc->hashMask;}
 
@@ -201,7 +191,7 @@ unsigned module::hash(register char *s)
 // if no symbol is found - does NOT create a new symbol
 // this method embodies the strategy for looking in upper modules (namespace inheritance)
 symbol *module::lookup(char *name)
-{int i = hash(name);
+{Cint i = hash(name);
    while ((ClRes->sTable[i] != NULL) &&
           ((this != ClRes->sTable[i]->module_I) ||
            (equal_string(name,ClRes->sTable[i]->name) == CFALSE))) i++;
@@ -266,7 +256,7 @@ void end_module (module *x)
 // def, which is NULL for private symbols and the definition (owner) for other symbols
 // 
 symbol *symbol::make(char *name, module *ns, module *def)
-{int i = ns->hash(name);
+{Cint i = ns->hash(name);
    while ((ClRes->sTable[i] != NULL) &&
           ((ns != ClRes->sTable[i]->module_I) ||
            (equal_string(name,ClRes->sTable[i]->name) == CFALSE))) i++;
@@ -292,7 +282,7 @@ OID symbol::getValue()
 
 // to remove
 void symbolDebug(symbol *s)
-{int i = s->module_I->hash(s->name);
+{Cint i = s->module_I->hash(s->name);
  printf("______ symbol debug s = %x __________________\n",s);
  printf(" string is %s, module:%s\n",s->name, s->module_I->comment);
  printf(" position is %d",i);
@@ -329,7 +319,7 @@ symbol *append_symbol(symbol *s1, OID s2)
 
 // print a symbol with its application name
 void princ_symbol(symbol *s)
-{ int i;
+{ Cint i;
   char *ss1 = s->name;
   if ((s->module_I != claire.it) && (s->module_I != ClEnv->module_I))
      {princ_symbol(s->module_I->name); ClEnv->put('/');}
@@ -356,8 +346,8 @@ symbol *gensym_string (char *s)
   return claire.it->getSymbol(ClEnv->bufferCopy(),claire.it);}
 
 // useful to represent a symbol with an integer
-int integer_I_symbol (symbol *s)
-{ int i = s->module_I->hash(s->name);
+Cint integer_I_symbol (symbol *s)
+{ Cint i = s->module_I->hash(s->name);
    while ((ClRes->sTable[i] != NULL) &&
           ((s->module_I != ClRes->sTable[i]->module_I) ||
            (equal_string(s->name,ClRes->sTable[i]->name) == CFALSE))) i++;
@@ -369,48 +359,57 @@ int integer_I_symbol (symbol *s)
 /*********************************************************************/
 
 // useful upper and lower bound to check overflow
+#ifdef CL64
+double CLMAXFLOAT = 2.30583e+18;
+double CLMINFLOAT = -2.30583e+18;
+#else
 double CLMAXFLOAT = 1073741823.0;              // v3.3.12
 double CLMINFLOAT = -1073741822.0;
+#endif
 
-void princ_integer(int i) {ClEnv->cout->put(i);}
+// TODO : CHANGE TO 64 bits values => move to CLAIRE.h
+
+void princ_integer(Cint i) { ClEnv->cout->put(i);}
 
 // arithmetic functions
-OID ch_sign(int n)
+Cint ch_sign(Cint n)
 { return -n ;}
 
-int _7_integer(int n, int m)
+Cint _7_integer(Cint n, Cint m)
 { if (m == 0) Cerror(20,n,0); return (n / m);}
 
-int mod_integer(int n, int m)
+Cint mod_integer(Cint n, Cint m)
 { if (m == 0) Cerror(20,n,0); return (n % m);}
 
 // v3.3.16: use float exponentiation and check overflow
-int _exp_integer(int n, int m)
+// this is not enough for 64 bits integer !!
+Cint _exp_integer(Cint n, Cint m)
 {double a = (double) n, b = (double) m,  c = pow(a,b);
+ Cint d;
   if (c < CLMINFLOAT || c > CLMAXFLOAT) Cerror(40,n,m);
-  return (int) c; }
+  return llround(c);}
 
 // return a power of 2
-int exp2_integer(int n)
+Cint exp2_integer(Cint n)
 {if ((n >= 0) && (n <= 31)) return (1 << n);
  else Cerror(19,0,0); return 1;}
 
 // translate a integer into a char - v3.2.44 : supports encoding both on (-255 -- 256) or (0 -- 511)
-ClaireChar *char_I_integer(int n)
+ClaireChar *char_I_integer(Cint n)
 {if ((n < -510) || (n > 511)) Cerror(21,n,0);
  else if (n < 0)  return ClRes->ascii[512 + n];
  return ClRes->ascii[n];}
 
 // create a new string
-char *string_I_integer (int n)
+char *string_I_integer (Cint n)
 { ClEnv->bufferStart();
   ClEnv->pushInteger(n);
   return ClEnv->bufferCopy();}
 
 // allocate a list with n member equal to m */
-char *make_string_integer(int n, ClaireChar *c)
+char *make_string_integer(Cint n, ClaireChar *c)
 { if (n < 0) {Cerror(22,n,0); return "";}
-  else {int i;
+  else {Cint i;
         char *s = ClAlloc->makeString(1 + n / 4);
           for (i = 0; i < n; i++) s[i] = (char) c->ascii;
           s[i] = '\0';
@@ -420,14 +419,14 @@ char *make_string_integer(int n, ClaireChar *c)
 // TODO: trap the error nicely
 char *make_string_list(list *l)
 {if (l->of != Kernel._char) Cerror(22,0,0);
- int i,n = l->length;
+ Cint i,n = l->length;
  char *s = ClAlloc->makeString(1 + n / 4);
           for (i = 0; i < n; i++) s[i] = (char) OBJECT(ClaireChar,(*(l))[i + 1])->ascii;
           s[i] = '\0';
           return s; }
 
 // give a safe multiplication
-int times_integer(int n, int m)
+Cint times_integer(Cint n, Cint m)
 {double a = (double) n, b = (double) m,  c = a * b;
   if (c < CLMINFLOAT || c > CLMAXFLOAT) Cerror(40,n,m);
   return n * m; }
@@ -445,7 +444,7 @@ int times_integer(int n, int m)
 #define C_RANDMAX (RAND_MAX & 0x00007FFF)
 #endif
 
-int random_integer(int n)
+Cint random_integer(Cint n)
 {if (n <= 1) return 0;
  else if (n <= 1000) return (C_RAND() % n);
  else if (n <= 30000) return ((C_RAND() * 16384 + (C_RAND() % 16383)) % n);
@@ -456,7 +455,7 @@ int random_integer(int n)
 
 
 // print
-void princ_int(int n) {ClEnv->cout->put(n);}
+void princ_int(Cint n) {ClEnv->cout->put(n);}
 
 /*********************************************************************/
 /**    5. floats                                                     */
@@ -467,14 +466,14 @@ void princ_int(int n) {ClEnv->cout->put(n);}
 // op_float_(...) returns an OID   [float parameters are OID]
 
 // makes an integer into a float */
-OID to_float_ (int n) {return _float_((double) n);}
-double to_float (int n) {return  ((double) n);}
+OID to_float_ (Cint n) {return _float_((double) n);}
+double to_float (Cint n) {return  ((double) n);}
 
 // create a  claire integer from a claire float */
-int integer_I_float_(OID n) {return integer_I_float(float_v(n));}
-int integer_I_float(double n)
+Cint integer_I_float_(OID n) {return integer_I_float(float_v(n));}
+Cint integer_I_float(double n)
 { if (n < CLMINFLOAT || n > CLMAXFLOAT) Cerror(39,_float_(n),0);
-  return _integer_((int) floor(n));}                         // v3.3
+  return _integer_((Cint) floor(n));}                         // v3.3
 
 // the classical order comparisons for two float
 ClaireBoolean *_inf_float(double n,double m)
@@ -508,7 +507,7 @@ void princ_float_(OID x) {ClEnv->cout->prettyp(float_v(x));}     // v3.2.54
 void print_float(double x) {ClEnv->cout->put(x);}            // v3.2.54
 void print_float_(OID x) {ClEnv->cout->put(float_v(x));}     // v3.2.54
 
-void print_format_float(double x,int i) {ClEnv->cout->putFormat(x,i);}            // v3.3.42
-void print_format_float_(OID x,int i) {ClEnv->cout->putFormat(float_v(x),i);}     // v3.3.42
+void print_format_float(double x,Cint i) {ClEnv->cout->putFormat(x,i);}            // v3.3.42
+void print_format_float_(OID x,OID i) {ClEnv->cout->putFormat(float_v(x),i);}     // v3.3.42
 
 

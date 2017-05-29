@@ -1,13 +1,3 @@
-/** @package 
-
-        Kernel.cpp
-        
-        Copyright(c) self 2000
-        
-        Author: YVES CASEAU
-        Created: YC  24/01/2006 07:45:18
-	Last change: YC 24/01/2006 07:49:09
-*/
 /***********************************************************************/
 /**   microCLAIRE                                       Yves Caseau    */
 /**   Kernel.cpp pp                                                    */
@@ -18,6 +8,8 @@
 #include <claire.h>
 #include <Kernel.h>
 #include <marie.h>
+
+int VERB = 0;
 
 // create the namespace
 KernelClass Kernel;
@@ -51,11 +43,30 @@ ClaireEnvironment *ClEnv;
 
 
 void KernelClass::bootstrap()
-{CTRUE = (ClaireBoolean *) ClAlloc->makeAny(4);
+{ClaireBoolean *TEST;
+// VERB = 1;
+ 
+ // this is the proper way to print a pointer
+// printf("OBJ_CODE = %016llx\n",OBJ_CODE);
+// printf("OBJ_CODE = %llx\n",OBJ_CODE);
+
+ CTRUE = (ClaireBoolean *) ClAlloc->makeAny(4);
  CFALSE = (ClaireBoolean *) ClAlloc->makeAny(4);
- CNULL = _oid_(ClAlloc->makeAny(4));
+ // printf("CTRUE = %x, CFALSE = %x\n",CTRUE,CFALSE);
+ // CNULL = _oid_(ClAlloc->makeAny(4));
+ TEST = (ClaireBoolean *) ClAlloc->makeAny(4);
+ CNULL = _oid_(TEST);
+ // printf("ADR(oid) = %d, getADR(obj) = %d\n",ADR(CNULL),getADR(TEST));
  ctrue = _oid_(CTRUE);
  cfalse = _oid_(CFALSE);                            // v3.3.42  use them instead of _oid_(CFALSE) as pointed by Sylvain
+
+ /*printf("ctrue = %x\n cfalse =%x\n",ctrue,cfalse);
+ printf("CCAST(CTRUE) = %x, delta = %x\n",CCAST(CTRUE),CCAST(CFALSE)-CCAST(CTRUE));
+ printf("CNULL = %x, adr = %d\n",CNULL,getADR(OBJECT(ClaireAny,CNULL)));
+ printf("Ctrue = %x, adr = %d\n",ctrue,getADR(OBJECT(ClaireAny,ctrue)));
+ printf("Cfalse = %x, adr = %d\n",cfalse,getADR(OBJECT(ClaireAny,cfalse))); */
+ VERB = 0;
+  
  NoDefault = (thing *) ClAlloc->makeAny(4);
  emptySet = set::empty();
  emptySet->of = emptySet;
@@ -64,15 +75,21 @@ void KernelClass::bootstrap()
 
  _integer = NULL;
  _float = NULL;
+ 
 
  // step 1 : define the object shells
  _class =  (ClaireClass *) ClAlloc->makeStatic(18);  // creates the 3 most basic class templates
  _set =  (ClaireClass *) ClAlloc->makeStatic(18);
  _list =  (ClaireClass *) ClAlloc->makeStatic(18);
+ 
+ OBJECT(ClaireAny,CNULL)->isa = (ClaireClass *) CTRUE;
+
  _class = ClaireClass::make(_class);              // now we can call make
  _class->comment = "class";
  _class->isa = _class;
-
+ 
+  OBJECT(ClaireAny,CNULL)->isa = _class;
+ 
  _symbol = ClaireClass::make(ClAlloc->makeStatic(18));
  _module = ClaireClass::make(ClAlloc->makeStatic(18));
  _module->comment = "module";
@@ -102,15 +119,26 @@ void KernelClass::bootstrap()
  it->made_of = list::empty();
  it->comment = "Kernel";
  _class->instances = list::domain(5,_class,_symbol,_module,_set,_list);
+ //printf("class instances = %x\n",_class->instances);
+ //printf("class instance length = %x\n",_class->instances->length);
+// if ((*_class->instances)[1] == _oid_(_class)) printf("OK so far \n");
+ 
  // step 2: define the symbols
+ Cint *strange = &(_class->instances->length);
  _class->name = symbol::make("class",claire.it,it);
  _list->name = symbol::make("list",claire.it,it);
- _set->name = symbol::make("set",claire.it,it);
+ 
+ {symbol *ss = symbol::make("set",claire.it,it);
+  _set->name = ss;    // this is really the culprit
+  }
+ 
  _symbol->name = symbol::make("symbol",claire.it,it);
  _module->name = symbol::make("module",claire.it,it);
+
  claire.it->name = symbol::make("claire",claire.it,claire.it);
  Kernel.it->name = symbol::make("Kernel",claire.it,claire.it);
  mClaire.it->name = symbol::make("mClaire",claire.it,claire.it);
+ 
  NoDefault->name = symbol::make("NoDefault",it,it);
  symbol::make("true",claire.it,claire.it)->value = ctrue;
  symbol::make("false",claire.it,claire.it)->value = cfalse;
@@ -118,6 +146,8 @@ void KernelClass::bootstrap()
  unknownName->value = CNULL;
  PRIVATE = symbol::make("private",claire.it,claire.it);
  PRIVATE->value = _oid_(PRIVATE);
+ 
+
 // STATIC = symbol::make("static",claire.it,claire.it);            // v3.4
 //
  _class->name->value = _oid_(_class);
@@ -131,7 +161,10 @@ void KernelClass::bootstrap()
  NoDefault->name->value = _oid_(NoDefault);
  Kernel.nil->isa = _list;
  Kernel.emptySet->isa = _set;
+ 
+ 
  // step 3: we can now create a few class templates
+ 
  _property = ClaireClass::make("property");
  _restriction = ClaireClass::make("restriction");
  _slot = ClaireClass::make("slot");
@@ -139,7 +172,8 @@ void KernelClass::bootstrap()
  _type = ClaireClass::make("type");
  _float = ClaireClass::make("float");          // used in methods
 // _void = ClaireClass::make("void");
- OBJECT(ClaireAny,CNULL)->isa = _any;
+OBJECT(ClaireAny,CNULL)->isa = _any;
+ 
  _void = ClaireClass::make("void");
  _boolean = ClaireClass::make("boolean");
     CTRUE->isa = _boolean;
@@ -147,11 +181,11 @@ void KernelClass::bootstrap()
 
  // step 4: now we can build prototypes
  // isa/name/comment/slot/sclass/sub/ances/desc/eval/open/inst/proto/par/code/dict
- _class->prototype = list::alloc(18, 0, 0, 0, _oid_(list::empty(_slot)), 0,
+ _class->prototype = list::alloc(18, 0, 0, 0, _oid_(list::empty(_slot)), 0ll,
                                  _oid_(set::empty(_class)),
                                  _oid_(list::empty(_class)),_oid_(set::empty(_class)),
-                                 0,2,_oid_(list::empty()),_oid_(list::empty()),
-                                 _oid_(list::empty()),0,_oid_(list::empty()),
+                                 0ll,2ll,_oid_(list::empty()),_oid_(list::empty()),
+                                 _oid_(list::empty()),0ll,_oid_(list::empty()),
                                  ctrue,CNULL,_oid_(list::empty()));
  _class->ancestors = list::alloc(1,_oid_(_class));
   // JUST CHANGED in v3.0.54 ! was :
@@ -159,9 +193,11 @@ void KernelClass::bootstrap()
   // isa/name/comment/dom/ran/ifwrite/store/inv/open/multi/trace/restric/defini/dict/
   
  _property->prototype =  list::alloc(16, 0, 0, 0, _oid_(_any), _oid_(_any), CNULL, cfalse,
-                                   0, 2, cfalse, 0, _oid_(list::empty(_restriction)),
+                                   0ll, 2ll, cfalse, 0ll, _oid_(list::empty(_restriction)),
                                 _oid_(list::empty(_restriction)),_oid_(list::empty()),
-                                cfalse, 0);
+                                cfalse, 0ll);
+    
+
  // isa/module/comment/dom/range/select/srange/default/index
 
  // step5: this is the first set of properties
@@ -237,12 +273,14 @@ void KernelClass::bootstrap()
 
 
 // step6: this is the first set of classes [we do the root, void, by hand]
+
 //_void = ClaireClass::make("void");   already done
     _void->superclass = NULL;
     _void->ancestors = list::empty(_class)->addFast(_oid_(_void));
     _void->descendents = set::empty(_class)->addFast(_oid_(_void));
     _void->prototype = list::empty();
     _void->code = 0;
+
 
 _any = ClaireClass::make("any",_void,claire.it);
 _integer = ClaireClass::make("integer",_any,claire.it);
@@ -290,7 +328,7 @@ _class = ClaireClass::make("class",_type,claire.it);
     CL_ADDSLOT(_class,ClaireClass,instances,_list,_oid_(list::empty()));
     CL_ADDSLOT(_class,ClaireClass,prototype,_list,_oid_(list::empty()));
     CL_ADDSLOT(_class,ClaireClass,params,_list,_oid_(list::empty()));
-    CL_ADDSLOT(_class,ClaireClass,code,_integer,0);
+    CL_ADDSLOT(_class,ClaireClass,code,_integer,0ll);
     CL_ADDSLOT(_class,ClaireClass,dictionary,_list,_oid_(list::empty()));
     CL_ADDSLOT(_class,ClaireClass,ident_ask,_boolean,ctrue);   // v3.3.42
     CL_ADDSLOT(_class,ClaireClass,if_write,_any,CNULL);
@@ -329,6 +367,8 @@ _method = ClaireClass::make("method",_restriction,claire.it);
      CL_ADDSLOT(_method,method,status,_integer,0);
      CL_ADDSLOT(_method,method,inline_ask,_boolean,cfalse);
 _char =  ClaireClass::make("char",_system_object,claire.it);
+
+
 ClaireChar::init();
 _relation = ClaireClass::make("relation",_system_thing,claire.it);
     CL_ADDSLOT(_relation,ClaireRelation,comment,_string,CNULL);
@@ -374,7 +414,9 @@ _environment = ClaireClass::make("environment",_system_object,claire.it);
         CL_ADDSLOT(_environment,ClaireEnvironment,exception_I,_exception,0);
         CL_ADDSLOT(_environment,ClaireEnvironment,module_I,_module,0);
         CL_ADDSLOT(_environment,ClaireEnvironment,name,_string,CNULL);
-        CL_ADDSLOT(_environment,ClaireEnvironment,version,_float,_float_(0.0));
+    
+  CL_ADDSLOT(_environment,ClaireEnvironment,version,_float,_float_(0.0));
+    
         CL_ADDSLOT(_environment,ClaireEnvironment,ctrace,_port,0);
         CL_ADDSLOT(_environment,ClaireEnvironment,cout,_port,0);
         CL_ADDSLOT(_environment,ClaireEnvironment,index,_integer,0);
@@ -427,7 +469,10 @@ _error->open = 4;
 // ===================== end of bootstrap =========================================
 
 void KernelClass::metaLoad()
-{bootstrap();
+{
+
+bootstrap();
+
 // properties of module Kernel
 copy = property::make("copy",claire.it);
 _equal = operation::make("=",claire.it,60);
@@ -531,6 +576,8 @@ free_I = property::make("free!",claire.it);           // v3.2.40
 // we follow the same order as in the claire.h API list
 // TODO: check all status
 
+
+
 copy->addMethod( list::domain(1,_object),_object,
                  NEW_ALLOC, _function_(copy_object,"copy_object"));
 _equal->addMethod(   list::domain(2,_any,_any),_boolean,
@@ -552,6 +599,7 @@ sort_I->addMethod(  list::domain(1,_class),_class,
                     0,_function_(sort_I_class,"sort_I_class"));
 add_method->addMethod(  list::domain(5,_property,_list,_type,_any,_any),_method,
                         0,_function_(add_method_property,"add_method_property")),
+
 index->addMethod(   list::domain(2,_table,_any),_integer,
                     0,_function_(index_table,"index_table"));
 index->addMethod(   list::domain(3,_table,_any,_any),_integer,
@@ -736,8 +784,15 @@ integer_I->addMethod(   list::domain(1,_symbol),_integer,
 // === integer & floats =======================================================
 _dash->addMethod(  list::domain(1,_integer),_integer,
                     0,_function_(ch_sign,"ch_sign"));
+
 mod->addMethod( list::domain(2,_integer,_integer),_integer,
                 0,_function_(mod_integer,"mod_integer"));
+
+/*{fptr2 f = mod_integer;
+ printf("==== >f = %llx\n ",f);
+ if ((f)(7,4) == 3) printf("TEST  happy\n"); ;
+ }*/
+
 _7->addMethod(  list::domain(2,_integer,_integer),_integer,
                 0,_function_(_7_integer,"_7_integer"));
 _exp->addMethod(    list::domain(2,_integer,_integer),_integer,
@@ -840,14 +895,15 @@ restore_state->addMethod(   list::domain(1,_void),_void,
                         0,_function_(restore_state_void,"restore_state_void"));
 
 put_symbol(symbol_I_string("STDIN",claire.it),
-           ClAlloc->import(Kernel._port, (int *) ClAlloc->stdIn));                     
+           ClAlloc->import(Kernel._port, (OID *) ClAlloc->stdIn));
 put_symbol(symbol_I_string("STDOUT",claire.it),
-           ClAlloc->import(Kernel._port, (int *) ClAlloc->stdOut));
+           ClAlloc->import(Kernel._port, (OID *) ClAlloc->stdOut));
 Kernel._set->ident_ask = CFALSE;                   
 Kernel._list->ident_ask = CFALSE;                   
 Kernel._tuple->ident_ask = CFALSE;                   
 Kernel._string->ident_ask = CFALSE;                   
 Kernel._float->ident_ask = CFALSE;                   
-Kernel._port->ident_ask = CFALSE;                   
+Kernel._port->ident_ask = CFALSE;
+
 }
  

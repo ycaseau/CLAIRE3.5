@@ -1,5 +1,5 @@
-/***** CLAIRE Compilation of file e:\claire\v3.5\src\meta\method.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:54 2017 *****/
+/***** CLAIRE Compilation of file /Users/ycaseau/claire/v3.5/src/meta/method.cl 
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:41 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>

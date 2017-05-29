@@ -1,6 +1,16 @@
+/** @package 
+
+        testKernel.cpp
+        
+        Copyright(c) Hewlett-Packard Company 2000
+        
+        Author: YVES CASEAU
+        Created: YC  03/07/2016 06:39:26
+	Last change: YC 03/07/2016 09:10:54
+*/
 /***********************************************************************/
 /**   microCLAIRE                                       Yves Caseau    */
-/**   clAlloc.cpp                                                      */
+/**   testKernel.cpp                                                      */
 /**  Copyright (C) 1998-99 Yves Caseau. All Rights Reserved.           */
 /**  cf claire.h                                                       */
 /***********************************************************************/
@@ -44,7 +54,7 @@ void loadModules ()
 
 
 // this is our main function (a simpler version of what is in main.cpp)
-main()
+int main()
 {int t1,t2;
   ClAlloc = new ClaireAllocation;
   ClAlloc->logList = 20;
@@ -59,6 +69,10 @@ main()
   ClAlloc->stdOut = ClairePort::make(stdout);
   ClAlloc->stdIn = ClairePort::make(stdin);
   ClAlloc->stdErr = ClairePort::make(stderr);
+
+  printf("sizeof(int) = %d\n",sizeof(int));
+  printf("sizeof(int*) = %d\n",sizeof(int*));
+  printf("sizeof(ClaireClass) = %d\n",sizeof(ClaireClass));
 
   printf("------------- Kernel version %g ------------------\n",CKernelRelease);
   msec(t1);

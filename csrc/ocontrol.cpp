@@ -1,5 +1,5 @@
-/***** CLAIRE Compilation of file e:\claire\v3.5\src\compile\ocontrol.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:59 2017 *****/
+/***** CLAIRE Compilation of file /Users/ycaseau/claire/v3.5/src/compile/ocontrol.cl 
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:46 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -7,428 +7,428 @@
 #include <Language.h>
 #include <Reader.h>
 #include <Optimize.h>
-ClaireType * c_type_Assign_Optimize(Assign *v9332)
+ClaireType * c_type_Assign_Optimize(Assign *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    Result = OBJECT(ClaireType,(*Optimize.c_type)(v9332->arg));
+    Result = OBJECT(ClaireType,(*Optimize.c_type)(v13540->arg));
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Assign_Optimize(Assign *v9332)
+OID  c_code_Assign_Optimize(Assign *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { OID  v15438 = GC_OID(v9332->var);
-      OID  v15440 = GC_OID(v9332->arg);
-      ClaireType * v1207 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(v15440))));
-      if (inherit_ask_class(OWNER(v15438),Language._Variable) != CTRUE)
+    { OID  v82398 = GC_OID(v13540->var);
+      OID  v82400 = GC_OID(v13540->arg);
+      ClaireType * v16967 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(v82400))));
+      if (inherit_ask_class(OWNER(v82398),Language._Variable) != CTRUE)
        (*Optimize.Cerror)(_string_(CSTRING("[213] ~S is not a variable")),
-        v15438);
-      if (_oid_((ClaireObject *) Core._inf_equalt->fcall(((Cint) v1207),((Cint) OBJECT(ClaireObject,GC_OID((*Kernel.range)(v15438)))))) != Kernel.ctrue)
-       v15440= GC_OID((*Optimize.c_warn)(GC_OID(v9332->var),
-        v15440,
-        _oid_(v1207)));
-      { OID  v8505 = GC_OID(c_gc_I_any2(GC_OID(c_strict_code_any(v15440,psort_any((*Kernel.range)(v15438)))),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel._exp)(GC_OID((*Kernel.range)(v15438)),
-          _oid_(v1207))))));
-        gc_register_Variable2(OBJECT(Variable,v15438),v8505);
-        { Assign * v10264 = ((Assign *) GC_OBJECT(Assign,new_object_class(Language._Assign)));
-          (v10264->var = v15438);
-          (v10264->arg = v8505);
-          add_I_property(Kernel.instances,Language._Assign,11,_oid_(v10264));
-          Result = _oid_(v10264);
+        v82398);
+      if (_oid_((ClaireObject *) Core._inf_equalt->fcall(((Cint) v16967),((Cint) OBJECT(ClaireObject,GC_OID((*Kernel.range)(v82398)))))) != Kernel.ctrue)
+       v82400= GC_OID((*Optimize.c_warn)(GC_OID(v13540->var),
+        v82400,
+        _oid_(v16967)));
+      { OID  v45481 = GC_OID(c_gc_I_any2(GC_OID(c_strict_code_any(v82400,psort_any((*Kernel.range)(v82398)))),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel._exp)(GC_OID((*Kernel.range)(v82398)),
+          _oid_(v16967))))));
+        gc_register_Variable2(OBJECT(Variable,v82398),v45481);
+        { Assign * v88616 = ((Assign *) GC_OBJECT(Assign,new_object_class(Language._Assign)));
+          (v88616->var = v82398);
+          (v88616->arg = v45481);
+          add_I_property(Kernel.instances,Language._Assign,11,_oid_(v88616));
+          Result = _oid_(v88616);
           } 
         } 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireBoolean * c_gc_ask_Assign(Assign *v9332)
+ClaireBoolean * c_gc_ask_Assign(Assign *v13540)
 { GC_BIND;
   { ClaireBoolean *Result ;
-    Result = OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v9332->arg));
+    Result = OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v13540->arg));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Gassign_Optimize(Gassign *v9332)
+ClaireType * c_type_Gassign_Optimize(Gassign *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    Result = OBJECT(ClaireType,(*Optimize.c_type)(v9332->arg));
+    Result = OBJECT(ClaireType,(*Optimize.c_type)(v13540->arg));
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Gassign_Optimize(Gassign *v9332)
+OID  c_code_Gassign_Optimize(Gassign *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { OID  v1049 = GC_OID(v9332->arg);
-      ClaireType * v1207 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(v1049))));
-      if (boolean_I_any(_oid_(v9332->var->range)) != CTRUE)
+    { OID  v61589 = GC_OID(v13540->arg);
+      ClaireType * v16967 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(v61589))));
+      if (boolean_I_any(_oid_(v13540->var->range)) != CTRUE)
        (*Optimize.Cerror)(_string_(CSTRING("[214] cannot assign ~S")),
-        _oid_(v9332));
-      if (_oid_((ClaireObject *) Core._inf_equalt->fcall(((Cint) v1207),((Cint) v9332->var->range))) != Kernel.ctrue)
-       v1049= GC_OID(c_check_any(GC_OID((*Optimize.c_code)(v1049,
-        _oid_(Kernel._any))),GC_OID((*Optimize.c_code)(_oid_(v9332->var->range),
+        _oid_(v13540));
+      if (_oid_((ClaireObject *) Core._inf_equalt->fcall(((Cint) v16967),((Cint) v13540->var->range))) != Kernel.ctrue)
+       v61589= GC_OID(c_check_any(GC_OID((*Optimize.c_code)(v61589,
+        _oid_(Kernel._any))),GC_OID((*Optimize.c_code)(_oid_(v13540->var->range),
         _oid_(Kernel._type)))));
-      { Gassign * v10264 = ((Gassign *) GC_OBJECT(Gassign,new_object_class(Language._Gassign)));
-        store_object(v10264,
+      { Gassign * v88616 = ((Gassign *) GC_OBJECT(Gassign,new_object_class(Language._Gassign)));
+        store_object(v88616,
           2,
           Kernel._object,
-          (*Optimize.c_code)(_oid_(v9332->var)),
+          (*Optimize.c_code)(_oid_(v13540->var)),
           CFALSE);
-        { Gassign * v15903 = v10264; 
-          OID  v15904;
-          if (nativeVar_ask_global_variable(v9332->var) == CTRUE)
-           v15904 = c_strict_code_any(v1049,psort_any(_oid_(v9332->var->range)));
-          else v15904 = (*Optimize.c_code)(v1049,
+        { Gassign * v62511 = v88616; 
+          OID  v62512;
+          if (nativeVar_ask_global_variable(v13540->var) == CTRUE)
+           v62512 = c_strict_code_any(v61589,psort_any(_oid_(v13540->var->range)));
+          else v62512 = (*Optimize.c_code)(v61589,
               _oid_(Kernel._any));
-            (v15903->arg = v15904);} 
-        add_I_property(Kernel.instances,Language._Gassign,11,_oid_(v10264));
-        Result = _oid_(v10264);
+            (v62511->arg = v62512);} 
+        add_I_property(Kernel.instances,Language._Gassign,11,_oid_(v88616));
+        Result = _oid_(v88616);
         } 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireBoolean * c_gc_ask_Gassign(Gassign *v9332)
+ClaireBoolean * c_gc_ask_Gassign(Gassign *v13540)
 { GC_BIND;
   { ClaireBoolean *Result ;
-    Result = OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v9332->arg));
+    Result = OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v13540->arg));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_And_Optimize(And *v9332)
+ClaireType * c_type_And_Optimize(And *v13540)
 { return (Kernel._boolean);} 
 
-OID  c_code_And_Optimize(And *v9332)
+OID  c_code_And_Optimize(And *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { And * v10264 = ((And *) GC_OBJECT(And,new_object_class(Language._And)));
-      { And * v15905 = v10264; 
-        list * v15907;
+    { And * v88616 = ((And *) GC_OBJECT(And,new_object_class(Language._And)));
+      { And * v62513 = v88616; 
+        list * v62514;
         { bag *v_list; OID v_val;
-          OID v15440,CLcount;
-          v_list = GC_OBJECT(list,v9332->args);
-           v15907 = v_list->clone();
+          OID v82400,CLcount;
+          v_list = GC_OBJECT(list,v13540->args);
+           v62514 = v_list->clone();
           for (CLcount= 1; CLcount <= v_list->length; CLcount++)
-          { v15440 = (*(v_list))[CLcount];
-            { if ((*Optimize.c_type)(v15440) == _oid_(Kernel._void))
+          { v82400 = (*(v_list))[CLcount];
+            { if ((*Optimize.c_type)(v82400) == _oid_(Kernel._void))
                (*Optimize.Cerror)(_string_(CSTRING("[206] void ~S in ~S")),
-                v15440,
-                _oid_(v9332));
-              v_val = c_boolean_any(v15440);
+                v82400,
+                _oid_(v13540));
+              v_val = c_boolean_any(v82400);
               } 
             
-            (*((list *) v15907))[CLcount] = v_val;} 
+            (*((list *) v62514))[CLcount] = v_val;} 
           } 
-        (v15905->args = v15907);} 
-      add_I_property(Kernel.instances,Language._And,11,_oid_(v10264));
-      Result = _oid_(v10264);
+        (v62513->args = v62514);} 
+      add_I_property(Kernel.instances,Language._And,11,_oid_(v88616));
+      Result = _oid_(v88616);
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Or_Optimize(Or *v9332)
+ClaireType * c_type_Or_Optimize(Or *v13540)
 { return (Kernel._boolean);} 
 
-OID  c_code_Or_Optimize(Or *v9332)
+OID  c_code_Or_Optimize(Or *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { Or * v10264 = ((Or *) GC_OBJECT(Or,new_object_class(Language._Or)));
-      { Or * v15908 = v10264; 
-        list * v15910;
+    { Or * v88616 = ((Or *) GC_OBJECT(Or,new_object_class(Language._Or)));
+      { Or * v62515 = v88616; 
+        list * v62516;
         { bag *v_list; OID v_val;
-          OID v15440,CLcount;
-          v_list = GC_OBJECT(list,v9332->args);
-           v15910 = v_list->clone();
+          OID v82400,CLcount;
+          v_list = GC_OBJECT(list,v13540->args);
+           v62516 = v_list->clone();
           for (CLcount= 1; CLcount <= v_list->length; CLcount++)
-          { v15440 = (*(v_list))[CLcount];
-            { if ((*Optimize.c_type)(v15440) == _oid_(Kernel._void))
+          { v82400 = (*(v_list))[CLcount];
+            { if ((*Optimize.c_type)(v82400) == _oid_(Kernel._void))
                (*Optimize.Cerror)(_string_(CSTRING("[206] void ~S in ~S")),
-                v15440,
-                _oid_(v9332));
-              v_val = c_boolean_any(v15440);
+                v82400,
+                _oid_(v13540));
+              v_val = c_boolean_any(v82400);
               } 
             
-            (*((list *) v15910))[CLcount] = v_val;} 
+            (*((list *) v62516))[CLcount] = v_val;} 
           } 
-        (v15908->args = v15910);} 
-      add_I_property(Kernel.instances,Language._Or,11,_oid_(v10264));
-      Result = _oid_(v10264);
+        (v62515->args = v62516);} 
+      add_I_property(Kernel.instances,Language._Or,11,_oid_(v88616));
+      Result = _oid_(v88616);
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Quote_Optimize(Quote *v9332)
-{ return (OWNER(v9332->arg));} 
+ClaireType * c_type_Quote_Optimize(Quote *v13540)
+{ return (OWNER(v13540->arg));} 
 
-void  c_code_Quote_Optimize(Quote *v9332)
+void  c_code_Quote_Optimize(Quote *v13540)
 { (*Optimize.Cerror)(_string_(CSTRING("[internal] optimization of quote not implemented yet! ~S")),
-    _oid_(v9332));
+    _oid_(v13540));
   } 
 
-ClaireType * c_type_to_protect_Optimize(Compile_to_protect *v9332)
+ClaireType * c_type_to_protect_Optimize(Compile_to_protect *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    Result = OBJECT(ClaireType,(*Optimize.c_type)(v9332->arg));
+    Result = OBJECT(ClaireType,(*Optimize.c_type)(v13540->arg));
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_to_protect_Optimize(Compile_to_protect *v9332)
-{ return (_oid_(v9332));} 
+OID  c_code_to_protect_Optimize(Compile_to_protect *v13540)
+{ return (_oid_(v13540));} 
 
-ClaireBoolean * c_gc_ask_to_protect(Compile_to_protect *v9332)
+ClaireBoolean * c_gc_ask_to_protect(Compile_to_protect *v13540)
 { return (CFALSE);} 
 
-ClaireType * c_type_Return_Optimize(Return *v9332)
+ClaireType * c_type_Return_Optimize(Return *v13540)
 { return (Kernel._any);} 
 
-OID  c_code_Return_Optimize(Return *v9332)
+OID  c_code_Return_Optimize(Return *v13540)
 { GC_BIND;
   (Optimize.OPT->loop_gc = CFALSE);
   { OID Result = 0;
-    { Return * v10264 = ((Return *) GC_OBJECT(Return,new_object_class(Language._Return)));
-      (v10264->arg = (*Optimize.c_code)(GC_OID(v9332->arg),
+    { Return * v88616 = ((Return *) GC_OBJECT(Return,new_object_class(Language._Return)));
+      (v88616->arg = (*Optimize.c_code)(GC_OID(v13540->arg),
         _oid_(Kernel._any)));
-      add_I_property(Kernel.instances,Language._Return,11,_oid_(v10264));
-      Result = _oid_(v10264);
+      add_I_property(Kernel.instances,Language._Return,11,_oid_(v88616));
+      Result = _oid_(v88616);
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Handle_Optimize(ClaireHandle *v9332)
+ClaireType * c_type_Handle_Optimize(ClaireHandle *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    Result = U_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg)))),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->other)))));
+    Result = U_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg)))),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->other)))));
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Handle_Optimize(ClaireHandle *v9332,ClaireClass *v15435)
+OID  c_code_Handle_Optimize(ClaireHandle *v13540,ClaireClass *v82395)
 { GC_BIND;
   { OID Result = 0;
-    { ClaireHandle * v15440;
-      { { ClaireHandle * v10264 = ((ClaireHandle *) GC_OBJECT(ClaireHandle,new_object_class(Language._Handle)));
-          (v10264->test = _oid_(Kernel._any));
-          (v10264->arg = (*Optimize.c_code)(GC_OID(v9332->arg),
-            _oid_(v15435)));
-          (v10264->other = (*Optimize.c_code)(GC_OID(v9332->other),
-            _oid_(v15435)));
-          add_I_property(Kernel.instances,Language._Handle,11,_oid_(v10264));
-          v15440 = v10264;
+    { ClaireHandle * v82400;
+      { { ClaireHandle * v88616 = ((ClaireHandle *) GC_OBJECT(ClaireHandle,new_object_class(Language._Handle)));
+          (v88616->test = _oid_(Kernel._any));
+          (v88616->arg = (*Optimize.c_code)(GC_OID(v13540->arg),
+            _oid_(v82395)));
+          (v88616->other = (*Optimize.c_code)(GC_OID(v13540->other),
+            _oid_(v82395)));
+          add_I_property(Kernel.instances,Language._Handle,11,_oid_(v88616));
+          v82400 = v88616;
           } 
-        GC_OBJECT(ClaireHandle,v15440);} 
-      if (v9332->test != _oid_(Core._contradiction))
+        GC_OBJECT(ClaireHandle,v82400);} 
+      if (v13540->test != _oid_(Core._contradiction))
        (Optimize.OPT->allocation = CTRUE);
-      (v15440->test = v9332->test);
-      Result = _oid_(v15440);
+      (v82400->test = v13540->test);
+      Result = _oid_(v82400);
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireBoolean * c_gc_ask_Handle(ClaireHandle *v9332)
+ClaireBoolean * c_gc_ask_Handle(ClaireHandle *v13540)
 { GC_BIND;
   { ClaireBoolean *Result ;
-    Result = (((OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v9332->arg))) == CTRUE) ? CTRUE : (((OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v9332->other))) == CTRUE) ? CTRUE : CFALSE));
+    Result = (((OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v13540->arg))) == CTRUE) ? CTRUE : (((OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v13540->other))) == CTRUE) ? CTRUE : CFALSE));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Cast_Optimize(Cast *v9332)
-{ return (v9332->set_arg);} 
+ClaireType * c_type_Cast_Optimize(Cast *v13540)
+{ return (v13540->set_arg);} 
 
-OID  c_code_Cast_Optimize(Cast *v9332)
+OID  c_code_Cast_Optimize(Cast *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { ClaireType * v15441 = GC_OBJECT(ClaireType,v9332->set_arg);
-      ClaireClass * v15480 = psort_any(_oid_(v15441));
-      if ((INHERIT(v15441->isa,Core._Param)) && (((CLREAD(Param,v15441,arg) == Kernel._list) || 
-            (CLREAD(Param,v15441,arg) == Kernel._set)) && 
-          (Kernel._set == OWNER((*(CLREAD(Param,v15441,args)))[1]))))
-       { OID  v7432 = GC_OID((*(OBJECT(set,(*(CLREAD(Param,v15441,args)))[1])))[1]);
-        if ((equal(_oid_(_at_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg)))),Kernel.of)),v7432) == CTRUE) || 
+    { ClaireType * v82401 = GC_OBJECT(ClaireType,v13540->set_arg);
+      ClaireClass * v14856 = psort_any(_oid_(v82401));
+      if ((INHERIT(v82401->isa,Core._Param)) && (((CLREAD(Param,v82401,arg) == Kernel._list) || 
+            (CLREAD(Param,v82401,arg) == Kernel._set)) && 
+          (Kernel._set == OWNER((*(CLREAD(Param,v82401,args)))[1]))))
+       { OID  v105111 = GC_OID((*(OBJECT(set,(*(CLREAD(Param,v82401,args)))[1])))[1]);
+        if ((equal(_oid_(_at_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg)))),Kernel.of)),v105111) == CTRUE) || 
             (Optimize.compiler->safety > 4))
-         Result = (*Optimize.c_code)(GC_OID(v9332->arg),
-          _oid_(v15480));
-        else { OID  v8794;
-            { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-              (v10264->selector = Core.check_in);
-              (v10264->args = list::alloc(3,GC_OID(v9332->arg),
-                _oid_(CLREAD(Param,v15441,arg)),
-                v7432));
-              add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-              v8794 = _oid_(v10264);
+         Result = (*Optimize.c_code)(GC_OID(v13540->arg),
+          _oid_(v14856));
+        else { OID  v70762;
+            { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+              (v88616->selector = Core.check_in);
+              (v88616->args = list::alloc(3,GC_OID(v13540->arg),
+                _oid_(CLREAD(Param,v82401,arg)),
+                v105111));
+              add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+              v70762 = _oid_(v88616);
               } 
-            Result = (*Optimize.c_code)(v8794,
-              _oid_(v15480));
+            Result = (*Optimize.c_code)(v70762,
+              _oid_(v14856));
             } 
           } 
-      else if ((_inf_equal_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg)))),v15441) == CTRUE) || 
+      else if ((_inf_equal_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg)))),v82401) == CTRUE) || 
           (Optimize.compiler->safety > 1))
-       Result = (*Optimize.c_code)(GC_OID(v9332->arg),
-        _oid_(v15480));
-      else { OID  v9755;
-          { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-            (v10264->selector = Core.check_in);
-            (v10264->args = list::alloc(2,GC_OID(v9332->arg),_oid_(v15441)));
-            add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-            v9755 = _oid_(v10264);
+       Result = (*Optimize.c_code)(GC_OID(v13540->arg),
+        _oid_(v14856));
+      else { OID  v71723;
+          { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+            (v88616->selector = Core.check_in);
+            (v88616->args = list::alloc(2,GC_OID(v13540->arg),_oid_(v82401)));
+            add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+            v71723 = _oid_(v88616);
             } 
-          Result = (*Optimize.c_code)(v9755,
-            _oid_(v15480));
+          Result = (*Optimize.c_code)(v71723,
+            _oid_(v14856));
           } 
         } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Super_Optimize(Super *v9332)
+ClaireType * c_type_Super_Optimize(Super *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { list * v1207;
+    { list * v16967;
       { { bag *v_list; OID v_val;
-          OID v15440,CLcount;
-          v_list = GC_OBJECT(list,v9332->args);
-           v1207 = v_list->clone();
+          OID v82400,CLcount;
+          v_list = GC_OBJECT(list,v13540->args);
+           v16967 = v_list->clone();
           for (CLcount= 1; CLcount <= v_list->length; CLcount++)
-          { v15440 = (*(v_list))[CLcount];
-            v_val = (*Optimize.c_type)(v15440);
+          { v82400 = (*(v_list))[CLcount];
+            v_val = (*Optimize.c_type)(v82400);
             
-            (*((list *) v1207))[CLcount] = v_val;} 
+            (*((list *) v16967))[CLcount] = v_val;} 
           } 
-        GC_OBJECT(list,v1207);} 
-      property * v15435 = v9332->selector;
-      ((*(v1207))[1]=_oid_(v9332->cast_to));
-      { OID  v14476;
-        { if (v15435->open == 3)
-           v14476 = Core.nil->value;
-          else v14476 = restriction_I_class(class_I_type(v9332->cast_to),v15435->definition,v1207);
-            GC_OID(v14476);} 
-        Result = ((Kernel._slot == OWNER(v14476)) ?
-          OBJECT(restriction,v14476)->range :
-          ((Kernel._method == OWNER(v14476)) ?
-            use_range_method(OBJECT(method,v14476),v1207) :
-            v15435->range ) );
+        GC_OBJECT(list,v16967);} 
+      property * v82395 = v13540->selector;
+      ((*(v16967))[1]=_oid_(v13540->cast_to));
+      { OID  v67835;
+        { if (v82395->open == 3)
+           v67835 = Core.nil->value;
+          else v67835 = restriction_I_class(class_I_type(v13540->cast_to),v82395->definition,v16967);
+            GC_OID(v67835);} 
+        Result = ((Kernel._slot == OWNER(v67835)) ?
+          OBJECT(restriction,v67835)->range :
+          ((Kernel._method == OWNER(v67835)) ?
+            use_range_method(OBJECT(method,v67835),v16967) :
+            v82395->range ) );
         } 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Super_Optimize(Super *v9332)
+OID  c_code_Super_Optimize(Super *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { property * v15435 = v9332->selector;
-      list * v15428 = GC_OBJECT(list,v9332->args);
-      list * v1207;
+    { property * v82395 = v13540->selector;
+      list * v82388 = GC_OBJECT(list,v13540->args);
+      list * v16967;
       { { bag *v_list; OID v_val;
-          OID v15440,CLcount;
-          v_list = GC_OBJECT(list,v9332->args);
-           v1207 = v_list->clone();
+          OID v82400,CLcount;
+          v_list = GC_OBJECT(list,v13540->args);
+           v16967 = v_list->clone();
           for (CLcount= 1; CLcount <= v_list->length; CLcount++)
-          { v15440 = (*(v_list))[CLcount];
-            v_val = (*Optimize.c_type)(v15440);
+          { v82400 = (*(v_list))[CLcount];
+            v_val = (*Optimize.c_type)(v82400);
             
-            (*((list *) v1207))[CLcount] = v_val;} 
+            (*((list *) v16967))[CLcount] = v_val;} 
           } 
-        GC_OBJECT(list,v1207);} 
-      OID  v14476;
-      { if (v15435->open == 3)
-         v14476 = Core.nil->value;
-        else v14476 = restriction_I_class(class_I_type(v9332->cast_to),v15435->definition,v1207);
-          GC_OID(v14476);} 
-      if (Kernel._slot == OWNER(v14476))
-       { Call_slot * v10264 = ((Call_slot *) GC_OBJECT(Call_slot,new_object_class(Language._Call_slot)));
-        (v10264->selector = OBJECT(slot,v14476));
-        (v10264->arg = (*Optimize.c_code)((*(v15428))[1],
-          _oid_(psort_any(_oid_(domain_I_restriction(OBJECT(restriction,v14476)))))));
-        (v10264->test = ((belong_to(OBJECT(slot,v14476)->DEFAULT,_oid_(OBJECT(restriction,v14476)->range)) != CTRUE) ? ((Optimize.compiler->safety < 5) ? CTRUE: CFALSE): CFALSE));
-        add_I_property(Kernel.instances,Language._Call_slot,11,_oid_(v10264));
-        Result = _oid_(v10264);
+        GC_OBJECT(list,v16967);} 
+      OID  v67835;
+      { if (v82395->open == 3)
+         v67835 = Core.nil->value;
+        else v67835 = restriction_I_class(class_I_type(v13540->cast_to),v82395->definition,v16967);
+          GC_OID(v67835);} 
+      if (Kernel._slot == OWNER(v67835))
+       { Call_slot * v88616 = ((Call_slot *) GC_OBJECT(Call_slot,new_object_class(Language._Call_slot)));
+        (v88616->selector = OBJECT(slot,v67835));
+        (v88616->arg = (*Optimize.c_code)((*(v82388))[1],
+          _oid_(psort_any(_oid_(domain_I_restriction(OBJECT(restriction,v67835)))))));
+        (v88616->test = ((belong_to(OBJECT(slot,v67835)->DEFAULT,_oid_(OBJECT(restriction,v67835)->range)) != CTRUE) ? ((Optimize.compiler->safety < 5) ? CTRUE: CFALSE): CFALSE));
+        add_I_property(Kernel.instances,Language._Call_slot,11,_oid_(v88616));
+        Result = _oid_(v88616);
         } 
-      else if (Kernel._method == OWNER(v14476))
-       Result = c_code_method_method1(OBJECT(method,v14476),v15428,v1207);
-      else Result = c_warn_Super(v9332,_oid_(v1207));
+      else if (Kernel._method == OWNER(v67835))
+       Result = c_code_method_method1(OBJECT(method,v67835),v82388,v16967);
+      else Result = c_warn_Super(v13540,_oid_(v16967));
         } 
     GC_UNBIND; return (Result);} 
   } 
 
-void  self_print_Call_function2(Optimize_Call_function2 *v9332)
-{ print_any(_oid_(v9332->arg));
+void  self_print_Call_function2(Optimize_Call_function2 *v13540)
+{ print_any(_oid_(v13540->arg));
   princ_string(CSTRING("("));
-  princ_bag(v9332->args);
+  princ_bag(v13540->args);
   princ_string(CSTRING(")"));
   } 
 
-ClaireType * c_type_Call_function2_Optimize(Optimize_Call_function2 *v9332)
+ClaireType * c_type_Call_function2_Optimize(Optimize_Call_function2 *v13540)
 { return (Kernel._any);} 
 
-OID  c_code_Call_function2_Optimize(Optimize_Call_function2 *v9332)
+OID  c_code_Call_function2_Optimize(Optimize_Call_function2 *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { Optimize_Call_function2 * v10264 = ((Optimize_Call_function2 *) GC_OBJECT(Optimize_Call_function2,new_object_class(Optimize._Call_function2)));
-      (v10264->arg = v9332->arg);
-      { Optimize_Call_function2 * v15932 = v10264; 
-        list * v15933;
+    { Optimize_Call_function2 * v88616 = ((Optimize_Call_function2 *) GC_OBJECT(Optimize_Call_function2,new_object_class(Optimize._Call_function2)));
+      (v88616->arg = v13540->arg);
+      { Optimize_Call_function2 * v62540 = v88616; 
+        list * v62541;
         { bag *v_list; OID v_val;
-          OID v15440,CLcount;
-          v_list = v9332->args;
-           v15933 = v_list->clone();
+          OID v82400,CLcount;
+          v_list = v13540->args;
+           v62541 = v_list->clone();
           for (CLcount= 1; CLcount <= v_list->length; CLcount++)
-          { v15440 = (*(v_list))[CLcount];
-            v_val = (*Optimize.c_code)(v15440,
+          { v82400 = (*(v_list))[CLcount];
+            v_val = (*Optimize.c_code)(v82400,
               _oid_(Kernel._any));
             
-            (*((list *) v15933))[CLcount] = v_val;} 
+            (*((list *) v62541))[CLcount] = v_val;} 
           } 
-        (v15932->args = v15933);} 
-      add_I_property(Kernel.instances,Optimize._Call_function2,11,_oid_(v10264));
-      Result = _oid_(v10264);
+        (v62540->args = v62541);} 
+      add_I_property(Kernel.instances,Optimize._Call_function2,11,_oid_(v88616));
+      Result = _oid_(v88616);
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Assert_Optimize(Assert *v9332)
+OID  c_code_Assert_Optimize(Assert *v13540)
 { if (Optimize.OPT->online_ask == CTRUE) 
   { { OID Result = 0;
-      Result = _oid_(v9332);
+      Result = _oid_(v13540);
       return (Result);} 
      } 
   else{ GC_BIND;
     { OID Result = 0;
       if ((Optimize.compiler->safety == 0) || 
           (Optimize.compiler->debug_ask->length != 0))
-       { OID  v12638;
-        { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-          { If * v15935 = v10264; 
-            OID  v15936;
-            { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-              (v10264->selector = Core.NOT);
-              (v10264->args = list::alloc(1,GC_OID((*(v9332->args))[1])));
-              add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-              v15936 = _oid_(v10264);
+       { OID  v74606;
+        { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+          { If * v62543 = v88616; 
+            OID  v62544;
+            { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+              (v88616->selector = Core.NOT);
+              (v88616->args = list::alloc(1,GC_OID((*(v13540->args))[1])));
+              add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+              v62544 = _oid_(v88616);
               } 
-            (v15935->test = v15936);} 
-          { If * v15937 = v10264; 
-            OID  v15938;
-            { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-              (v10264->selector = Core.tformat);
-              { Call * v15939 = v10264; 
-                list * v15961;
+            (v62543->test = v62544);} 
+          { If * v62545 = v88616; 
+            OID  v62546;
+            { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+              (v88616->selector = Core.tformat);
+              { Call * v62547 = v88616; 
+                list * v62569;
                 { OID v_bag;
-                  GC_ANY(v15961= list::empty(Kernel.emptySet));
-                  ((list *) v15961)->addFast(_string_(CSTRING("Assertion violation in ~A line ~A\n")));
-                  ((list *) v15961)->addFast(0);
-                  { { List * v10264 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
-                      (v10264->args = list::alloc(2,GC_OID(_string_(v9332->external)),v9332->index));
-                      add_I_property(Kernel.instances,Language._List,11,_oid_(v10264));
-                      v_bag = _oid_(v10264);
+                  GC_ANY(v62569= list::empty(Kernel.emptySet));
+                  ((list *) v62569)->addFast(_string_(CSTRING("Assertion violation in ~A line ~A\n")));
+                  ((list *) v62569)->addFast(0);
+                  { { List * v88616 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
+                      (v88616->args = list::alloc(2,GC_OID(_string_(v13540->external)),v13540->index));
+                      add_I_property(Kernel.instances,Language._List,11,_oid_(v88616));
+                      v_bag = _oid_(v88616);
                       } 
                     GC_OID(v_bag);} 
-                  ((list *) v15961)->addFast(v_bag);} 
-                (v15939->args = v15961);} 
-              add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-              v15938 = _oid_(v10264);
+                  ((list *) v62569)->addFast(v_bag);} 
+                (v62547->args = v62569);} 
+              add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+              v62546 = _oid_(v88616);
               } 
-            (v15937->arg = v15938);} 
-          (v10264->other = Kernel.cfalse);
-          add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-          v12638 = _oid_(v10264);
+            (v62545->arg = v62546);} 
+          (v88616->other = Kernel.cfalse);
+          add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+          v74606 = _oid_(v88616);
           } 
-        Result = (*Optimize.c_code)(v12638,
+        Result = (*Optimize.c_code)(v74606,
           _oid_(Kernel._any));
         } 
       else Result = Kernel.cfalse;
@@ -436,30 +436,30 @@ OID  c_code_Assert_Optimize(Assert *v9332)
     } 
   } 
 
-OID  c_code_Trace_Optimize(Trace *v9332)
+OID  c_code_Trace_Optimize(Trace *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { list * v15417 = GC_OBJECT(list,v9332->args);
+    { list * v82377 = GC_OBJECT(list,v13540->args);
       if (Optimize.OPT->online_ask == CTRUE)
-       Result = _oid_(v9332);
-      else if ((v15417->length == 1) && 
-          (_inf_equal_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)((*(v15417))[1]))),Kernel._integer) == CTRUE))
-       { OID  v6778;
-        { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-          (v10264->selector = Core.write);
-          (v10264->args = list::alloc(3,_oid_(Kernel.verbose),
+       Result = _oid_(v13540);
+      else if ((v82377->length == 1) && 
+          (_inf_equal_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)((*(v82377))[1]))),Kernel._integer) == CTRUE))
+       { OID  v101514;
+        { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+          (v88616->selector = Core.write);
+          (v88616->args = list::alloc(3,_oid_(Kernel.verbose),
             _oid_(ClEnv),
-            (*(v15417))[1]));
-          add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-          v6778 = _oid_(v10264);
+            (*(v82377))[1]));
+          add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+          v101514 = _oid_(v88616);
           } 
-        Result = (*Optimize.c_code)(v6778);
+        Result = (*Optimize.c_code)(v101514);
         } 
       else { ClaireBoolean * g0172I;
         { ClaireBoolean *v_and;
-          { v_and = ((v15417->length > 1) ? CTRUE : CFALSE);
+          { v_and = ((v82377->length > 1) ? CTRUE : CFALSE);
             if (v_and == CFALSE) g0172I =CFALSE; 
-            else { v_and = ((Kernel._string == OWNER((*(v15417))[2])) ? CTRUE : CFALSE);
+            else { v_and = ((Kernel._string == OWNER((*(v82377))[2])) ? CTRUE : CFALSE);
               if (v_and == CFALSE) g0172I =CFALSE; 
               else { { ClaireBoolean *v_or;
                   { v_or = ((Optimize.compiler->debug_ask->length != 0) ? CTRUE : CFALSE);
@@ -467,7 +467,7 @@ OID  c_code_Trace_Optimize(Trace *v9332)
                     else { { ClaireObject *V_CC ;
                         { ClaireHandler c_handle = ClaireHandler();
                           if ERROR_IN 
-                          { V_CC = ((OPT_EVAL((*(v15417))[1]) <= ClEnv->verbose) ? CTRUE : CFALSE);
+                          { V_CC = ((OPT_EVAL((*(v82377))[1]) <= ClEnv->verbose) ? CTRUE : CFALSE);
                             ClEnv->cHandle--;} 
                           else if (belong_to(_oid_(ClEnv->exception_I),_oid_(Kernel._any)) == CTRUE)
                           { c_handle.catchIt();V_CC = CTRUE;
@@ -484,59 +484,59 @@ OID  c_code_Trace_Optimize(Trace *v9332)
             } 
           } 
         
-        if (g0172I == CTRUE) { Call * v1030;
-            { { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                (v10264->selector = Core.tformat);
-                { Call * v15964 = v10264; 
-                  list * v15965;
+        if (g0172I == CTRUE) { Call * v61558;
+            { { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                (v88616->selector = Core.tformat);
+                { Call * v62572 = v88616; 
+                  list * v62573;
                   { OID v_bag;
-                    GC_ANY(v15965= list::empty(Kernel.emptySet));
-                    ((list *) v15965)->addFast((*(v15417))[2]);
-                    ((list *) v15965)->addFast((*(v15417))[1]);
-                    { { List * v10264 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
-                        (v10264->args = skip_list(((list *) copy_bag(v15417)),2));
-                        add_I_property(Kernel.instances,Language._List,11,_oid_(v10264));
-                        v_bag = _oid_(v10264);
+                    GC_ANY(v62573= list::empty(Kernel.emptySet));
+                    ((list *) v62573)->addFast((*(v82377))[2]);
+                    ((list *) v62573)->addFast((*(v82377))[1]);
+                    { { List * v88616 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
+                        (v88616->args = skip_list(((list *) copy_bag(v82377)),2));
+                        add_I_property(Kernel.instances,Language._List,11,_oid_(v88616));
+                        v_bag = _oid_(v88616);
                         } 
                       GC_OID(v_bag);} 
-                    ((list *) v15965)->addFast(v_bag);} 
-                  (v15964->args = v15965);} 
-                add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                v1030 = v10264;
+                    ((list *) v62573)->addFast(v_bag);} 
+                  (v62572->args = v62573);} 
+                add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                v61558 = v88616;
                 } 
-              GC_OBJECT(Call,v1030);} 
-            { OID  v10622;
-              if (inherit_ask_class(OWNER((*(v15417))[1]),Kernel._integer) != CTRUE)
-               { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                { If * v15967 = v10264; 
-                  OID  v15969;
-                  { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                    (v10264->selector = Kernel._inf_equal);
-                    { Call * v15970 = v10264; 
-                      list * v15971;
+              GC_OBJECT(Call,v61558);} 
+            { OID  v105358;
+              if (inherit_ask_class(OWNER((*(v82377))[1]),Kernel._integer) != CTRUE)
+               { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                { If * v62575 = v88616; 
+                  OID  v62576;
+                  { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                    (v88616->selector = Kernel._inf_equal);
+                    { Call * v62577 = v88616; 
+                      list * v62578;
                       { OID v_bag;
-                        GC_ANY(v15971= list::empty(Kernel.emptySet));
-                        ((list *) v15971)->addFast((*(v15417))[1]);
-                        { { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                            (v10264->selector = Kernel.verbose);
-                            (v10264->args = list::alloc(1,_oid_(ClEnv)));
-                            add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                            v_bag = _oid_(v10264);
+                        GC_ANY(v62578= list::empty(Kernel.emptySet));
+                        ((list *) v62578)->addFast((*(v82377))[1]);
+                        { { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                            (v88616->selector = Kernel.verbose);
+                            (v88616->args = list::alloc(1,_oid_(ClEnv)));
+                            add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                            v_bag = _oid_(v88616);
                             } 
                           GC_OID(v_bag);} 
-                        ((list *) v15971)->addFast(v_bag);} 
-                      (v15970->args = v15971);} 
-                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                    v15969 = _oid_(v10264);
+                        ((list *) v62578)->addFast(v_bag);} 
+                      (v62577->args = v62578);} 
+                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                    v62576 = _oid_(v88616);
                     } 
-                  (v15967->test = v15969);} 
-                (v10264->arg = _oid_(v1030));
-                (v10264->other = Kernel.cfalse);
-                add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                v10622 = _oid_(v10264);
+                  (v62575->test = v62576);} 
+                (v88616->arg = _oid_(v61558));
+                (v88616->other = Kernel.cfalse);
+                add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                v105358 = _oid_(v88616);
                 } 
-              else v10622 = _oid_(v1030);
-                Result = (*Optimize.c_code)(v10622,
+              else v105358 = _oid_(v61558);
+                Result = (*Optimize.c_code)(v105358,
                 _oid_(Kernel._any));
               } 
             } 
@@ -546,229 +546,229 @@ OID  c_code_Trace_Optimize(Trace *v9332)
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Assert_Optimize(Assert *v9332)
+ClaireType * c_type_Assert_Optimize(Assert *v13540)
 { return (Kernel._any);} 
 
-ClaireType * c_type_Trace_Optimize(Trace *v9332)
+ClaireType * c_type_Trace_Optimize(Trace *v13540)
 { return (Kernel._any);} 
 
-ClaireType * c_type_Branch_Optimize(Branch *v9332)
+ClaireType * c_type_Branch_Optimize(Branch *v13540)
 { return (Kernel._boolean);} 
 
-OID  c_code_Branch_Optimize(Branch *v9332)
+OID  c_code_Branch_Optimize(Branch *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { OID  v2840;
-      { ClaireHandle * v10264 = ((ClaireHandle *) GC_OBJECT(ClaireHandle,new_object_class(Language._Handle)));
-        { ClaireHandle * v15994 = v10264; 
-          OID  v15995;
-          { Do * v10264 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
-            { Do * v15996 = v10264; 
-              list * v15997;
+    { OID  v130344;
+      { ClaireHandle * v88616 = ((ClaireHandle *) GC_OBJECT(ClaireHandle,new_object_class(Language._Handle)));
+        { ClaireHandle * v62601 = v88616; 
+          OID  v62602;
+          { Do * v88616 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
+            { Do * v62603 = v88616; 
+              list * v62604;
               { OID v_bag;
-                GC_ANY(v15997= list::empty(Kernel.emptySet));
-                { { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                    (v10264->selector = Kernel.choice);
-                    (v10264->args = list::alloc(1,_oid_(ClEnv)));
-                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                    v_bag = _oid_(v10264);
+                GC_ANY(v62604= list::empty(Kernel.emptySet));
+                { { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                    (v88616->selector = Kernel.choice);
+                    (v88616->args = list::alloc(1,_oid_(ClEnv)));
+                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                    v_bag = _oid_(v88616);
                     } 
                   GC_OID(v_bag);} 
-                ((list *) v15997)->addFast(v_bag);
-                { { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                    (v10264->test = (*(v9332->args))[1]);
-                    (v10264->arg = Kernel.ctrue);
-                    { If * v15998 = v10264; 
-                      OID  v15999;
-                      { Do * v10264 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
-                        { Do * v16000 = v10264; 
-                          list * v16001;
+                ((list *) v62604)->addFast(v_bag);
+                { { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                    (v88616->test = (*(v13540->args))[1]);
+                    (v88616->arg = Kernel.ctrue);
+                    { If * v62605 = v88616; 
+                      OID  v62606;
+                      { Do * v88616 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
+                        { Do * v62607 = v88616; 
+                          list * v62608;
                           { OID v_bag;
-                            GC_ANY(v16001= list::empty(Kernel.emptySet));
-                            { { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                                (v10264->selector = Kernel.backtrack);
-                                (v10264->args = list::alloc(1,_oid_(ClEnv)));
-                                add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                                v_bag = _oid_(v10264);
+                            GC_ANY(v62608= list::empty(Kernel.emptySet));
+                            { { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                                (v88616->selector = Kernel.backtrack);
+                                (v88616->args = list::alloc(1,_oid_(ClEnv)));
+                                add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                                v_bag = _oid_(v88616);
                                 } 
                               GC_OID(v_bag);} 
-                            ((list *) v16001)->addFast(v_bag);
-                            ((list *) v16001)->addFast(Kernel.cfalse);} 
-                          (v16000->args = v16001);} 
-                        add_I_property(Kernel.instances,Language._Do,11,_oid_(v10264));
-                        v15999 = _oid_(v10264);
+                            ((list *) v62608)->addFast(v_bag);
+                            ((list *) v62608)->addFast(Kernel.cfalse);} 
+                          (v62607->args = v62608);} 
+                        add_I_property(Kernel.instances,Language._Do,11,_oid_(v88616));
+                        v62606 = _oid_(v88616);
                         } 
-                      (v15998->other = v15999);} 
-                    add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                    v_bag = _oid_(v10264);
+                      (v62605->other = v62606);} 
+                    add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                    v_bag = _oid_(v88616);
                     } 
                   GC_OID(v_bag);} 
-                ((list *) v15997)->addFast(v_bag);} 
-              (v15996->args = v15997);} 
-            add_I_property(Kernel.instances,Language._Do,11,_oid_(v10264));
-            v15995 = _oid_(v10264);
+                ((list *) v62604)->addFast(v_bag);} 
+              (v62603->args = v62604);} 
+            add_I_property(Kernel.instances,Language._Do,11,_oid_(v88616));
+            v62602 = _oid_(v88616);
             } 
-          (v15994->arg = v15995);} 
-        (v10264->test = _oid_(Core._contradiction));
-        { ClaireHandle * v16002 = v10264; 
-          OID  v16023;
-          { Do * v10264 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
-            { Do * v16024 = v10264; 
-              list * v16025;
+          (v62601->arg = v62602);} 
+        (v88616->test = _oid_(Core._contradiction));
+        { ClaireHandle * v62609 = v88616; 
+          OID  v62631;
+          { Do * v88616 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
+            { Do * v62632 = v88616; 
+              list * v62633;
               { OID v_bag;
-                GC_ANY(v16025= list::empty(Kernel.emptySet));
-                { { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                    (v10264->selector = Kernel.backtrack);
-                    (v10264->args = list::alloc(1,_oid_(ClEnv)));
-                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                    v_bag = _oid_(v10264);
+                GC_ANY(v62633= list::empty(Kernel.emptySet));
+                { { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                    (v88616->selector = Kernel.backtrack);
+                    (v88616->args = list::alloc(1,_oid_(ClEnv)));
+                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                    v_bag = _oid_(v88616);
                     } 
                   GC_OID(v_bag);} 
-                ((list *) v16025)->addFast(v_bag);
-                ((list *) v16025)->addFast(Kernel.cfalse);} 
-              (v16024->args = v16025);} 
-            add_I_property(Kernel.instances,Language._Do,11,_oid_(v10264));
-            v16023 = _oid_(v10264);
+                ((list *) v62633)->addFast(v_bag);
+                ((list *) v62633)->addFast(Kernel.cfalse);} 
+              (v62632->args = v62633);} 
+            add_I_property(Kernel.instances,Language._Do,11,_oid_(v88616));
+            v62631 = _oid_(v88616);
             } 
-          (v16002->other = v16023);} 
-        add_I_property(Kernel.instances,Language._Handle,11,_oid_(v10264));
-        v2840 = _oid_(v10264);
+          (v62609->other = v62631);} 
+        add_I_property(Kernel.instances,Language._Handle,11,_oid_(v88616));
+        v130344 = _oid_(v88616);
         } 
-      Result = (*Optimize.c_code)(v2840,
+      Result = (*Optimize.c_code)(v130344,
         _oid_(Kernel._any));
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Macro_Optimize(Macro *v9332,ClaireClass *v15435)
+OID  c_code_Macro_Optimize(Macro *v13540,ClaireClass *v82395)
 { GC_BIND;
   { OID Result = 0;
-    Result = (*Optimize.c_code)(GC_OID((*Language.macroexpand)(_oid_(v9332))),
-      _oid_(v15435));
+    Result = (*Optimize.c_code)(GC_OID((*Language.macroexpand)(_oid_(v13540))),
+      _oid_(v82395));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Macro_Optimize(Macro *v9332)
+ClaireType * c_type_Macro_Optimize(Macro *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    Result = OBJECT(ClaireType,(*Optimize.c_type)(GC_OID((*Language.macroexpand)(_oid_(v9332)))));
+    Result = OBJECT(ClaireType,(*Optimize.c_type)(GC_OID((*Language.macroexpand)(_oid_(v13540)))));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Printf_Optimize(Printf *v9332)
+ClaireType * c_type_Printf_Optimize(Printf *v13540)
 { return (Kernel._any);} 
 
-OID  c_code_Printf_Optimize(Printf *v9332)
+OID  c_code_Printf_Optimize(Printf *v13540)
 { GC_RESERVE(13);  // v3.0.55 optim !
   { OID Result = 0;
-    { list * v15428 = GC_OBJECT(list,v9332->args);
-      if (equal(_oid_(Kernel._string),_oid_(OWNER((*(v15428))[1]))) != CTRUE)
+    { list * v82388 = GC_OBJECT(list,v13540->args);
+      if (equal(_oid_(Kernel._string),_oid_(OWNER((*(v82388))[1]))) != CTRUE)
        Result = (*Optimize.Cerror)(_string_(CSTRING("[209] the first argument in ~S must be a string")),
-        _oid_(v9332));
-      else { char * v15435 = string_v((*(v15428))[1]);
-          Cint  v15425 = 1;
-          Cint  v15431 = get_string(v15435,_char_('~'));
-          list * v15434 = list::empty(Kernel._any);
+        _oid_(v13540));
+      else { char * v82395 = string_v((*(v82388))[1]);
+          Cint  v82385 = 1;
+          Cint  v82390 = get_string(v82395,_char_('~'));
+          list * v82394 = list::empty(Kernel._any);
           { OID gc_local;
-            while ((equal(v15431,0) != CTRUE))
+            while ((equal(v82390,0) != CTRUE))
             { GC_LOOP;
-              { ClaireChar * v15429 = _char_(v15435[(v15431+1) - 1]);
-                if (v15425 < v15428->length)
-                 ++v15425;
+              { ClaireChar * v82389 = _char_(v82395[(v82390+1) - 1]);
+                if (v82385 < v82388->length)
+                 ++v82385;
                 else (*Optimize.Cerror)(_string_(CSTRING("[210] not enough arguments in ~S")),
-                    _oid_(v9332));
-                  if (v15431 > 1)
-                 { { OID  v2746;
-                    { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                      (v10264->selector = Kernel.princ);
-                      (v10264->args = list::alloc(1,GC_OID(_string_(substring_string(v15435,1,(v15431-1))))));
-                      add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                      v2746 = _oid_(v10264);
+                    _oid_(v13540));
+                  if (v82390 > 1)
+                 { { OID  v31946;
+                    { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                      (v88616->selector = Kernel.princ);
+                      (v88616->args = list::alloc(1,GC_OID(_string_(substring_string(v82395,1,(v82390-1))))));
+                      add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                      v31946 = _oid_(v88616);
                       } 
-                    v15434 = v15434->addFast(v2746);
+                    v82394 = v82394->addFast(v31946);
                     } 
-                   GC__ANY(v15434, 7);} 
-                { { OID  v3707;
-                    if ('A' == ((char) v15429->ascii))
-                     { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                      (v10264->selector = Kernel.princ);
-                      (v10264->args = list::alloc(1,(*(v15428))[v15425]));
-                      add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                      v3707 = _oid_(v10264);
+                   GC__ANY(v82394, 7);} 
+                { { OID  v32907;
+                    if ('A' == ((char) v82389->ascii))
+                     { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                      (v88616->selector = Kernel.princ);
+                      (v88616->args = list::alloc(1,(*(v82388))[v82385]));
+                      add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                      v32907 = _oid_(v88616);
                       } 
-                    else if ('S' == ((char) v15429->ascii))
-                     { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                      (v10264->selector = Kernel.print);
-                      (v10264->args = list::alloc(1,(*(v15428))[v15425]));
-                      add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                      v3707 = _oid_(v10264);
+                    else if ('S' == ((char) v82389->ascii))
+                     { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                      (v88616->selector = Kernel.print);
+                      (v88616->args = list::alloc(1,(*(v82388))[v82385]));
+                      add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                      v32907 = _oid_(v88616);
                       } 
-                    else if ('F' == ((char) v15429->ascii))
-                     { ClaireBoolean * v3293 = CFALSE;
-                      Cint  v15426 = (integer_I_char(_char_(v15435[(v15431+2) - 1]))-48);
-                      if ('%' == v15435[(v15431+2) - 1])
-                       { v3293= CTRUE;
-                        v15426= 1;
+                    else if ('F' == ((char) v82389->ascii))
+                     { ClaireBoolean * v63821 = CFALSE;
+                      Cint  v82386 = (integer_I_char(_char_(v82395[(v82390+2) - 1]))-48);
+                      if ('%' == v82395[(v82390+2) - 1])
+                       { v63821= CTRUE;
+                        v82386= 1;
                         } 
-                      else if ((v15426 < 0) || 
-                          (v15426 > 9))
+                      else if ((v82386 < 0) || 
+                          (v82386 > 9))
                        close_exception(((general_error *) (*Core._general_error)(_string_(CSTRING("[189] F requires a single digit integer in ~S")),
-                        _oid_(list::alloc(1,_oid_(v9332))))));
-                      if ((v3293 != CTRUE) && 
-                          ('%' == v15435[(v15431+3) - 1]))
-                       { v3293= CTRUE;
-                        ++v15431;
+                        _oid_(list::alloc(1,_oid_(v13540))))));
+                      if ((v63821 != CTRUE) && 
+                          ('%' == v82395[(v82390+3) - 1]))
+                       { v63821= CTRUE;
+                        ++v82390;
                         } 
-                      ++v15431;
-                      { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                        (v10264->selector = Core.printFDigit);
-                        { Call * v16028 = v10264; 
-                          list * v16029;
+                      ++v82390;
+                      { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                        (v88616->selector = Core.printFDigit);
+                        { Call * v62636 = v88616; 
+                          list * v62637;
                           { OID v_bag;
-                            GC_ANY(v16029= list::empty(Kernel.emptySet));
-                            if (v3293 == CTRUE)
-                             { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                              (v10264->selector = Kernel._star);
-                              (v10264->args = list::alloc(2,(*(v15428))[v15425],GC_OID(_float_(100.0))));
-                              add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                              v_bag = _oid_(v10264);
+                            GC_ANY(v62637= list::empty(Kernel.emptySet));
+                            if (v63821 == CTRUE)
+                             { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                              (v88616->selector = Kernel._star);
+                              (v88616->args = list::alloc(2,(*(v82388))[v82385],GC_OID(_float_(100.0))));
+                              add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                              v_bag = _oid_(v88616);
                               } 
-                            else v_bag = (*(v15428))[v15425];
-                              ((list *) v16029)->addFast(v_bag);
-                            ((list *) v16029)->addFast(v15426);} 
-                          (v16028->args = v16029);} 
-                        add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                        v3707 = _oid_(v10264);
+                            else v_bag = (*(v82388))[v82385];
+                              ((list *) v62637)->addFast(v_bag);
+                            ((list *) v62637)->addFast(v82386);} 
+                          (v62636->args = v62637);} 
+                        add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                        v32907 = _oid_(v88616);
                         } 
                       } 
-                    else if ('I' == ((char) v15429->ascii))
-                     v3707 = (*(v15428))[v15425];
-                    else v3707 = Kernel.cfalse;
-                      v15434 = v15434->addFast(v3707);
+                    else if ('I' == ((char) v82389->ascii))
+                     v32907 = (*(v82388))[v82385];
+                    else v32907 = Kernel.cfalse;
+                      v82394 = v82394->addFast(v32907);
                     } 
-                   GC__ANY(v15434, 7);} 
-                GC__STRING(v15435 = substring_string(v15435,(v15431+2),1000), 4);
-                v15431= get_string(v15435,_char_('~'));
+                   GC__ANY(v82394, 7);} 
+                GC__STRING(v82395 = substring_string(v82395,(v82390+2),1000), 4);
+                v82390= get_string(v82395,_char_('~'));
                 } 
               GC_UNLOOP;} 
             } 
-          if (boolean_I_any(_string_(v15435)) == CTRUE)
-           { OID  v6590;
-            { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-              (v10264->selector = Kernel.princ);
-              (v10264->args = list::alloc(1,_string_(v15435)));
-              add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-              v6590 = _oid_(v10264);
+          if (boolean_I_any(_string_(v82395)) == CTRUE)
+           { OID  v35790;
+            { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+              (v88616->selector = Kernel.princ);
+              (v88616->args = list::alloc(1,_string_(v82395)));
+              add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+              v35790 = _oid_(v88616);
               } 
-            v15434 = v15434->addFast(v6590);
+            v82394 = v82394->addFast(v35790);
             } 
-          { OID  v7551;
-            { Do * v10264 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
-              (v10264->args = v15434);
-              add_I_property(Kernel.instances,Language._Do,11,_oid_(v10264));
-              v7551 = _oid_(v10264);
+          { OID  v36751;
+            { Do * v88616 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
+              (v88616->args = v82394);
+              add_I_property(Kernel.instances,Language._Do,11,_oid_(v88616));
+              v36751 = _oid_(v88616);
               } 
-            Result = (*Optimize.c_code)(v7551,
+            Result = (*Optimize.c_code)(v36751,
               _oid_(Kernel._any));
             } 
           } 
@@ -776,79 +776,79 @@ OID  c_code_Printf_Optimize(Printf *v9332)
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Error_Optimize(Error *v9332)
+ClaireType * c_type_Error_Optimize(Error *v13540)
 { return (Kernel.emptySet);} 
 
-OID  c_code_Error_Optimize(Error *v9332)
+OID  c_code_Error_Optimize(Error *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { ClaireBoolean * v15440 = Optimize.OPT->allocation;
-      OID  v15441;
-      { { OID  v8512;
-          { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-            (v10264->selector = Kernel.close);
-            { Call * v321 = v10264; 
-              list * v322;
+    { ClaireBoolean * v82400 = Optimize.OPT->allocation;
+      OID  v82401;
+      { { OID  v37712;
+          { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+            (v88616->selector = Kernel.close);
+            { Call * v63313 = v88616; 
+              list * v63314;
               { OID v_bag;
-                GC_ANY(v322= list::empty(Kernel.emptySet));
-                { { Cast * v10264 = ((Cast *) GC_OBJECT(Cast,new_object_class(Language._Cast)));
-                    { Cast * v323 = v10264; 
-                      OID  v324;
-                      { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                        (v10264->selector = Optimize.anyObject_I);
-                        { Call * v325 = v10264; 
-                          list * v326;
+                GC_ANY(v63314= list::empty(Kernel.emptySet));
+                { { Cast * v88616 = ((Cast *) GC_OBJECT(Cast,new_object_class(Language._Cast)));
+                    { Cast * v63315 = v88616; 
+                      OID  v63316;
+                      { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                        (v88616->selector = Optimize.anyObject_I);
+                        { Call * v63317 = v88616; 
+                          list * v63318;
                           { OID v_bag;
-                            GC_ANY(v326= list::empty(Kernel.emptySet));
-                            ((list *) v326)->addFast(_oid_(Core._general_error));
-                            ((list *) v326)->addFast(GC_OID((*Optimize.c_code)(GC_OID(car_list(v9332->args)),
+                            GC_ANY(v63318= list::empty(Kernel.emptySet));
+                            ((list *) v63318)->addFast(_oid_(Core._general_error));
+                            ((list *) v63318)->addFast(GC_OID((*Optimize.c_code)(GC_OID(car_list(v13540->args)),
                               _oid_(Kernel._any))));
-                            { { OID  v5672;
-                                if (v9332->args->length != 1)
-                                 { List * v10264 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
-                                  (v10264->args = cdr_list(GC_OBJECT(list,v9332->args)));
-                                  add_I_property(Kernel.instances,Language._List,11,_oid_(v10264));
-                                  v5672 = _oid_(v10264);
+                            { { OID  v34871;
+                                if (v13540->args->length != 1)
+                                 { List * v88616 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
+                                  (v88616->args = cdr_list(GC_OBJECT(list,v13540->args)));
+                                  add_I_property(Kernel.instances,Language._List,11,_oid_(v88616));
+                                  v34871 = _oid_(v88616);
                                   } 
-                                else v5672 = Core.nil->value;
-                                  v_bag = (*Optimize.c_code)(v5672,
+                                else v34871 = Core.nil->value;
+                                  v_bag = (*Optimize.c_code)(v34871,
                                   _oid_(Kernel._any));
                                 } 
                               GC_OID(v_bag);} 
-                            ((list *) v326)->addFast(v_bag);} 
-                          (v325->args = v326);} 
-                        add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                        v324 = _oid_(v10264);
+                            ((list *) v63318)->addFast(v_bag);} 
+                          (v63317->args = v63318);} 
+                        add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                        v63316 = _oid_(v88616);
                         } 
-                      (v323->arg = v324);} 
-                    (v10264->set_arg = Kernel._exception);
-                    add_I_property(Kernel.instances,Language._Cast,11,_oid_(v10264));
-                    v_bag = _oid_(v10264);
+                      (v63315->arg = v63316);} 
+                    (v88616->set_arg = Kernel._exception);
+                    add_I_property(Kernel.instances,Language._Cast,11,_oid_(v88616));
+                    v_bag = _oid_(v88616);
                     } 
                   GC_OID(v_bag);} 
-                ((list *) v322)->addFast(v_bag);} 
-              (v321->args = v322);} 
-            add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-            v8512 = _oid_(v10264);
+                ((list *) v63314)->addFast(v_bag);} 
+              (v63313->args = v63314);} 
+            add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+            v37712 = _oid_(v88616);
             } 
-          v15441 = (*Optimize.c_code)(v8512,
+          v82401 = (*Optimize.c_code)(v37712,
             _oid_(Kernel._void));
           } 
-        GC_OID(v15441);} 
-      (Optimize.OPT->allocation = v15440);
-      Result = v15441;
+        GC_OID(v82401);} 
+      (Optimize.OPT->allocation = v82400);
+      Result = v82401;
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * extendedTest_ask_If(If *v9332)
+ClaireType * extendedTest_ask_If(If *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { OID  v1047 = v9332->test;
-      if (INHERIT(OWNER(v1047),Language._Call))
-       { if ((INHERIT(OWNER((*(OBJECT(Call,v1047)->args))[1]),Language._Variable)) && 
-            (OBJECT(Call,v1047)->selector == Core.known_ask))
-         Result = OBJECT(ClaireType,(*Kernel.range)((*(OBJECT(Call,v1047)->args))[1]));
+    { OID  v61575 = v13540->test;
+      if (INHERIT(OWNER(v61575),Language._Call))
+       { if ((INHERIT(OWNER((*(OBJECT(Call,v61575)->args))[1]),Language._Variable)) && 
+            (OBJECT(Call,v61575)->selector == Core.known_ask))
+         Result = OBJECT(ClaireType,(*Kernel.range)((*(OBJECT(Call,v61575)->args))[1]));
         else Result = Kernel._any;
           } 
       else Result = Kernel._any;
@@ -856,472 +856,472 @@ ClaireType * extendedTest_ask_If(If *v9332)
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_If_Optimize(If *v9332)
+ClaireType * c_type_If_Optimize(If *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { ClaireType * v1045 = GC_OBJECT(ClaireType,extendedTest_ask_If(v9332));
-      if (extended_ask_type(v1045) == CTRUE)
-       range_sets_any(GC_OID((*(OBJECT(bag,(*Core.args)(GC_OID(v9332->test)))))[1]),GC_OBJECT(ClaireType,sort_abstract_I_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Core.t1)(_oid_(v1045)))))));
-      { ClaireType * v13125 = GC_OBJECT(ClaireType,U_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg)))),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->other))))));
-        if (extended_ask_type(v1045) == CTRUE)
-         put_property2(Kernel.range,GC_OBJECT(ClaireObject,OBJECT(ClaireObject,(*(OBJECT(bag,(*Core.args)(GC_OID(v9332->test)))))[1])),_oid_(v1045));
-        Result = v13125;
+    { ClaireType * v61573 = GC_OBJECT(ClaireType,extendedTest_ask_If(v13540));
+      if (extended_ask_type(v61573) == CTRUE)
+       range_sets_any(GC_OID((*(OBJECT(bag,(*Core.args)(GC_OID(v13540->test)))))[1]),GC_OBJECT(ClaireType,sort_abstract_I_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Core.t1)(_oid_(v61573)))))));
+      { ClaireType * v75701 = GC_OBJECT(ClaireType,U_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg)))),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->other))))));
+        if (extended_ask_type(v61573) == CTRUE)
+         put_property2(Kernel.range,GC_OBJECT(ClaireObject,OBJECT(ClaireObject,(*(OBJECT(bag,(*Core.args)(GC_OID(v13540->test)))))[1])),_oid_(v61573));
+        Result = v75701;
         } 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_If_Optimize(If *v9332,ClaireClass *v15435)
+OID  c_code_If_Optimize(If *v13540,ClaireClass *v82395)
 { GC_BIND;
   { OID Result = 0;
-    { ClaireType * v1045 = GC_OBJECT(ClaireType,extendedTest_ask_If(v9332));
-      if (extended_ask_type(v1045) == CTRUE)
-       range_sets_any(GC_OID((*(OBJECT(bag,(*Core.args)(GC_OID(v9332->test)))))[1]),GC_OBJECT(ClaireType,sort_abstract_I_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Core.t1)(_oid_(v1045)))))));
-      if ((_inf_equal_type(GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->test))))),Kernel._boolean) != CTRUE) && 
+    { ClaireType * v61573 = GC_OBJECT(ClaireType,extendedTest_ask_If(v13540));
+      if (extended_ask_type(v61573) == CTRUE)
+       range_sets_any(GC_OID((*(OBJECT(bag,(*Core.args)(GC_OID(v13540->test)))))[1]),GC_OBJECT(ClaireType,sort_abstract_I_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Core.t1)(_oid_(v61573)))))));
+      if ((_inf_equal_type(GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->test))))),Kernel._boolean) != CTRUE) && 
           (Optimize.PENIBLE->value == Kernel.ctrue))
        { warn_void();
-        tformat_string(CSTRING("CLAIRE 3.3 SYNTAX - Test in ~S should be a boolean [260]\n"),2,list::alloc(1,_oid_(v9332)));
+        tformat_string(CSTRING("CLAIRE 3.3 SYNTAX - Test in ~S should be a boolean [260]\n"),2,list::alloc(1,_oid_(v13540)));
         } 
-      { If * v13125;
-        { { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-            (v10264->test = c_boolean_any(GC_OID(v9332->test)));
-            (v10264->arg = (*Optimize.c_code)(GC_OID(v9332->arg),
-              _oid_(v15435)));
-            (v10264->other = (*Optimize.c_code)(GC_OID(v9332->other),
-              _oid_(v15435)));
-            add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-            v13125 = v10264;
+      { If * v75701;
+        { { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+            (v88616->test = c_boolean_any(GC_OID(v13540->test)));
+            (v88616->arg = (*Optimize.c_code)(GC_OID(v13540->arg),
+              _oid_(v82395)));
+            (v88616->other = (*Optimize.c_code)(GC_OID(v13540->other),
+              _oid_(v82395)));
+            add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+            v75701 = v88616;
             } 
-          GC_OBJECT(If,v13125);} 
-        if (extended_ask_type(v1045) == CTRUE)
-         put_property2(Kernel.range,GC_OBJECT(ClaireObject,OBJECT(ClaireObject,(*(OBJECT(bag,(*Core.args)(GC_OID(v9332->test)))))[1])),_oid_(v1045));
-        Result = _oid_(v13125);
+          GC_OBJECT(If,v75701);} 
+        if (extended_ask_type(v61573) == CTRUE)
+         put_property2(Kernel.range,GC_OBJECT(ClaireObject,OBJECT(ClaireObject,(*(OBJECT(bag,(*Core.args)(GC_OID(v13540->test)))))[1])),_oid_(v61573));
+        Result = _oid_(v75701);
         } 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireBoolean * c_gc_ask_If(If *v9332)
+ClaireBoolean * c_gc_ask_If(If *v13540)
 { GC_BIND;
   { ClaireBoolean *Result ;
-    Result = (((OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v9332->arg))) == CTRUE) ? CTRUE : (((OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v9332->other))) == CTRUE) ? CTRUE : CFALSE));
+    Result = (((OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v13540->arg))) == CTRUE) ? CTRUE : (((OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v13540->other))) == CTRUE) ? CTRUE : CFALSE));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Case_Optimize(Case *v9332)
+ClaireType * c_type_Case_Optimize(Case *v13540)
 { GC_RESERVE(6);  // v3.0.55 optim !
   { ClaireType *Result ;
-    { OID  v11786 = GC_OID(v9332->var);
-      OID  v1207;
-      { if (INHERIT(OWNER(v11786),Language._Variable))
-         v1207 = get_property(Kernel.range,OBJECT(ClaireObject,v11786));
-        else v1207 = _oid_(Kernel._any);
-          GC_OID(v1207);} 
-      list * v15428 = GC_OBJECT(list,((list *) copy_bag(v9332->args)));
-      ClaireType * v5765 = Kernel.emptySet;
-      ClaireType * v7432 = Kernel.emptySet;
+    { OID  v65146 = GC_OID(v13540->var);
+      OID  v16967;
+      { if (INHERIT(OWNER(v65146),Language._Variable))
+         v16967 = get_property(Kernel.range,OBJECT(ClaireObject,v65146));
+        else v16967 = _oid_(Kernel._any);
+          GC_OID(v16967);} 
+      list * v82388 = GC_OBJECT(list,((list *) copy_bag(v13540->args)));
+      ClaireType * v87060 = Kernel.emptySet;
+      ClaireType * v105111 = Kernel.emptySet;
       { OID gc_local;
-        while ((v15428->length > 0))
+        while ((v82388->length > 0))
         { GC_LOOP;
-          if (INHERIT(OWNER((*(v15428))[1]),Kernel._type))
-           { GC__ANY(v7432 = U_type(v7432,OBJECT(ClaireType,(*(v15428))[1])), 6);
-            if (osort_any(v1207) == osort_any((*(v15428))[1]))
-             range_sets_any(v11786,OBJECT(ClaireType,(*(v15428))[1]));
-            else if (osort_any(v1207) == Kernel._any)
-             range_sets_any(v11786,GC_OBJECT(ClaireType,sort_abstract_I_type(OBJECT(ClaireType,(*(v15428))[1]))));
+          if (INHERIT(OWNER((*(v82388))[1]),Kernel._type))
+           { GC__ANY(v105111 = U_type(v105111,OBJECT(ClaireType,(*(v82388))[1])), 6);
+            if (osort_any(v16967) == osort_any((*(v82388))[1]))
+             range_sets_any(v65146,OBJECT(ClaireType,(*(v82388))[1]));
+            else if (osort_any(v16967) == Kernel._any)
+             range_sets_any(v65146,GC_OBJECT(ClaireType,sort_abstract_I_type(OBJECT(ClaireType,(*(v82388))[1]))));
             } 
           else (*Optimize.Cerror)(_string_(CSTRING("[208] wrong type declaration for case: ~S in ~S")),
-              GC_OID(car_list(v15428)),
-              _oid_(v9332));
-            GC__ANY(v5765 = U_type(v5765,GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)((*(v15428))[2])))), 5);
-          if (INHERIT(OWNER(v11786),Language._Variable))
-           store_object(OBJECT(ClaireObject,v11786),
+              GC_OID(car_list(v82388)),
+              _oid_(v13540));
+            GC__ANY(v87060 = U_type(v87060,GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)((*(v82388))[2])))), 5);
+          if (INHERIT(OWNER(v65146),Language._Variable))
+           store_object(OBJECT(ClaireObject,v65146),
             3,
             Kernel._object,
-            v1207,
+            v16967,
             CFALSE);
-          GC__ANY(v15428 = skip_list(v15428,2), 4);
+          GC__ANY(v82388 = skip_list(v82388,2), 4);
           GC_UNLOOP;} 
         } 
-      if (_inf_equal_type(OBJECT(ClaireType,v1207),v7432) == CTRUE)
-       Result = v5765;
-      else Result = ((_inf_equal_type(v5765,Kernel._boolean) == CTRUE) ?
+      if (_inf_equal_type(OBJECT(ClaireType,v16967),v105111) == CTRUE)
+       Result = v87060;
+      else Result = ((_inf_equal_type(v87060,Kernel._boolean) == CTRUE) ?
         Kernel._boolean :
         Kernel._any );
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Case_Optimize(Case *v9332,ClaireClass *v15435)
+OID  c_code_Case_Optimize(Case *v13540,ClaireClass *v82395)
 { GC_RESERVE(13);  // v3.0.55 optim !
   { OID Result = 0;
-    { OID  v11786 = GC_OID(v9332->var);
-      OID  v1207;
-      { if (INHERIT(OWNER(v11786),Language._Variable))
-         v1207 = get_property(Kernel.range,OBJECT(ClaireObject,v11786));
-        else v1207 = _oid_(Kernel._any);
-          GC_OID(v1207);} 
-      list * v15428 = GC_OBJECT(list,((list *) copy_bag(v9332->args)));
-      OID  v7432 = _oid_(Kernel.emptySet);
-      OID  v16004;
-      { { OID  v6632;
-          { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-            (v10264->selector = Kernel._Z);
-            (v10264->args = list::alloc(2,v11786,(*(v15428))[1]));
-            add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-            v6632 = _oid_(v10264);
+    { OID  v65146 = GC_OID(v13540->var);
+      OID  v16967;
+      { if (INHERIT(OWNER(v65146),Language._Variable))
+         v16967 = get_property(Kernel.range,OBJECT(ClaireObject,v65146));
+        else v16967 = _oid_(Kernel._any);
+          GC_OID(v16967);} 
+      list * v82388 = GC_OBJECT(list,((list *) copy_bag(v13540->args)));
+      OID  v105111 = _oid_(Kernel.emptySet);
+      OID  v94965;
+      { { OID  v35832;
+          { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+            (v88616->selector = Kernel._Z);
+            (v88616->args = list::alloc(2,v65146,(*(v82388))[1]));
+            add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+            v35832 = _oid_(v88616);
             } 
-          v16004 = c_boolean_any(v6632);
+          v94965 = c_boolean_any(v35832);
           } 
-        GC_OID(v16004);} 
-      range_sets_any(v11786,OBJECT(ClaireType,(*(v15428))[1]));
-      { If * v7797;
-        { { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-            (v10264->test = v16004);
-            (v10264->arg = (*Optimize.c_code)((*(v15428))[2],
-              _oid_(v15435)));
-            (v10264->other = (*Optimize.c_code)(Kernel.cfalse,
-              _oid_(v15435)));
-            add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-            v7797 = v10264;
+        GC_OID(v94965);} 
+      range_sets_any(v65146,OBJECT(ClaireType,(*(v82388))[1]));
+      { If * v16389;
+        { { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+            (v88616->test = v94965);
+            (v88616->arg = (*Optimize.c_code)((*(v82388))[2],
+              _oid_(v82395)));
+            (v88616->other = (*Optimize.c_code)(Kernel.cfalse,
+              _oid_(v82395)));
+            add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+            v16389 = v88616;
             } 
-          GC_OBJECT(If,v7797);} 
-        If * v14357 = v7797;
-        if (INHERIT(OWNER(v11786),Language._Variable))
-         store_object(OBJECT(ClaireObject,v11786),
+          GC_OBJECT(If,v16389);} 
+        If * v119205 = v16389;
+        if (INHERIT(OWNER(v65146),Language._Variable))
+         store_object(OBJECT(ClaireObject,v65146),
           3,
           Kernel._object,
-          v1207,
+          v16967,
           CFALSE);
-        v15428= GC_OBJECT(list,skip_list(v15428,2));
+        v82388= GC_OBJECT(list,skip_list(v82388,2));
         { OID gc_local;
-          while ((v15428->length > 0))
+          while ((v82388->length > 0))
           { GC_LOOP;
-            GC__OID(v7432 = _oid_(U_type(OBJECT(ClaireType,v7432),OBJECT(ClaireType,(*(v15428))[1]))), 7);
-            if (_inf_equal_type(OBJECT(ClaireType,v1207),OBJECT(ClaireType,v7432)) == CTRUE)
-             { if (osort_any(v1207) == osort_any((*(v15428))[1]))
-               range_sets_any(v11786,OBJECT(ClaireType,(*(v15428))[1]));
-              else if (osort_any(v1207) == Kernel._any)
-               range_sets_any(v11786,GC_OBJECT(ClaireType,sort_abstract_I_type(OBJECT(ClaireType,(*(v15428))[1]))));
-              (v14357->other = (*Optimize.c_code)((*(v15428))[2],
-                _oid_(v15435)));
-              if (INHERIT(OWNER(v11786),Language._Variable))
-               store_object(OBJECT(ClaireObject,v11786),
+            GC__OID(v105111 = _oid_(U_type(OBJECT(ClaireType,v105111),OBJECT(ClaireType,(*(v82388))[1]))), 7);
+            if (_inf_equal_type(OBJECT(ClaireType,v16967),OBJECT(ClaireType,v105111)) == CTRUE)
+             { if (osort_any(v16967) == osort_any((*(v82388))[1]))
+               range_sets_any(v65146,OBJECT(ClaireType,(*(v82388))[1]));
+              else if (osort_any(v16967) == Kernel._any)
+               range_sets_any(v65146,GC_OBJECT(ClaireType,sort_abstract_I_type(OBJECT(ClaireType,(*(v82388))[1]))));
+              (v119205->other = (*Optimize.c_code)((*(v82388))[2],
+                _oid_(v82395)));
+              if (INHERIT(OWNER(v65146),Language._Variable))
+               store_object(OBJECT(ClaireObject,v65146),
                 3,
                 Kernel._object,
-                v1207,
+                v16967,
                 CFALSE);
               { ;break;} 
               } 
-            else { OID  v11085;
-                { { OID  v7593;
-                    { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                      (v10264->selector = Kernel._Z);
-                      (v10264->args = list::alloc(2,v11786,(*(v15428))[1]));
-                      add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                      v7593 = _oid_(v10264);
+            else { OID  v108765;
+                { { OID  v36793;
+                    { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                      (v88616->selector = Kernel._Z);
+                      (v88616->args = list::alloc(2,v65146,(*(v82388))[1]));
+                      add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                      v36793 = _oid_(v88616);
                       } 
-                    v11085 = c_boolean_any(v7593);
+                    v108765 = c_boolean_any(v36793);
                     } 
-                  GC_OID(v11085);} 
-                range_sets_any(v11786,OBJECT(ClaireType,(*(v15428))[1]));
-                { If * v330 = v14357; 
-                  OID  v352;
-                  { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                    (v10264->test = v11085);
-                    (v10264->arg = (*Optimize.c_code)((*(v15428))[2],
-                      _oid_(v15435)));
-                    (v10264->other = (*Optimize.c_code)(Kernel.cfalse,
-                      _oid_(v15435)));
-                    add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                    v352 = _oid_(v10264);
+                  GC_OID(v108765);} 
+                range_sets_any(v65146,OBJECT(ClaireType,(*(v82388))[1]));
+                { If * v63322 = v119205; 
+                  OID  v63344;
+                  { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                    (v88616->test = v108765);
+                    (v88616->arg = (*Optimize.c_code)((*(v82388))[2],
+                      _oid_(v82395)));
+                    (v88616->other = (*Optimize.c_code)(Kernel.cfalse,
+                      _oid_(v82395)));
+                    add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                    v63344 = _oid_(v88616);
                     } 
-                  (v330->other = v352);} 
-                GC__ANY(v14357 = OBJECT(If,v14357->other), 10);
+                  (v63322->other = v63344);} 
+                GC__ANY(v119205 = OBJECT(If,v119205->other), 10);
                 } 
-              if (INHERIT(OWNER(v11786),Language._Variable))
-             store_object(OBJECT(ClaireObject,v11786),
+              if (INHERIT(OWNER(v65146),Language._Variable))
+             store_object(OBJECT(ClaireObject,v65146),
               3,
               Kernel._object,
-              v1207,
+              v16967,
               CFALSE);
-            GC__ANY(v15428 = skip_list(v15428,2), 6);
+            GC__ANY(v82388 = skip_list(v82388,2), 6);
             GC_UNLOOP;} 
           } 
-        if ((INHERIT(OWNER(v11786),Language._Definition)) && (INHERIT(OBJECT(Definition,v11786)->arg->isa,Kernel._exception)))
-         Result = v11786;
-        else Result = _oid_(v7797);
+        if ((INHERIT(OWNER(v65146),Language._Definition)) && (INHERIT(OBJECT(Definition,v65146)->arg->isa,Kernel._exception)))
+         Result = v65146;
+        else Result = _oid_(v16389);
           } 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Do_Optimize(Do *v9332)
+ClaireType * c_type_Do_Optimize(Do *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    Result = OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(last_list(v9332->args))));
+    Result = OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(last_list(v13540->args))));
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Do_Optimize(Do *v9332,ClaireClass *v15435)
+OID  c_code_Do_Optimize(Do *v13540,ClaireClass *v82395)
 { GC_BIND;
   { OID Result = 0;
-    { Do * v10264 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
-      { Do * v353 = v10264; 
-        list * v354;
-        { Cint  v15429 = v9332->args->length;
-          Cint  v15431 = 0;
+    { Do * v88616 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
+      { Do * v63345 = v88616; 
+        list * v63346;
+        { Cint  v82389 = v13540->args->length;
+          Cint  v82390 = 0;
           { bag *v_list; OID v_val;
-            OID v15440,CLcount;
-            v_list = GC_OBJECT(list,v9332->args);
-             v354 = v_list->clone();
+            OID v82400,CLcount;
+            v_list = GC_OBJECT(list,v13540->args);
+             v63346 = v_list->clone();
             for (CLcount= 1; CLcount <= v_list->length; CLcount++)
-            { v15440 = (*(v_list))[CLcount];
-              { ++v15431;
-                { OID  v16195;
-                  if (v15431 == v15429)
-                   v16195 = _oid_(v15435);
-                  else v16195 = _oid_(Kernel._void);
-                    v_val = (*Optimize.c_code)(v15440,
-                    v16195);
+            { v82400 = (*(v_list))[CLcount];
+              { ++v82390;
+                { OID  v61779;
+                  if (v82390 == v82389)
+                   v61779 = _oid_(v82395);
+                  else v61779 = _oid_(Kernel._void);
+                    v_val = (*Optimize.c_code)(v82400,
+                    v61779);
                   } 
                 } 
               
-              (*((list *) v354))[CLcount] = v_val;} 
+              (*((list *) v63346))[CLcount] = v_val;} 
             } 
           } 
-        (v353->args = v354);} 
-      add_I_property(Kernel.instances,Language._Do,11,_oid_(v10264));
-      Result = _oid_(v10264);
+        (v63345->args = v63346);} 
+      add_I_property(Kernel.instances,Language._Do,11,_oid_(v88616));
+      Result = _oid_(v88616);
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireBoolean * c_gc_ask_Do(Do *v9332)
+ClaireBoolean * c_gc_ask_Do(Do *v13540)
 { GC_BIND;
   { ClaireBoolean *Result ;
-    Result = OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(GC_OID(last_list(v9332->args))));
+    Result = OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(GC_OID(last_list(v13540->args))));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Let_Optimize(Let *v9332)
+ClaireType * c_type_Let_Optimize(Let *v13540)
 { GC_BIND;
-  range_infers_Variable(GC_OBJECT(Variable,v9332->var),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->value)))));
+  range_infers_Variable(GC_OBJECT(Variable,v13540->var),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->value)))));
   { ClaireType *Result ;
-    Result = OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg)));
+    Result = OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg)));
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Let_Optimize(Let *v9332,ClaireClass *v15435)
+OID  c_code_Let_Optimize(Let *v13540,ClaireClass *v82395)
 { GC_RESERVE(1);  // HOHO v3.0.55 optim !
   { OID Result = 0;
-    { OID  v1049 = GC_OID(v9332->value);
-      ClaireType * v1207 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(v1049))));
-      range_infers_Variable(v9332->var,v1207);
-      if (_inf_equal_type(v1207,GC_OBJECT(ClaireType,v9332->var->range)) != CTRUE)
-       v1049= GC_OID(c_warn_Variable(GC_OBJECT(Variable,v9332->var),v1049,v1207));
-      { Let * v15440;
-        { { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-            (v10264->var = v9332->var);
-            (v10264->value = c_gc_I_any2(GC_OID(c_strict_code_any(v1049,psort_any(_oid_(v9332->var->range)))),v1207));
-            (v10264->arg = (*Optimize.c_code)(GC_OID(v9332->arg),
-              _oid_(v15435)));
-            add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-            v15440 = v10264;
+    { OID  v61589 = GC_OID(v13540->value);
+      ClaireType * v16967 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(v61589))));
+      range_infers_Variable(v13540->var,v16967);
+      if (_inf_equal_type(v16967,GC_OBJECT(ClaireType,v13540->var->range)) != CTRUE)
+       v61589= GC_OID(c_warn_Variable(GC_OBJECT(Variable,v13540->var),v61589,v16967));
+      { Let * v82400;
+        { { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+            (v88616->var = v13540->var);
+            (v88616->value = c_gc_I_any2(GC_OID(c_strict_code_any(v61589,psort_any(_oid_(v13540->var->range)))),v16967));
+            (v88616->arg = (*Optimize.c_code)(GC_OID(v13540->arg),
+              _oid_(v82395)));
+            add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+            v82400 = v88616;
             } 
-          GC_OBJECT(Let,v15440);} 
-        (v15440->isa = v9332->isa);
-        if ((INHERIT(v15440->isa,Language._Let_star)) && 
-            ((INHERIT(v1207->isa,Kernel._tuple)) && 
-              (BCONTAIN(c_status_any(GC_OID(v9332->value),Kernel.nil),1))))
-         { Cint  v15425 = 1;
-          OID  v15442 = GC_OID(v15440->arg);
+          GC_OBJECT(Let,v82400);} 
+        (v82400->isa = v13540->isa);
+        if ((INHERIT(v82400->isa,Language._Let_star)) && 
+            ((INHERIT(v16967->isa,Kernel._tuple)) && 
+              (BCONTAIN(c_status_any(GC_OID(v13540->value),Kernel.nil),1))))
+         { Cint  v82385 = 1;
+          OID  v82402 = GC_OID(v82400->arg);
           { OID gc_local;
-            while (((INHERIT(OWNER(v15442),Language._Let)) && 
-                (v15425 <= ((bag *) v1207)->length)))
+            while (((INHERIT(OWNER(v82402),Language._Let)) && 
+                (v82385 <= ((bag *) v16967)->length)))
             { GC_LOOP;
-              if ((((OBJECT(ClaireBoolean,(*Optimize.gcsafe_ask)((*(((bag *) v1207)))[v15425]))) == CTRUE) ? CTRUE : ((INHERIT(owner_any((*Kernel.value)(v15442)),Optimize._to_protect)) ? CTRUE : CFALSE)) != CTRUE)
+              if ((((OBJECT(ClaireBoolean,(*Optimize.gcsafe_ask)((*(((bag *) v16967)))[v82385]))) == CTRUE) ? CTRUE : ((INHERIT(owner_any((*Kernel.value)(v82402)),Optimize._to_protect)) ? CTRUE : CFALSE)) != CTRUE)
                { (Optimize.OPT->protection = CTRUE);
-                { OID  v773;
-                  { Compile_to_protect * v10264 = ((Compile_to_protect *) GC_OBJECT(Compile_to_protect,new_object_class(Optimize._to_protect)));
-                    (v10264->arg = (*Kernel.value)(v15442));
-                    add_I_property(Kernel.instances,Optimize._to_protect,11,_oid_(v10264));
-                    v773 = _oid_(v10264);
+                { OID  v62740;
+                  { Compile_to_protect * v88616 = ((Compile_to_protect *) GC_OBJECT(Compile_to_protect,new_object_class(Optimize._to_protect)));
+                    (v88616->arg = (*Kernel.value)(v82402));
+                    add_I_property(Kernel.instances,Optimize._to_protect,11,_oid_(v88616));
+                    v62740 = _oid_(v88616);
                     } 
-                  write_property(Kernel.value,OBJECT(ClaireObject,v15442),v773);
+                  write_property(Kernel.value,OBJECT(ClaireObject,v82402),v62740);
                   } 
                 } 
-              ++v15425;
-              GC__OID(v15442 = (*Kernel.arg)(v15442), 8);
+              ++v82385;
+              GC__OID(v82402 = (*Kernel.arg)(v82402), 8);
               GC_UNLOOP;} 
             } 
           } 
-        Result = _oid_(v15440);
+        Result = _oid_(v82400);
         } 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_When_Optimize(When *v9332)
+ClaireType * c_type_When_Optimize(When *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { OID  v1049 = GC_OID(v9332->value);
-      Variable * v15438 = GC_OBJECT(Variable,v9332->var);
-      OID  v15420 = GC_OID(daccess_any(v1049,CTRUE));
-      OID  v1207;
-      { if (v15420 != CNULL)
-         v1207 = (*Optimize.c_type)(v15420);
-        else v1207 = (*Optimize.c_type)(v1049);
-          GC_OID(v1207);} 
-      if (extended_ask_type(OBJECT(ClaireType,v1207)) == CTRUE)
-       v1207= GC_OID((*Core.t1)(v1207));
-      range_infers_Variable(v15438,OBJECT(ClaireType,v1207));
-      Result = U_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg)))),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->other)))));
+    { OID  v61589 = GC_OID(v13540->value);
+      Variable * v82398 = GC_OBJECT(Variable,v13540->var);
+      OID  v82380 = GC_OID(daccess_any(v61589,CTRUE));
+      OID  v16967;
+      { if (v82380 != CNULL)
+         v16967 = (*Optimize.c_type)(v82380);
+        else v16967 = (*Optimize.c_type)(v61589);
+          GC_OID(v16967);} 
+      if (extended_ask_type(OBJECT(ClaireType,v16967)) == CTRUE)
+       v16967= GC_OID((*Core.t1)(v16967));
+      range_infers_Variable(v82398,OBJECT(ClaireType,v16967));
+      Result = U_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg)))),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->other)))));
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_When_Optimize(When *v9332,ClaireClass *v15435)
+OID  c_code_When_Optimize(When *v13540,ClaireClass *v82395)
 { GC_BIND;
   { OID Result = 0;
-    { OID  v1049 = GC_OID(v9332->value);
-      Variable * v15438 = GC_OBJECT(Variable,v9332->var);
-      OID  v15420 = GC_OID(daccess_any(v1049,CTRUE));
-      Variable * v3492 = GC_OBJECT(Variable,Variable_I_symbol(append_symbol(v9332->var->pname,_string_(CSTRING("test"))),v9332->var->index,Kernel._any));
-      OID  v1207;
-      { if (v15420 != CNULL)
-         v1207 = (*Optimize.c_type)(v15420);
-        else v1207 = (*Optimize.c_type)(v1049);
-          GC_OID(v1207);} 
-      if (extended_ask_type(OBJECT(ClaireType,v1207)) == CTRUE)
-       v1207= GC_OID((*Core.t1)(v1207));
-      range_infers_Variable(v15438,OBJECT(ClaireType,v1207));
-      if ((v15420 != CNULL) && 
-          (extended_ask_type(OBJECT(ClaireType,(*Kernel.range)(GC_OID((*Kernel.selector)(v15420))))) != CTRUE))
-       { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-        (v10264->var = v15438);
-        (v10264->value = c_gc_I_any2(v15420,OBJECT(ClaireType,v1207)));
-        { Let * v357 = v10264; 
-          OID  v358;
-          { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-            { If * v359 = v10264; 
-              OID  v360;
-              { Call_method2 * v10264 = ((Call_method2 *) GC_OBJECT(Call_method2,new_object_class(Language._Call_method2)));
-                (v10264->arg = ((method *) _at_property1(Core.identical_ask,Kernel._any)));
-                (v10264->args = list::alloc(2,_oid_(v15438),GC_OID((*Optimize.c_code)(CNULL,
-                  GC_OID((*Optimize.c_sort)(_oid_(v15438)))))));
-                add_I_property(Kernel.instances,Language._Call_method2,11,_oid_(v10264));
-                v360 = _oid_(v10264);
+    { OID  v61589 = GC_OID(v13540->value);
+      Variable * v82398 = GC_OBJECT(Variable,v13540->var);
+      OID  v82380 = GC_OID(daccess_any(v61589,CTRUE));
+      Variable * v64020 = GC_OBJECT(Variable,Variable_I_symbol(append_symbol(v13540->var->pname,_string_(CSTRING("test"))),v13540->var->index,Kernel._any));
+      OID  v16967;
+      { if (v82380 != CNULL)
+         v16967 = (*Optimize.c_type)(v82380);
+        else v16967 = (*Optimize.c_type)(v61589);
+          GC_OID(v16967);} 
+      if (extended_ask_type(OBJECT(ClaireType,v16967)) == CTRUE)
+       v16967= GC_OID((*Core.t1)(v16967));
+      range_infers_Variable(v82398,OBJECT(ClaireType,v16967));
+      if ((v82380 != CNULL) && 
+          (extended_ask_type(OBJECT(ClaireType,(*Kernel.range)(GC_OID((*Kernel.selector)(v82380))))) != CTRUE))
+       { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+        (v88616->var = v82398);
+        (v88616->value = c_gc_I_any2(v82380,OBJECT(ClaireType,v16967)));
+        { Let * v63349 = v88616; 
+          OID  v63350;
+          { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+            { If * v63351 = v88616; 
+              OID  v63352;
+              { Call_method2 * v88616 = ((Call_method2 *) GC_OBJECT(Call_method2,new_object_class(Language._Call_method2)));
+                (v88616->arg = ((method *) _at_property1(Core.identical_ask,Kernel._any)));
+                (v88616->args = list::alloc(2,_oid_(v82398),GC_OID((*Optimize.c_code)(CNULL,
+                  GC_OID((*Optimize.c_sort)(_oid_(v82398)))))));
+                add_I_property(Kernel.instances,Language._Call_method2,11,_oid_(v88616));
+                v63352 = _oid_(v88616);
                 } 
-              (v359->test = v360);} 
-            (v10264->arg = (*Optimize.c_code)(GC_OID(v9332->other),
-              _oid_(v15435)));
-            (v10264->other = (*Optimize.c_code)(GC_OID(v9332->arg),
-              _oid_(v15435)));
-            add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-            v358 = _oid_(v10264);
+              (v63351->test = v63352);} 
+            (v88616->arg = (*Optimize.c_code)(GC_OID(v13540->other),
+              _oid_(v82395)));
+            (v88616->other = (*Optimize.c_code)(GC_OID(v13540->arg),
+              _oid_(v82395)));
+            add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+            v63350 = _oid_(v88616);
             } 
-          (v357->arg = v358);} 
-        add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-        Result = _oid_(v10264);
+          (v63349->arg = v63350);} 
+        add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+        Result = _oid_(v88616);
         } 
-      else if (((*Optimize.c_sort)(_oid_(v15438)) == _oid_(Kernel._any)) && 
-          ((_inf_equal_type(OBJECT(ClaireType,v1207),GC_OBJECT(ClaireType,v15438->range)) == CTRUE) && 
+      else if (((*Optimize.c_sort)(_oid_(v82398)) == _oid_(Kernel._any)) && 
+          ((_inf_equal_type(OBJECT(ClaireType,v16967),GC_OBJECT(ClaireType,v82398->range)) == CTRUE) && 
             (3 <= Optimize.compiler->safety)))
-       { OID  v5577;
-        { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-          (v10264->var = v15438);
-          (v10264->value = v1049);
-          { Let * v383 = v10264; 
-            OID  v384;
-            { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-              { If * v385 = v10264; 
-                OID  v386;
-                { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                  (v10264->selector = Core._I_equal);
-                  (v10264->args = list::alloc(2,_oid_(v15438),CNULL));
-                  add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                  v386 = _oid_(v10264);
+       { OID  v67545;
+        { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+          (v88616->var = v82398);
+          (v88616->value = v61589);
+          { Let * v63375 = v88616; 
+            OID  v63376;
+            { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+              { If * v63377 = v88616; 
+                OID  v63378;
+                { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                  (v88616->selector = Core._I_equal);
+                  (v88616->args = list::alloc(2,_oid_(v82398),CNULL));
+                  add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                  v63378 = _oid_(v88616);
                   } 
-                (v385->test = v386);} 
-              (v10264->arg = v9332->arg);
-              (v10264->other = v9332->other);
-              add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-              v384 = _oid_(v10264);
+                (v63377->test = v63378);} 
+              (v88616->arg = v13540->arg);
+              (v88616->other = v13540->other);
+              add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+              v63376 = _oid_(v88616);
               } 
-            (v383->arg = v384);} 
-          add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-          v5577 = _oid_(v10264);
+            (v63375->arg = v63376);} 
+          add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+          v67545 = _oid_(v88616);
           } 
-        Result = (*Optimize.c_code)(v5577,
-          _oid_(v15435));
+        Result = (*Optimize.c_code)(v67545,
+          _oid_(v82395));
         } 
-      else { OID  v14179;
-          { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-            (v10264->var = v3492);
-            (v10264->value = v1049);
-            { Let * v388 = v10264; 
-              OID  v389;
-              { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                { If * v390 = v10264; 
-                  OID  v391;
-                  { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                    (v10264->selector = Core._I_equal);
-                    (v10264->args = list::alloc(2,_oid_(v3492),CNULL));
-                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                    v391 = _oid_(v10264);
+      else { OID  v92531;
+          { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+            (v88616->var = v64020);
+            (v88616->value = v61589);
+            { Let * v63380 = v88616; 
+              OID  v63381;
+              { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                { If * v63382 = v88616; 
+                  OID  v63383;
+                  { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                    (v88616->selector = Core._I_equal);
+                    (v88616->args = list::alloc(2,_oid_(v64020),CNULL));
+                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                    v63383 = _oid_(v88616);
                     } 
-                  (v390->test = v391);} 
-                { If * v392 = v10264; 
-                  OID  v414;
-                  { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-                    (v10264->var = v15438);
-                    { Let * v415 = v10264; 
-                      OID  v416;
-                      { Cast * v10264 = ((Cast *) GC_OBJECT(Cast,new_object_class(Language._Cast)));
-                        (v10264->arg = _oid_(v3492));
-                        (v10264->set_arg = OBJECT(ClaireType,v1207));
-                        add_I_property(Kernel.instances,Language._Cast,11,_oid_(v10264));
-                        v416 = _oid_(v10264);
+                  (v63382->test = v63383);} 
+                { If * v63384 = v88616; 
+                  OID  v63406;
+                  { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+                    (v88616->var = v82398);
+                    { Let * v63407 = v88616; 
+                      OID  v63408;
+                      { Cast * v88616 = ((Cast *) GC_OBJECT(Cast,new_object_class(Language._Cast)));
+                        (v88616->arg = _oid_(v64020));
+                        (v88616->set_arg = OBJECT(ClaireType,v16967));
+                        add_I_property(Kernel.instances,Language._Cast,11,_oid_(v88616));
+                        v63408 = _oid_(v88616);
                         } 
-                      (v415->value = v416);} 
-                    (v10264->arg = v9332->arg);
-                    add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-                    v414 = _oid_(v10264);
+                      (v63407->value = v63408);} 
+                    (v88616->arg = v13540->arg);
+                    add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+                    v63406 = _oid_(v88616);
                     } 
-                  (v392->arg = v414);} 
-                (v10264->other = (*Optimize.c_code)(GC_OID(v9332->other),
-                  _oid_(v15435)));
-                add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                v389 = _oid_(v10264);
+                  (v63384->arg = v63406);} 
+                (v88616->other = (*Optimize.c_code)(GC_OID(v13540->other),
+                  _oid_(v82395)));
+                add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                v63381 = _oid_(v88616);
                 } 
-              (v388->arg = v389);} 
-            add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-            v14179 = _oid_(v10264);
+              (v63380->arg = v63381);} 
+            add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+            v92531 = _oid_(v88616);
             } 
-          Result = (*Optimize.c_code)(v14179,
-            _oid_(v15435));
+          Result = (*Optimize.c_code)(v92531,
+            _oid_(v82395));
           } 
         } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireBoolean * c_gc_ask_Let(Let *v9332)
+ClaireBoolean * c_gc_ask_Let(Let *v13540)
 { GC_BIND;
   { ClaireBoolean *Result ;
-    Result = OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v9332->arg));
+    Result = OBJECT(ClaireBoolean,(*Optimize.c_gc_ask)(v13540->arg));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_For_Optimize(For *v9332)
+ClaireType * c_type_For_Optimize(For *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    Result = infers_from_type2(GC_OBJECT(ClaireType,return_type_any(GC_OID(v9332->arg))),_oid_(v9332));
+    Result = infers_from_type2(GC_OBJECT(ClaireType,return_type_any(GC_OID(v13540->arg))),_oid_(v13540));
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * infers_from_type2(ClaireType *v15436,OID v9332)
-{ if (equal(_oid_(v15436),_oid_(Kernel.emptySet)) == CTRUE) 
+ClaireType * infers_from_type2(ClaireType *v82396,OID v13540)
+{ if (equal(_oid_(v82396),_oid_(Kernel.emptySet)) == CTRUE) 
   { { ClaireType *Result ;
       Result = sort_abstract_I_type(Kernel._boolean);
       return (Result);} 
@@ -1329,148 +1329,148 @@ ClaireType * infers_from_type2(ClaireType *v15436,OID v9332)
   else{ GC_BIND;
     { ClaireType *Result ;
       if (Optimize.compiler->safety > 3)
-       { tformat_string(CSTRING("... c_type(~S) -> ~S - ~S \n"),2,list::alloc(3,v9332,
-          _oid_(v15436),
-          GC_OID(_oid_(sort_abstract_I_type(v15436)))));
-        Result = sort_abstract_I_type(v15436);
+       { tformat_string(CSTRING("... c_type(~S) -> ~S - ~S \n"),2,list::alloc(3,v13540,
+          _oid_(v82396),
+          GC_OID(_oid_(sort_abstract_I_type(v82396)))));
+        Result = sort_abstract_I_type(v82396);
         } 
       else Result = Kernel._any;
         GC_UNBIND; return (Result);} 
     } 
   } 
 
-OID  c_code_For_Optimize(For *v9332,ClaireClass *v15435)
+OID  c_code_For_Optimize(For *v13540,ClaireClass *v82395)
 { GC_BIND;
   { OID Result = 0;
-    { OID  v3469 = GC_OID(v9332->set_arg);
-      ClaireBoolean * v15418 = Optimize.OPT->protection;
-      Cint  v3309 = Optimize.compiler->safety;
-      Variable * v10009 = GC_OBJECT(Variable,v9332->var);
-      Variable * v15438;
-      { { Variable * v10264 = ((Variable *) GC_OBJECT(Variable,new_object_class(Language._Variable)));
-          (v10264->pname = v10009->pname);
-          (v10264->range = v10009->range);
-          (v10264->index = v10009->index);
-          add_I_property(Kernel.instances,Language._Variable,11,_oid_(v10264));
-          v15438 = v10264;
+    { OID  v63997 = GC_OID(v13540->set_arg);
+      ClaireBoolean * v82378 = Optimize.OPT->protection;
+      Cint  v63837 = Optimize.compiler->safety;
+      Variable * v112521 = GC_OBJECT(Variable,v13540->var);
+      Variable * v82398;
+      { { Variable * v88616 = ((Variable *) GC_OBJECT(Variable,new_object_class(Language._Variable)));
+          (v88616->pname = v112521->pname);
+          (v88616->range = v112521->range);
+          (v88616->index = v112521->index);
+          add_I_property(Kernel.instances,Language._Variable,11,_oid_(v88616));
+          v82398 = v88616;
           } 
-        GC_OBJECT(Variable,v15438);} 
-      OID  v4176 = GC_OID(substitution_any(v9332->arg,v10009,_oid_(v15438)));
-      OID  v8699 = GC_OID(c_inline_arg_ask_any(v3469));
+        GC_OBJECT(Variable,v82398);} 
+      OID  v123072 = GC_OID(substitution_any(v13540->arg,v112521,_oid_(v82398)));
+      OID  v17291 = GC_OID(c_inline_arg_ask_any(v63997));
       (Optimize.OPT->protection = CFALSE);
-      if (INHERIT(OWNER(v3469),Core._global_variable))
-       { if (boolean_I_any(_oid_(OBJECT(global_variable,v3469)->range)) != CTRUE)
-         { (v9332->set_arg = OBJECT(global_variable,v3469)->value);
-          v3469= GC_OID(OBJECT(global_variable,v3469)->value);
+      if (INHERIT(OWNER(v63997),Core._global_variable))
+       { if (boolean_I_any(_oid_(OBJECT(global_variable,v63997)->range)) != CTRUE)
+         { (v13540->set_arg = OBJECT(global_variable,v63997)->value);
+          v63997= GC_OID(OBJECT(global_variable,v63997)->value);
           } 
         } 
-      else if (INHERIT(OWNER(v3469),Language._Select))
-       { ClaireType * v1047 = GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(v3469)));
-        if ((_inf_equal_type(v1047,Kernel._bag) != CTRUE) || 
-            (_inf_equal_type(v1047,Kernel._set) == CTRUE))
-         { v9332= GC_OBJECT(For,((For *) copy_object(v9332)));
-          (v9332->isa = Language._Select);
+      else if (INHERIT(OWNER(v63997),Language._Select))
+       { ClaireType * v61575 = GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(v63997)));
+        if ((_inf_equal_type(v61575,Kernel._bag) != CTRUE) || 
+            (_inf_equal_type(v61575,Kernel._set) == CTRUE))
+         { v13540= GC_OBJECT(For,((For *) copy_object(v13540)));
+          (v13540->isa = Language._Select);
           } 
         } 
-      else if (INHERIT(OWNER(v3469),Kernel._class))
-       { if ((OBJECT(ClaireClass,v3469)->open <= 1) && 
-            (boolean_I_any(_oid_(OBJECT(ClaireClass,v3469)->subclass)) != CTRUE))
-         { Iteration * v417 = v9332; 
-          OID  v418;
-          { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-            (v10264->selector = Kernel.instances);
-            (v10264->args = list::alloc(1,v3469));
-            add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-            v418 = _oid_(v10264);
+      else if (INHERIT(OWNER(v63997),Kernel._class))
+       { if ((OBJECT(ClaireClass,v63997)->open <= 1) && 
+            (boolean_I_any(_oid_(OBJECT(ClaireClass,v63997)->subclass)) != CTRUE))
+         { Iteration * v63409 = v13540; 
+          OID  v63410;
+          { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+            (v88616->selector = Kernel.instances);
+            (v88616->args = list::alloc(1,v63997));
+            add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+            v63410 = _oid_(v88616);
             } 
-          (v417->set_arg = v418);} 
+          (v63409->set_arg = v63410);} 
         } 
-      { OID  v1047 = GC_OID((*Optimize.c_type)(GC_OID(v9332->set_arg)));
-        ClaireType * v16123 = GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047)));
-        ClaireType * v16124;
-        { { ClaireType * v12163;
-            { { OID v7538;{ OID  v13124;
-                  { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                    (v10264->selector = Kernel.set_I);
-                    (v10264->args = list::alloc(1,v3469));
-                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                    v13124 = _oid_(v10264);
+      { OID  v61575 = GC_OID((*Optimize.c_type)(GC_OID(v13540->set_arg)));
+        ClaireType * v73867 = GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575)));
+        ClaireType * v73868;
+        { { ClaireType * v123283;
+            { { OID v55170;{ OID  v124244;
+                  { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                    (v88616->selector = Kernel.set_I);
+                    (v88616->args = list::alloc(1,v63997));
+                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                    v124244 = _oid_(v88616);
                     } 
-                  v7538 = (*Optimize.c_type)(v13124);
+                  v55170 = (*Optimize.c_type)(v124244);
                   } 
                 
-                v12163=OBJECT(ClaireType,v7538);} 
-              GC_OBJECT(ClaireType,v12163);} 
-            v16124 = pmember_type(v12163);
+                v123283=OBJECT(ClaireType,v55170);} 
+              GC_OBJECT(ClaireType,v123283);} 
+            v73868 = pmember_type(v123283);
             } 
-          GC_OBJECT(ClaireType,v16124);} 
-        if (_inf_equal_type(v16124,v16123) == CTRUE)
-         v16123= v16124;
-        range_infers_for_Variable(v15438,v16123,OBJECT(ClaireType,v1047));
+          GC_OBJECT(ClaireType,v73868);} 
+        if (_inf_equal_type(v73868,v73867) == CTRUE)
+         v73867= v73868;
+        range_infers_for_Variable(v82398,v73867,OBJECT(ClaireType,v61575));
         (Optimize.compiler->safety = 1);
-        v16123= GC_OBJECT(ClaireType,v15438->range);
-        (v15438->range = ptype_type(v16123));
-        { OID  v15429 = GC_OID(Iterate_I_Iteration(v9332));
-          if (equal(_oid_(Kernel._method),_oid_(OWNER(v15429))) != CTRUE)
-           { OID  v3213 = GC_OID(restriction_I_property(Language.iterate,list::alloc(3,v1047,
-              _oid_(set::alloc(1,_oid_(v15438))),
+        v73867= GC_OBJECT(ClaireType,v82398->range);
+        (v82398->range = ptype_type(v73867));
+        { OID  v82389 = GC_OID(Iterate_I_Iteration(v13540));
+          if (equal(_oid_(Kernel._method),_oid_(OWNER(v82389))) != CTRUE)
+           { OID  v63741 = GC_OID(restriction_I_property(Language.iterate,list::alloc(3,v61575,
+              _oid_(set::alloc(1,_oid_(v82398))),
               _oid_(Kernel._any)),CTRUE));
-            if (Kernel._method == OWNER(v3213))
-             v15429= v3213;
+            if (Kernel._method == OWNER(v63741))
+             v82389= v63741;
             } 
-          (Optimize.compiler->safety = v3309);
-          (v15438->range = v16123);
-          { OID  v15434;
-            { if ((Kernel._method == OWNER(v15429)) && (OBJECT(method,v15429)->inline_ask == CTRUE))
+          (Optimize.compiler->safety = v63837);
+          (v82398->range = v73867);
+          { OID  v82394;
+            { if ((Kernel._method == OWNER(v82389)) && (OBJECT(method,v82389)->inline_ask == CTRUE))
                { if ((Optimize.compiler->safety < 6) && 
-                    (BCONTAIN(c_status_any(v4176,Kernel.nil),1)))
+                    (BCONTAIN(c_status_any(v123072,Kernel.nil),1)))
                  (Optimize.OPT->loop_gc = CTRUE);
-                if (sort_abstract_ask_type(v15438->range) == CTRUE)
-                 (v15438->range = CLREAD(Union,v15438->range,t2));
-                v15434 = c_inline_method1(OBJECT(method,v15429),list::alloc(3,GC_OID(instruction_copy_any(GC_OID(v9332->set_arg))),
-                  _oid_(v15438),
-                  v4176),v15435);
+                if (sort_abstract_ask_type(v82398->range) == CTRUE)
+                 (v82398->range = CLREAD(Union,v82398->range,t2));
+                v82394 = c_inline_method1(OBJECT(method,v82389),list::alloc(3,GC_OID(instruction_copy_any(GC_OID(v13540->set_arg))),
+                  _oid_(v82398),
+                  v123072),v82395);
                 } 
-              else if (boolean_I_any(v8699) == CTRUE)
-               { OID  v14085;
-                { For * v10264 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
-                  (v10264->var = v15438);
-                  (v10264->set_arg = v8699);
-                  (v10264->arg = v4176);
-                  add_I_property(Kernel.instances,Language._For,11,_oid_(v10264));
-                  v14085 = _oid_(v10264);
+              else if (boolean_I_any(v17291) == CTRUE)
+               { OID  v125205;
+                { For * v88616 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
+                  (v88616->var = v82398);
+                  (v88616->set_arg = v17291);
+                  (v88616->arg = v123072);
+                  add_I_property(Kernel.instances,Language._For,11,_oid_(v88616));
+                  v125205 = _oid_(v88616);
                   } 
-                v15434 = (*Optimize.c_code)(v14085,
-                  _oid_(v15435));
+                v82394 = (*Optimize.c_code)(v125205,
+                  _oid_(v82395));
                 } 
-              else if ((INHERIT(OWNER(v3469),Language._Call)) && (OBJECT(Call,v3469)->selector == Core.Id))
-               v15434 = c_code_multiple_For(v9332,OBJECT(ClaireType,v1047),v15435);
-              else { For * v3368;
-                  { { For * v10264 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
-                      (v10264->var = v15438);
-                      (v10264->set_arg = c_gc_I_any1(GC_OID(enumerate_code_any(GC_OID(v9332->set_arg),OBJECT(ClaireType,v1047)))));
-                      (v10264->arg = (*Optimize.c_code)(v4176,
+              else if ((INHERIT(OWNER(v63997),Language._Call)) && (OBJECT(Call,v63997)->selector == Core.Id))
+               v82394 = c_code_multiple_For(v13540,OBJECT(ClaireType,v61575),v82395);
+              else { For * v63896;
+                  { { For * v88616 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
+                      (v88616->var = v82398);
+                      (v88616->set_arg = c_gc_I_any1(GC_OID(enumerate_code_any(GC_OID(v13540->set_arg),OBJECT(ClaireType,v61575)))));
+                      (v88616->arg = (*Optimize.c_code)(v123072,
                         _oid_(Kernel._void)));
-                      add_I_property(Kernel.instances,Language._For,11,_oid_(v10264));
-                      v3368 = v10264;
+                      add_I_property(Kernel.instances,Language._For,11,_oid_(v88616));
+                      v63896 = v88616;
                       } 
-                    GC_OBJECT(For,v3368);} 
-                  if (v15435 == Kernel._any)
-                   v15434 = _oid_(v3368);
-                  else { Compile_to_C * v10264 = ((Compile_to_C *) GC_OBJECT(Compile_to_C,new_object_class(Optimize._to_C)));
-                      (v10264->arg = _oid_(v3368));
-                      (v10264->set_arg = v15435);
-                      add_I_property(Kernel.instances,Optimize._to_C,11,_oid_(v10264));
-                      v15434 = _oid_(v10264);
+                    GC_OBJECT(For,v63896);} 
+                  if (v82395 == Kernel._any)
+                   v82394 = _oid_(v63896);
+                  else { Compile_to_C * v88616 = ((Compile_to_C *) GC_OBJECT(Compile_to_C,new_object_class(Optimize._to_C)));
+                      (v88616->arg = _oid_(v63896));
+                      (v88616->set_arg = v82395);
+                      add_I_property(Kernel.instances,Optimize._to_C,11,_oid_(v88616));
+                      v82394 = _oid_(v88616);
                       } 
                     } 
-                GC_OID(v15434);} 
+                GC_OID(v82394);} 
             if ((Optimize.OPT->protection == CTRUE) && 
                 ((0 <= Optimize.OPT->loop_index) && 
                   (Optimize.compiler->safety < 6)))
              (Optimize.OPT->loop_gc = CTRUE);
-            (Optimize.OPT->protection = ((Optimize.OPT->protection == CTRUE) ? CTRUE : ((v15418 == CTRUE) ? CTRUE : CFALSE)));
-            Result = v15434;
+            (Optimize.OPT->protection = ((Optimize.OPT->protection == CTRUE) ? CTRUE : ((v82378 == CTRUE) ? CTRUE : CFALSE)));
+            Result = v82394;
             } 
           } 
         } 
@@ -1478,691 +1478,691 @@ OID  c_code_For_Optimize(For *v9332,ClaireClass *v15435)
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_multiple_For(For *v9332,ClaireType *v1047,ClaireClass *v15435)
+OID  c_code_multiple_For(For *v13540,ClaireType *v61575,ClaireClass *v82395)
 { GC_RESERVE(14);  // v3.0.55 optim !
   { OID Result = 0;
-    { Variable * v15438 = GC_OBJECT(Variable,v9332->var);
-      OID  v3469 = GC_OID((*(OBJECT(Call,v9332->set_arg)->args))[1]);
-      Variable * v3492 = GC_OBJECT(Variable,Variable_I_symbol(append_symbol(v15438->pname,_string_(CSTRING("test"))),v9332->var->index,v1047));
-      Let * v15431;
-      { { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-          (v10264->var = v3492);
-          (v10264->value = v3469);
-          { Let * v423 = v10264; 
-            OID  v424;
-            { For * v10264 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
-              (v10264->var = v9332->var);
-              (v10264->set_arg = enumerate_code_any(v3469,v1047));
-              (v10264->arg = v9332->arg);
-              add_I_property(Kernel.instances,Language._For,11,_oid_(v10264));
-              v424 = _oid_(v10264);
+    { Variable * v82398 = GC_OBJECT(Variable,v13540->var);
+      OID  v63997 = GC_OID((*(OBJECT(Call,v13540->set_arg)->args))[1]);
+      Variable * v64020 = GC_OBJECT(Variable,Variable_I_symbol(append_symbol(v82398->pname,_string_(CSTRING("test"))),v13540->var->index,v61575));
+      Let * v82390;
+      { { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+          (v88616->var = v64020);
+          (v88616->value = v63997);
+          { Let * v63414 = v88616; 
+            OID  v63415;
+            { For * v88616 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
+              (v88616->var = v13540->var);
+              (v88616->set_arg = enumerate_code_any(v63997,v61575));
+              (v88616->arg = v13540->arg);
+              add_I_property(Kernel.instances,Language._For,11,_oid_(v88616));
+              v63415 = _oid_(v88616);
               } 
-            (v423->arg = v424);} 
-          add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-          v15431 = v10264;
+            (v63414->arg = v63415);} 
+          add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+          v82390 = v88616;
           } 
-        GC_OBJECT(Let,v15431);} 
-      tformat_string(CSTRING("---- note: use an expended iteration for {~S} \n"),0,list::alloc(1,_oid_(v9332)));
+        GC_OBJECT(Let,v82390);} 
+      tformat_string(CSTRING("---- note: use an expended iteration for {~S} \n"),0,list::alloc(1,_oid_(v13540)));
       { OID gc_local;
-        ITERATE(v15434);
-        for (START(Language.iterate->restrictions); NEXT(v15434);)
+        ITERATE(v82394);
+        for (START(Language.iterate->restrictions); NEXT(v82394);)
         { GC_LOOP;
-          if ((_inf_equalt_class(domain_I_restriction(OBJECT(restriction,v15434)),v1047) == CTRUE) && 
-              ((_inf_equalt_class(domain_I_restriction(OBJECT(restriction,v15434)),Kernel._collection) == CTRUE) && 
-                ((OBJECT(method,v15434)->inline_ask == CTRUE) && 
-                  (belong_to(_oid_(v15438),(*(OBJECT(restriction,v15434)->domain))[2]) == CTRUE))))
-           { Variable * v8850;
-            { { Variable * v10264 = ((Variable *) GC_OBJECT(Variable,new_object_class(Language._Variable)));
-                (v10264->pname = v15438->pname);
-                (v10264->range = v15438->range);
-                (v10264->index = v15438->index);
-                add_I_property(Kernel.instances,Language._Variable,11,_oid_(v10264));
-                v8850 = v10264;
+          if ((_inf_equalt_class(domain_I_restriction(OBJECT(restriction,v82394)),v61575) == CTRUE) && 
+              ((_inf_equalt_class(domain_I_restriction(OBJECT(restriction,v82394)),Kernel._collection) == CTRUE) && 
+                ((OBJECT(method,v82394)->inline_ask == CTRUE) && 
+                  (belong_to(_oid_(v82398),(*(OBJECT(restriction,v82394)->domain))[2]) == CTRUE))))
+           { Variable * v111362;
+            { { Variable * v88616 = ((Variable *) GC_OBJECT(Variable,new_object_class(Language._Variable)));
+                (v88616->pname = v82398->pname);
+                (v88616->range = v82398->range);
+                (v88616->index = v82398->index);
+                add_I_property(Kernel.instances,Language._Variable,11,_oid_(v88616));
+                v111362 = v88616;
                 } 
-              GC_OBJECT(Variable,v8850);} 
-            OID  v4176 = GC_OID(substitution_any(v9332->arg,v15438,_oid_(v8850)));
-            { Let * v445 = v15431; 
-              OID  v446;
-              { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                { If * v447 = v10264; 
-                  OID  v448;
-                  { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                    (v10264->selector = Kernel._Z);
-                    (v10264->args = list::alloc(2,_oid_(v3492),(*(OBJECT(restriction,v15434)->domain))[1]));
-                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                    v448 = _oid_(v10264);
+              GC_OBJECT(Variable,v111362);} 
+            OID  v123072 = GC_OID(substitution_any(v13540->arg,v82398,_oid_(v111362)));
+            { Let * v63437 = v82390; 
+              OID  v63438;
+              { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                { If * v63439 = v88616; 
+                  OID  v63440;
+                  { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                    (v88616->selector = Kernel._Z);
+                    (v88616->args = list::alloc(2,_oid_(v64020),(*(OBJECT(restriction,v82394)->domain))[1]));
+                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                    v63440 = _oid_(v88616);
                     } 
-                  (v447->test = v448);} 
-                { If * v449 = v10264; 
-                  OID  v452;
+                  (v63439->test = v63440);} 
+                { If * v63441 = v88616; 
+                  OID  v63442;
                   { if ((Optimize.compiler->safety < 6) && 
-                        (BCONTAIN(c_status_any(GC_OID(v9332->arg),Kernel.nil),1)))
+                        (BCONTAIN(c_status_any(GC_OID(v13540->arg),Kernel.nil),1)))
                      (Optimize.OPT->loop_gc = CTRUE);
-                    if (sort_abstract_ask_type(v8850->range) == CTRUE)
-                     (v8850->range = CLREAD(Union,v15438->range,t2));
-                    v452 = c_inline_method1(OBJECT(method,v15434),GC_OBJECT(list,list::alloc(3,_oid_(v3492),
-                      _oid_(v8850),
-                      v4176)),v15435);
+                    if (sort_abstract_ask_type(v111362->range) == CTRUE)
+                     (v111362->range = CLREAD(Union,v82398->range,t2));
+                    v63442 = c_inline_method1(OBJECT(method,v82394),GC_OBJECT(list,list::alloc(3,_oid_(v64020),
+                      _oid_(v111362),
+                      v123072)),v82395);
                     } 
-                  (v449->arg = v452);} 
-                (v10264->other = v15431->arg);
-                add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                v446 = _oid_(v10264);
+                  (v63441->arg = v63442);} 
+                (v88616->other = v82390->arg);
+                add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                v63438 = _oid_(v88616);
                 } 
-              (v445->arg = v446);} 
+              (v63437->arg = v63438);} 
             } 
           GC_UNLOOP;} 
         } 
-      Result = (*Optimize.c_code)(_oid_(v15431),
-        _oid_(v15435));
+      Result = (*Optimize.c_code)(_oid_(v82390),
+        _oid_(v82395));
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireBoolean * c_gc_ask_Iteration(Iteration *v9332)
+ClaireBoolean * c_gc_ask_Iteration(Iteration *v13540)
 { return (CTRUE);} 
 
-ClaireType * c_type_Iteration_Optimize(Iteration *v9332)
+ClaireType * c_type_Iteration_Optimize(Iteration *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { OID  v1047 = GC_OID((*Optimize.c_type)(GC_OID(v9332->set_arg)));
-      range_infers_for_Variable(GC_OBJECT(Variable,v9332->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047))),OBJECT(ClaireType,v1047));
-      Result = ((get_property(Kernel.of,v9332) != CNULL) ?
-        param_I_class((((INHERIT(v9332->isa,Language._Select)) || 
-            (INHERIT(v9332->isa,Language._Image))) ?
+    { OID  v61575 = GC_OID((*Optimize.c_type)(GC_OID(v13540->set_arg)));
+      range_infers_for_Variable(GC_OBJECT(Variable,v13540->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575))),OBJECT(ClaireType,v61575));
+      Result = ((get_property(Kernel.of,v13540) != CNULL) ?
+        param_I_class((((INHERIT(v13540->isa,Language._Select)) || 
+            (INHERIT(v13540->isa,Language._Image))) ?
           Kernel._set :
-          Kernel._list ),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v9332))))) :
-        nth_class1((((INHERIT(v9332->isa,Language._Select)) || 
-            (INHERIT(v9332->isa,Language._Image))) ?
+          Kernel._list ),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v13540))))) :
+        nth_class1((((INHERIT(v13540->isa,Language._Select)) || 
+            (INHERIT(v13540->isa,Language._Image))) ?
           Kernel._set :
-          Kernel._list ),GC_OBJECT(ClaireType,(((INHERIT(v9332->isa,Language._Select)) || 
-            (INHERIT(v9332->isa,Language._Lselect))) ?
-          pmember_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->set_arg))))) :
-          ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg)))) ))) );
+          Kernel._list ),GC_OBJECT(ClaireType,(((INHERIT(v13540->isa,Language._Select)) || 
+            (INHERIT(v13540->isa,Language._Lselect))) ?
+          pmember_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->set_arg))))) :
+          ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg)))) ))) );
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Iteration_Optimize(Iteration *v9332)
+OID  c_code_Iteration_Optimize(Iteration *v13540)
 { GC_BIND;
   { OID Result = 0;
-    { OID  v3469 = GC_OID(v9332->set_arg);
-      OID  v1047 = GC_OID((*Optimize.c_type)(v3469));
-      if (INHERIT(v9332->isa,Language._For))
-       Result = (*Optimize.c_code)(_oid_(v9332),
+    { OID  v63997 = GC_OID(v13540->set_arg);
+      OID  v61575 = GC_OID((*Optimize.c_type)(v63997));
+      if (INHERIT(v13540->isa,Language._For))
+       Result = (*Optimize.c_code)(_oid_(v13540),
         _oid_(Kernel._any));
-      else if ((INHERIT(v9332->isa,Language._Collect)) && (_inf_equal_type(OBJECT(ClaireType,v1047),Kernel._bag) == CTRUE))
+      else if ((INHERIT(v13540->isa,Language._Collect)) && (_inf_equal_type(OBJECT(ClaireType,v61575),Kernel._bag) == CTRUE))
        { (Optimize.OPT->allocation = CTRUE);
-        range_infers_for_Variable(GC_OBJECT(Variable,v9332->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047))),OBJECT(ClaireType,v1047));
-        { ClaireType * v3501 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg)))));
-          Collect * v15440;
-          { { Collect * v10264 = ((Collect *) GC_OBJECT(Collect,new_object_class(Language._Collect)));
-              (v10264->var = v9332->var);
-              (v10264->set_arg = c_gc_I_any1(GC_OID(c_strict_code_any(v3469,Kernel._bag))));
-              (v10264->arg = (*Optimize.c_code)(GC_OID(v9332->arg),
+        range_infers_for_Variable(GC_OBJECT(Variable,v13540->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575))),OBJECT(ClaireType,v61575));
+        { ClaireType * v64029 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg)))));
+          Collect * v82400;
+          { { Collect * v88616 = ((Collect *) GC_OBJECT(Collect,new_object_class(Language._Collect)));
+              (v88616->var = v13540->var);
+              (v88616->set_arg = c_gc_I_any1(GC_OID(c_strict_code_any(v63997,Kernel._bag))));
+              (v88616->arg = (*Optimize.c_code)(GC_OID(v13540->arg),
                 _oid_(Kernel._any)));
-              add_I_property(Kernel.instances,Language._Collect,11,_oid_(v10264));
-              v15440 = v10264;
+              add_I_property(Kernel.instances,Language._Collect,11,_oid_(v88616));
+              v82400 = v88616;
               } 
-            GC_OBJECT(Collect,v15440);} 
-          if (v3501 == Kernel._void)
+            GC_OBJECT(Collect,v82400);} 
+          if (v64029 == Kernel._void)
            (*Optimize.Cerror)(_string_(CSTRING("[205] use of void expression ~S in ~S")),
-            GC_OID(v9332->arg),
-            _oid_(v9332));
-          if (get_property(Kernel.of,v9332) != CNULL)
+            GC_OID(v13540->arg),
+            _oid_(v13540));
+          if (get_property(Kernel.of,v13540) != CNULL)
            { if ((Optimize.compiler->safety > 4) || 
-                (_inf_equal_type(v3501,GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v9332))))) == CTRUE))
+                (_inf_equal_type(v64029,GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v13540))))) == CTRUE))
              { update_property(Kernel.of,
-                v15440,
+                v82400,
                 5,
                 Kernel._object,
-                GC_OID((*Kernel.of)(_oid_(v9332))));
-              Result = _oid_(v15440);
+                GC_OID((*Kernel.of)(_oid_(v13540))));
+              Result = _oid_(v82400);
               } 
             else { warn_void();
-                tformat_string(CSTRING("unsafe typed collect (~S): ~S not in ~S [261]\n"),2,list::alloc(3,_oid_(v9332),
-                  GC_OID((*Optimize.c_type)(GC_OID(v9332->arg))),
-                  GC_OID((*Kernel.of)(_oid_(v9332)))));
-                { OID  v11108;
-                  { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                    (v10264->selector = Core.check_in);
-                    (v10264->args = list::alloc(3,_oid_(v15440),
+                tformat_string(CSTRING("unsafe typed collect (~S): ~S not in ~S [261]\n"),2,list::alloc(3,_oid_(v13540),
+                  GC_OID((*Optimize.c_type)(GC_OID(v13540->arg))),
+                  GC_OID((*Kernel.of)(_oid_(v13540)))));
+                { OID  v23924;
+                  { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                    (v88616->selector = Core.check_in);
+                    (v88616->args = list::alloc(3,_oid_(v82400),
                       _oid_(Kernel._list),
-                      GC_OID((*Kernel.of)(_oid_(v9332)))));
-                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                    v11108 = _oid_(v10264);
+                      GC_OID((*Kernel.of)(_oid_(v13540)))));
+                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                    v23924 = _oid_(v88616);
                     } 
-                  Result = (*Optimize.c_code)(v11108,
+                  Result = (*Optimize.c_code)(v23924,
                     _oid_(Kernel._list));
                   } 
                 } 
               } 
-          else Result = _oid_(v15440);
+          else Result = _oid_(v82400);
             } 
         } 
-      else { OID  v11513;
-          if (INHERIT(v9332->isa,Language._Image))
-           v11513 = _oid_(set::empty());
-          else v11513 = _oid_(list::empty());
-            Variable * v15438;
-          { { Cint  v12070;
+      else { OID  v20105;
+          if (INHERIT(v13540->isa,Language._Image))
+           v20105 = _oid_(set::empty());
+          else v20105 = _oid_(list::empty());
+            Variable * v82398;
+          { { Cint  v24885;
               { (Optimize.OPT->max_vars = (Optimize.OPT->max_vars+1));
-                v12070 = 0;
+                v24885 = 0;
                 } 
-              v15438 = Variable_I_symbol(append_symbol(v9332->var->pname,_string_(CSTRING("_bag"))),v12070,((INHERIT(v9332->isa,Language._Image)) ?
+              v82398 = Variable_I_symbol(append_symbol(v13540->var->pname,_string_(CSTRING("_bag"))),v24885,((INHERIT(v13540->isa,Language._Image)) ?
                 Kernel._set :
                 Kernel._list ));
               } 
-            GC_OBJECT(Variable,v15438);} 
-          if (get_property(Kernel.of,v9332) != CNULL)
-           { ClaireType * v15423 = GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg))));
-            if ((_inf_equal_type(GC_OBJECT(ClaireType,ptype_type(v15423)),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v9332))))) != CTRUE) && 
+            GC_OBJECT(Variable,v82398);} 
+          if (get_property(Kernel.of,v13540) != CNULL)
+           { ClaireType * v54732 = GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg))));
+            if ((_inf_equal_type(GC_OBJECT(ClaireType,ptype_type(v54732)),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v13540))))) != CTRUE) && 
                 (Optimize.compiler->safety <= 4))
              { warn_void();
-              tformat_string(CSTRING("unsafe bag construction (~S) : a ~S is not a ~S [262]\n"),2,list::alloc(3,GC_OID(_oid_(v9332->var)),
-                _oid_(v15423),
-                GC_OID((*Kernel.of)(_oid_(v9332)))));
+              tformat_string(CSTRING("unsafe bag construction (~S) : a ~S is not a ~S [262]\n"),2,list::alloc(3,GC_OID(_oid_(v13540->var)),
+                _oid_(v54732),
+                GC_OID((*Kernel.of)(_oid_(v13540)))));
               } 
-            cast_I_bag(OBJECT(bag,v11513),OBJECT(ClaireType,(*Kernel.of)(_oid_(v9332))));
-            (v15438->range = param_I_class(GC_OBJECT(ClaireClass,((ClaireClass *) v15438->range)),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v9332))))));
+            cast_I_bag(OBJECT(bag,v20105),OBJECT(ClaireType,(*Kernel.of)(_oid_(v13540))));
+            (v82398->range = param_I_class(GC_OBJECT(ClaireClass,((ClaireClass *) v82398->range)),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v13540))))));
             } 
-          else if (Kernel._set == OWNER(v11513))
-             { Set * v10264 = ((Set *) GC_OBJECT(Set,new_object_class(Language._Set)));
-              (v10264->of = Kernel.emptySet);
-              add_I_property(Kernel.instances,Language._Set,11,_oid_(v10264));
-              v11513 = _oid_(v10264);
+          else if (Kernel._set == OWNER(v20105))
+             { Set * v88616 = ((Set *) GC_OBJECT(Set,new_object_class(Language._Set)));
+              (v88616->of = Kernel.emptySet);
+              add_I_property(Kernel.instances,Language._Set,11,_oid_(v88616));
+              v20105 = _oid_(v88616);
               } 
-            else { List * v10264 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
-                (v10264->of = Kernel.emptySet);
-                add_I_property(Kernel.instances,Language._List,11,_oid_(v10264));
-                v11513 = _oid_(v10264);
+            else { List * v88616 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
+                (v88616->of = Kernel.emptySet);
+                add_I_property(Kernel.instances,Language._List,11,_oid_(v88616));
+                v20105 = _oid_(v88616);
                 } 
-              { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-            (v10264->var = v15438);
-            (v10264->value = v11513);
-            { Let * v457 = v10264; 
-              OID  v476;
-              { Do * v10264 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
-                { Do * v477 = v10264; 
-                  list * v478;
+              { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+            (v88616->var = v82398);
+            (v88616->value = v20105);
+            { Let * v63446 = v88616; 
+              OID  v63468;
+              { Do * v88616 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
+                { Do * v63469 = v88616; 
+                  list * v63470;
                   { OID v_bag;
-                    GC_ANY(v478= list::empty(Kernel.emptySet));
-                    { { OID  v4287;
-                        { For * v10264 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
-                          (v10264->var = v9332->var);
-                          (v10264->set_arg = v3469);
-                          { Iteration * v480 = v10264; 
-                            OID  v481;
-                            { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                              (v10264->selector = Kernel.add_I);
-                              (v10264->args = list::alloc(2,_oid_(v15438),GC_OID(v9332->arg)));
-                              add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                              v481 = _oid_(v10264);
+                    GC_ANY(v63470= list::empty(Kernel.emptySet));
+                    { { OID  v49871;
+                        { For * v88616 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
+                          (v88616->var = v13540->var);
+                          (v88616->set_arg = v63997);
+                          { Iteration * v63472 = v88616; 
+                            OID  v63473;
+                            { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                              (v88616->selector = Kernel.add_I);
+                              (v88616->args = list::alloc(2,_oid_(v82398),GC_OID(v13540->arg)));
+                              add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                              v63473 = _oid_(v88616);
                               } 
-                            (v480->arg = v481);} 
-                          add_I_property(Kernel.instances,Language._For,11,_oid_(v10264));
-                          v4287 = _oid_(v10264);
+                            (v63472->arg = v63473);} 
+                          add_I_property(Kernel.instances,Language._For,11,_oid_(v88616));
+                          v49871 = _oid_(v88616);
                           } 
-                        v_bag = (*Optimize.c_code)(v4287,
+                        v_bag = (*Optimize.c_code)(v49871,
                           _oid_(Kernel._any));
                         } 
                       GC_OID(v_bag);} 
-                    ((list *) v478)->addFast(v_bag);
+                    ((list *) v63470)->addFast(v_bag);
                     if (Optimize.OPT->online_ask != CTRUE)
                      { (Optimize.OPT->protection = CTRUE);
-                      { Compile_to_protect * v10264 = ((Compile_to_protect *) GC_OBJECT(Compile_to_protect,new_object_class(Optimize._to_protect)));
-                        (v10264->arg = _oid_(v15438));
-                        add_I_property(Kernel.instances,Optimize._to_protect,11,_oid_(v10264));
-                        v_bag = _oid_(v10264);
+                      { Compile_to_protect * v88616 = ((Compile_to_protect *) GC_OBJECT(Compile_to_protect,new_object_class(Optimize._to_protect)));
+                        (v88616->arg = _oid_(v82398));
+                        add_I_property(Kernel.instances,Optimize._to_protect,11,_oid_(v88616));
+                        v_bag = _oid_(v88616);
                         } 
                       } 
-                    else v_bag = _oid_(v15438);
-                      ((list *) v478)->addFast(v_bag);} 
-                  (v477->args = v478);} 
-                add_I_property(Kernel.instances,Language._Do,11,_oid_(v10264));
-                v476 = _oid_(v10264);
+                    else v_bag = _oid_(v82398);
+                      ((list *) v63470)->addFast(v_bag);} 
+                  (v63469->args = v63470);} 
+                add_I_property(Kernel.instances,Language._Do,11,_oid_(v88616));
+                v63468 = _oid_(v88616);
                 } 
-              (v457->arg = v476);} 
-            add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-            Result = _oid_(v10264);
+              (v63446->arg = v63468);} 
+            add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+            Result = _oid_(v88616);
             } 
           } 
         } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Select_Optimize(Select *v9332)
-{ return (c_code_select_Iteration(v9332,Kernel._set));} 
+OID  c_code_Select_Optimize(Select *v13540)
+{ return (c_code_select_Iteration(v13540,Kernel._set));} 
 
-OID  c_code_Lselect_Optimize(Lselect *v9332)
-{ return (c_code_select_Iteration(v9332,Kernel._list));} 
+OID  c_code_Lselect_Optimize(Lselect *v13540)
+{ return (c_code_select_Iteration(v13540,Kernel._list));} 
 
-OID  c_code_select_Iteration(Iteration *v9332,ClaireClass *v15440)
+OID  c_code_select_Iteration(Iteration *v13540,ClaireClass *v82400)
 { GC_BIND;
   { OID Result = 0;
-    { OID  v3469 = GC_OID(v9332->set_arg);
-      OID  v1047 = GC_OID((*Optimize.c_type)(v3469));
-      OID  v3465 = GC_OID(enumerate_code_any(v3469,OBJECT(ClaireType,v1047)));
-      bag * v11513;
-      if (v15440 == Kernel._set)
-       v11513 = set::empty();
-      else v11513 = list::empty();
-        Variable * v3491;
-      { { Cint  v9092;
+    { OID  v63997 = GC_OID(v13540->set_arg);
+      OID  v61575 = GC_OID((*Optimize.c_type)(v63997));
+      OID  v63993 = GC_OID(enumerate_code_any(v63997,OBJECT(ClaireType,v61575)));
+      bag * v20105;
+      if (v82400 == Kernel._set)
+       v20105 = set::empty();
+      else v20105 = list::empty();
+        Variable * v64019;
+      { { Cint  v54676;
           { (Optimize.OPT->max_vars = (Optimize.OPT->max_vars+1));
-            v9092 = 0;
+            v54676 = 0;
             } 
-          v3491 = Variable_I_symbol(append_symbol(v9332->var->pname,_string_(CSTRING("_in"))),v9092,Kernel._bag);
+          v64019 = Variable_I_symbol(append_symbol(v13540->var->pname,_string_(CSTRING("_in"))),v54676,Kernel._bag);
           } 
-        GC_OBJECT(Variable,v3491);} 
-      Variable * v3492;
-      { { Cint  v10053;
+        GC_OBJECT(Variable,v64019);} 
+      Variable * v64020;
+      { { Cint  v55637;
           { (Optimize.OPT->max_vars = (Optimize.OPT->max_vars+1));
-            v10053 = 0;
+            v55637 = 0;
             } 
-          v3492 = Variable_I_symbol(append_symbol(v9332->var->pname,_string_(CSTRING("_out"))),v10053,v15440);
+          v64020 = Variable_I_symbol(append_symbol(v13540->var->pname,_string_(CSTRING("_out"))),v55637,v82400);
           } 
-        GC_OBJECT(Variable,v3492);} 
-      if (get_property(Kernel.of,v9332) != CNULL)
-       { ClaireType * v15423 = GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047)));
-        if ((_inf_equal_type(GC_OBJECT(ClaireType,ptype_type(v15423)),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v9332))))) != CTRUE) && 
+        GC_OBJECT(Variable,v64020);} 
+      if (get_property(Kernel.of,v13540) != CNULL)
+       { ClaireType * v54732 = GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575)));
+        if ((_inf_equal_type(GC_OBJECT(ClaireType,ptype_type(v54732)),GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v13540))))) != CTRUE) && 
             (Optimize.compiler->safety <= 4))
          { warn_void();
-          tformat_string(CSTRING("unsafe bag construction (~S) : a ~S is not a ~S [262]\n"),2,list::alloc(3,GC_OID(_oid_(v9332->var)),
-            _oid_(v15423),
-            GC_OID((*Kernel.of)(_oid_(v9332)))));
+          tformat_string(CSTRING("unsafe bag construction (~S) : a ~S is not a ~S [262]\n"),2,list::alloc(3,GC_OID(_oid_(v13540->var)),
+            _oid_(v54732),
+            GC_OID((*Kernel.of)(_oid_(v13540)))));
           } 
-        cast_I_bag(v11513,OBJECT(ClaireType,(*Kernel.of)(_oid_(v9332))));
-        (v3492->range = param_I_class(v15440,GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v9332))))));
-        Result = inner_select_Iteration(v9332,_oid_(v3492),v3469,_oid_(v11513));
+        cast_I_bag(v20105,OBJECT(ClaireType,(*Kernel.of)(_oid_(v13540))));
+        (v64020->range = param_I_class(v82400,GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Kernel.of)(_oid_(v13540))))));
+        Result = inner_select_Iteration(v13540,_oid_(v64020),v63997,_oid_(v20105));
         } 
-      else if (_inf_equal_type(OBJECT(ClaireType,v1047),v15440) == CTRUE)
-       { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-        (v10264->var = v3491);
-        (v10264->value = v3465);
-        { Let * v507 = v10264; 
-          OID  v508;
-          { OID  v349;
-            { Compile_C_cast * v10264 = ((Compile_C_cast *) GC_OBJECT(Compile_C_cast,new_object_class(Optimize._C_cast)));
-              { Compile_to_C * v511 = v10264; 
-                OID  v512;
-                { OID  v3233;
-                  { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                    (v10264->selector = Kernel.empty);
-                    (v10264->args = list::alloc(1,_oid_(v3491)));
-                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                    v3233 = _oid_(v10264);
+      else if (_inf_equal_type(OBJECT(ClaireType,v61575),v82400) == CTRUE)
+       { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+        (v88616->var = v64019);
+        (v88616->value = v63993);
+        { Let * v63499 = v88616; 
+          OID  v63500;
+          { OID  v78701;
+            { Compile_C_cast * v88616 = ((Compile_C_cast *) GC_OBJECT(Compile_C_cast,new_object_class(Optimize._C_cast)));
+              { Compile_to_C * v63502 = v88616; 
+                OID  v63503;
+                { OID  v81584;
+                  { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                    (v88616->selector = Kernel.empty);
+                    (v88616->args = list::alloc(1,_oid_(v64019)));
+                    add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                    v81584 = _oid_(v88616);
                     } 
-                  v512 = (*Optimize.c_code)(v3233,
+                  v63503 = (*Optimize.c_code)(v81584,
                     _oid_(Kernel._bag));
                   } 
-                (v511->arg = v512);} 
-              (v10264->set_arg = v15440);
-              add_I_property(Kernel.instances,Optimize._C_cast,11,_oid_(v10264));
-              v349 = _oid_(v10264);
+                (v63502->arg = v63503);} 
+              (v88616->set_arg = v82400);
+              add_I_property(Kernel.instances,Optimize._C_cast,11,_oid_(v88616));
+              v78701 = _oid_(v88616);
               } 
-            v508 = inner_select_Iteration(v9332,_oid_(v3492),_oid_(v3491),v349);
+            v63500 = inner_select_Iteration(v13540,_oid_(v64020),_oid_(v64019),v78701);
             } 
-          (v507->arg = v508);} 
-        add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-        Result = _oid_(v10264);
+          (v63499->arg = v63500);} 
+        add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+        Result = _oid_(v88616);
         } 
-      else { OID  v4193;
-          if (v15440 == Kernel._set)
-           { Set * v10264 = ((Set *) GC_OBJECT(Set,new_object_class(Language._Set)));
-            (v10264->of = Kernel.emptySet);
-            add_I_property(Kernel.instances,Language._Set,11,_oid_(v10264));
-            v4193 = _oid_(v10264);
+      else { OID  v82545;
+          if (v82400 == Kernel._set)
+           { Set * v88616 = ((Set *) GC_OBJECT(Set,new_object_class(Language._Set)));
+            (v88616->of = Kernel.emptySet);
+            add_I_property(Kernel.instances,Language._Set,11,_oid_(v88616));
+            v82545 = _oid_(v88616);
             } 
-          else { List * v10264 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
-              (v10264->of = Kernel.emptySet);
-              add_I_property(Kernel.instances,Language._List,11,_oid_(v10264));
-              v4193 = _oid_(v10264);
+          else { List * v88616 = ((List *) GC_OBJECT(List,new_object_class(Language._List)));
+              (v88616->of = Kernel.emptySet);
+              add_I_property(Kernel.instances,Language._List,11,_oid_(v88616));
+              v82545 = _oid_(v88616);
               } 
-            Result = inner_select_Iteration(v9332,_oid_(v3492),v3469,v4193);
+            Result = inner_select_Iteration(v13540,_oid_(v64020),v63997,v82545);
           } 
         } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  inner_select_Iteration(Iteration *v9332,OID v3492,OID v3469,OID v11513)
+OID  inner_select_Iteration(Iteration *v13540,OID v64020,OID v63997,OID v20105)
 { GC_BIND;
   { OID Result = 0;
-    { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-      store_object(v10264,
+    { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+      store_object(v88616,
         2,
         Kernel._object,
-        v3492,
+        v64020,
         CFALSE);
-      (v10264->value = v11513);
-      { Let * v515 = v10264; 
-        OID  v516;
-        { Do * v10264 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
-          { Do * v517 = v10264; 
-            list * v538;
+      (v88616->value = v20105);
+      { Let * v63506 = v88616; 
+        OID  v63507;
+        { Do * v88616 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
+          { Do * v63508 = v88616; 
+            list * v63530;
             { OID v_bag;
-              GC_ANY(v538= list::empty(Kernel.emptySet));
-              { { OID  v12795;
-                  { For * v10264 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
-                    (v10264->var = v9332->var);
-                    (v10264->set_arg = v3469);
-                    { Iteration * v540 = v10264; 
-                      OID  v541;
-                      { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                        (v10264->test = v9332->arg);
-                        { If * v542 = v10264; 
-                          OID  v543;
-                          { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                            (v10264->selector = Kernel.add_I);
-                            (v10264->args = list::alloc(2,v3492,GC_OID(_oid_(v9332->var))));
-                            add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                            v543 = _oid_(v10264);
+              GC_ANY(v63530= list::empty(Kernel.emptySet));
+              { { OID  v107531;
+                  { For * v88616 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
+                    (v88616->var = v13540->var);
+                    (v88616->set_arg = v63997);
+                    { Iteration * v63532 = v88616; 
+                      OID  v63533;
+                      { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                        (v88616->test = v13540->arg);
+                        { If * v63534 = v88616; 
+                          OID  v63535;
+                          { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                            (v88616->selector = Kernel.add_I);
+                            (v88616->args = list::alloc(2,v64020,GC_OID(_oid_(v13540->var))));
+                            add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                            v63535 = _oid_(v88616);
                             } 
-                          (v542->arg = v543);} 
-                        add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                        (v10264->other = Kernel.cfalse);
-                        v541 = _oid_(v10264);
+                          (v63534->arg = v63535);} 
+                        add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                        (v88616->other = Kernel.cfalse);
+                        v63533 = _oid_(v88616);
                         } 
-                      (v540->arg = v541);} 
-                    add_I_property(Kernel.instances,Language._For,11,_oid_(v10264));
-                    v12795 = _oid_(v10264);
+                      (v63532->arg = v63533);} 
+                    add_I_property(Kernel.instances,Language._For,11,_oid_(v88616));
+                    v107531 = _oid_(v88616);
                     } 
-                  v_bag = (*Optimize.c_code)(v12795,
+                  v_bag = (*Optimize.c_code)(v107531,
                     _oid_(Kernel._any));
                   } 
                 GC_OID(v_bag);} 
-              ((list *) v538)->addFast(v_bag);
+              ((list *) v63530)->addFast(v_bag);
               if (Optimize.OPT->online_ask != CTRUE)
                { (Optimize.OPT->protection = CTRUE);
-                { Compile_to_protect * v10264 = ((Compile_to_protect *) GC_OBJECT(Compile_to_protect,new_object_class(Optimize._to_protect)));
-                  (v10264->arg = v3492);
-                  add_I_property(Kernel.instances,Optimize._to_protect,11,_oid_(v10264));
-                  v_bag = _oid_(v10264);
+                { Compile_to_protect * v88616 = ((Compile_to_protect *) GC_OBJECT(Compile_to_protect,new_object_class(Optimize._to_protect)));
+                  (v88616->arg = v64020);
+                  add_I_property(Kernel.instances,Optimize._to_protect,11,_oid_(v88616));
+                  v_bag = _oid_(v88616);
                   } 
                 } 
-              else v_bag = v3492;
-                ((list *) v538)->addFast(v_bag);} 
-            (v517->args = v538);} 
-          add_I_property(Kernel.instances,Language._Do,11,_oid_(v10264));
-          v516 = _oid_(v10264);
+              else v_bag = v64020;
+                ((list *) v63530)->addFast(v_bag);} 
+            (v63508->args = v63530);} 
+          add_I_property(Kernel.instances,Language._Do,11,_oid_(v88616));
+          v63507 = _oid_(v88616);
           } 
-        (v515->arg = v516);} 
-      add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-      Result = _oid_(v10264);
+        (v63506->arg = v63507);} 
+      add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+      Result = _oid_(v88616);
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Exists_Optimize(Exists *v9332)
+ClaireType * c_type_Exists_Optimize(Exists *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { OID  v1047 = GC_OID((*Optimize.c_type)(GC_OID(v9332->set_arg)));
-      range_infers_for_Variable(GC_OBJECT(Variable,v9332->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047))),OBJECT(ClaireType,v1047));
-      if (v9332->other == CNULL)
-       Result = extends_type(GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047))));
+    { OID  v61575 = GC_OID((*Optimize.c_type)(GC_OID(v13540->set_arg)));
+      range_infers_for_Variable(GC_OBJECT(Variable,v13540->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575))),OBJECT(ClaireType,v61575));
+      if (v13540->other == CNULL)
+       Result = extends_type(GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575))));
       else Result = Kernel._boolean;
         } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_Exists_Optimize(Exists *v9332,ClaireClass *v15435)
+OID  c_code_Exists_Optimize(Exists *v13540,ClaireClass *v82395)
 { GC_BIND;
   { OID Result = 0;
-    { OID  v1047 = GC_OID((*Optimize.c_type)(GC_OID(v9332->set_arg)));
-      range_infers_for_Variable(GC_OBJECT(Variable,v9332->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047))),OBJECT(ClaireType,v1047));
-      if (v9332->other == Kernel.ctrue)
-       { OID  v2177;
-        { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-          (v10264->selector = Core.NOT);
-          { Call * v546 = v10264; 
-            list * v547;
+    { OID  v61575 = GC_OID((*Optimize.c_type)(GC_OID(v13540->set_arg)));
+      range_infers_for_Variable(GC_OBJECT(Variable,v13540->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575))),OBJECT(ClaireType,v61575));
+      if (v13540->other == Kernel.ctrue)
+       { OID  v113297;
+        { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+          (v88616->selector = Core.NOT);
+          { Call * v63538 = v88616; 
+            list * v63539;
             { OID v_bag;
-              GC_ANY(v547= list::empty(Kernel.emptySet));
-              { { For * v10264 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
-                  (v10264->var = v9332->var);
-                  (v10264->set_arg = v9332->set_arg);
-                  { Iteration * v570 = v10264; 
-                    OID  v571;
-                    { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                      { If * v572 = v10264; 
-                        OID  v573;
-                        { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-                          (v10264->selector = Core.NOT);
-                          (v10264->args = list::alloc(1,GC_OID(v9332->arg)));
-                          add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-                          v573 = _oid_(v10264);
+              GC_ANY(v63539= list::empty(Kernel.emptySet));
+              { { For * v88616 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
+                  (v88616->var = v13540->var);
+                  (v88616->set_arg = v13540->set_arg);
+                  { Iteration * v63561 = v88616; 
+                    OID  v63562;
+                    { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                      { If * v63563 = v88616; 
+                        OID  v63564;
+                        { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+                          (v88616->selector = Core.NOT);
+                          (v88616->args = list::alloc(1,GC_OID(v13540->arg)));
+                          add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+                          v63564 = _oid_(v88616);
                           } 
-                        (v572->test = v573);} 
-                      { If * v574 = v10264; 
-                        OID  v575;
-                        { Return * v10264 = ((Return *) GC_OBJECT(Return,new_object_class(Language._Return)));
-                          (v10264->arg = Kernel.ctrue);
-                          add_I_property(Kernel.instances,Language._Return,11,_oid_(v10264));
-                          v575 = _oid_(v10264);
+                        (v63563->test = v63564);} 
+                      { If * v63565 = v88616; 
+                        OID  v63566;
+                        { Return * v88616 = ((Return *) GC_OBJECT(Return,new_object_class(Language._Return)));
+                          (v88616->arg = Kernel.ctrue);
+                          add_I_property(Kernel.instances,Language._Return,11,_oid_(v88616));
+                          v63566 = _oid_(v88616);
                           } 
-                        (v574->arg = v575);} 
-                      add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                      (v10264->other = Kernel.cfalse);
-                      v571 = _oid_(v10264);
+                        (v63565->arg = v63566);} 
+                      add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                      (v88616->other = Kernel.cfalse);
+                      v63562 = _oid_(v88616);
                       } 
-                    (v570->arg = v571);} 
-                  add_I_property(Kernel.instances,Language._For,11,_oid_(v10264));
-                  v_bag = _oid_(v10264);
+                    (v63561->arg = v63562);} 
+                  add_I_property(Kernel.instances,Language._For,11,_oid_(v88616));
+                  v_bag = _oid_(v88616);
                   } 
                 GC_OID(v_bag);} 
-              ((list *) v547)->addFast(v_bag);} 
-            (v546->args = v547);} 
-          add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-          v2177 = _oid_(v10264);
+              ((list *) v63539)->addFast(v_bag);} 
+            (v63538->args = v63539);} 
+          add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+          v113297 = _oid_(v88616);
           } 
-        Result = (*Optimize.c_code)(v2177,
-          _oid_(v15435));
+        Result = (*Optimize.c_code)(v113297,
+          _oid_(v82395));
         } 
-      else if (v9332->other == CNULL)
-       { Variable * v15438;
-        { { Cint  v14623;
+      else if (v13540->other == CNULL)
+       { Variable * v82398;
+        { { Cint  v11055;
             { (Optimize.OPT->max_vars = (Optimize.OPT->max_vars+1));
-              v14623 = 0;
+              v11055 = 0;
               } 
-            v15438 = Variable_I_symbol(append_symbol(v9332->var->pname,_string_(CSTRING("_some"))),v14623,GC_OBJECT(ClaireType,extends_type(GC_OBJECT(ClaireType,v9332->var->range))));
+            v82398 = Variable_I_symbol(append_symbol(v13540->var->pname,_string_(CSTRING("_some"))),v11055,GC_OBJECT(ClaireType,extends_type(GC_OBJECT(ClaireType,v13540->var->range))));
             } 
-          GC_OBJECT(Variable,v15438);} 
-        { OID  v15584;
-          { Let * v10264 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
-            (v10264->var = v15438);
-            (v10264->value = CNULL);
-            { Let * v578 = v10264; 
-              OID  v579;
-              { Do * v10264 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
-                { Do * v600 = v10264; 
-                  list * v601;
+          GC_OBJECT(Variable,v82398);} 
+        { OID  v12016;
+          { Let * v88616 = ((Let *) GC_OBJECT(Let,new_object_class(Language._Let)));
+            (v88616->var = v82398);
+            (v88616->value = CNULL);
+            { Let * v63569 = v88616; 
+              OID  v63571;
+              { Do * v88616 = ((Do *) GC_OBJECT(Do,new_object_class(Language._Do)));
+                { Do * v63592 = v88616; 
+                  list * v63593;
                   { OID v_bag;
-                    GC_ANY(v601= list::empty(Kernel.emptySet));
-                    { { For * v10264 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
-                        (v10264->var = v9332->var);
-                        (v10264->set_arg = v9332->set_arg);
-                        { Iteration * v604 = v10264; 
-                          OID  v605;
-                          { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                            (v10264->test = v9332->arg);
-                            { If * v606 = v10264; 
-                              OID  v607;
-                              { Return * v10264 = ((Return *) GC_OBJECT(Return,new_object_class(Language._Return)));
-                                { Return * v608 = v10264; 
-                                  OID  v609;
-                                  { Assign * v10264 = ((Assign *) GC_OBJECT(Assign,new_object_class(Language._Assign)));
-                                    (v10264->var = _oid_(v15438));
-                                    (v10264->arg = _oid_(v9332->var));
-                                    add_I_property(Kernel.instances,Language._Assign,11,_oid_(v10264));
-                                    v609 = _oid_(v10264);
+                    GC_ANY(v63593= list::empty(Kernel.emptySet));
+                    { { For * v88616 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
+                        (v88616->var = v13540->var);
+                        (v88616->set_arg = v13540->set_arg);
+                        { Iteration * v63594 = v88616; 
+                          OID  v63595;
+                          { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                            (v88616->test = v13540->arg);
+                            { If * v63596 = v88616; 
+                              OID  v63597;
+                              { Return * v88616 = ((Return *) GC_OBJECT(Return,new_object_class(Language._Return)));
+                                { Return * v63598 = v88616; 
+                                  OID  v63599;
+                                  { Assign * v88616 = ((Assign *) GC_OBJECT(Assign,new_object_class(Language._Assign)));
+                                    (v88616->var = _oid_(v82398));
+                                    (v88616->arg = _oid_(v13540->var));
+                                    add_I_property(Kernel.instances,Language._Assign,11,_oid_(v88616));
+                                    v63599 = _oid_(v88616);
                                     } 
-                                  (v608->arg = v609);} 
-                                add_I_property(Kernel.instances,Language._Return,11,_oid_(v10264));
-                                v607 = _oid_(v10264);
+                                  (v63598->arg = v63599);} 
+                                add_I_property(Kernel.instances,Language._Return,11,_oid_(v88616));
+                                v63597 = _oid_(v88616);
                                 } 
-                              (v606->arg = v607);} 
-                            add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                            (v10264->other = Kernel.cfalse);
-                            v605 = _oid_(v10264);
+                              (v63596->arg = v63597);} 
+                            add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                            (v88616->other = Kernel.cfalse);
+                            v63595 = _oid_(v88616);
                             } 
-                          (v604->arg = v605);} 
-                        add_I_property(Kernel.instances,Language._For,11,_oid_(v10264));
-                        v_bag = _oid_(v10264);
+                          (v63594->arg = v63595);} 
+                        add_I_property(Kernel.instances,Language._For,11,_oid_(v88616));
+                        v_bag = _oid_(v88616);
                         } 
                       GC_OID(v_bag);} 
-                    ((list *) v601)->addFast(v_bag);
-                    ((list *) v601)->addFast(_oid_(v15438));} 
-                  (v600->args = v601);} 
-                add_I_property(Kernel.instances,Language._Do,11,_oid_(v10264));
-                v579 = _oid_(v10264);
+                    ((list *) v63593)->addFast(v_bag);
+                    ((list *) v63593)->addFast(_oid_(v82398));} 
+                  (v63592->args = v63593);} 
+                add_I_property(Kernel.instances,Language._Do,11,_oid_(v88616));
+                v63571 = _oid_(v88616);
                 } 
-              (v578->arg = v579);} 
-            add_I_property(Kernel.instances,Language._Let,11,_oid_(v10264));
-            v15584 = _oid_(v10264);
+              (v63569->arg = v63571);} 
+            add_I_property(Kernel.instances,Language._Let,11,_oid_(v88616));
+            v12016 = _oid_(v88616);
             } 
-          Result = (*Optimize.c_code)(v15584,
-            _oid_(v15435));
+          Result = (*Optimize.c_code)(v12016,
+            _oid_(v82395));
           } 
         } 
-      else { OID  v13568;
-          { Call * v10264 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
-            (v10264->selector = Kernel.boolean_I);
-            { Call * v611 = v10264; 
-              list * v1282;
+      else { OID  v42768;
+          { Call * v88616 = ((Call *) GC_OBJECT(Call,new_object_class(Language._Call)));
+            (v88616->selector = Kernel.boolean_I);
+            { Call * v63601 = v88616; 
+              list * v64274;
               { OID v_bag;
-                GC_ANY(v1282= list::empty(Kernel.emptySet));
-                { { For * v10264 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
-                    (v10264->var = v9332->var);
-                    (v10264->set_arg = v9332->set_arg);
-                    { Iteration * v1283 = v10264; 
-                      OID  v1284;
-                      { If * v10264 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
-                        (v10264->test = v9332->arg);
-                        { If * v1285 = v10264; 
-                          OID  v1286;
-                          { Return * v10264 = ((Return *) GC_OBJECT(Return,new_object_class(Language._Return)));
-                            (v10264->arg = Kernel.ctrue);
-                            add_I_property(Kernel.instances,Language._Return,11,_oid_(v10264));
-                            v1286 = _oid_(v10264);
+                GC_ANY(v64274= list::empty(Kernel.emptySet));
+                { { For * v88616 = ((For *) GC_OBJECT(For,new_object_class(Language._For)));
+                    (v88616->var = v13540->var);
+                    (v88616->set_arg = v13540->set_arg);
+                    { Iteration * v64275 = v88616; 
+                      OID  v64276;
+                      { If * v88616 = ((If *) GC_OBJECT(If,new_object_class(Language._If)));
+                        (v88616->test = v13540->arg);
+                        { If * v64277 = v88616; 
+                          OID  v64278;
+                          { Return * v88616 = ((Return *) GC_OBJECT(Return,new_object_class(Language._Return)));
+                            (v88616->arg = Kernel.ctrue);
+                            add_I_property(Kernel.instances,Language._Return,11,_oid_(v88616));
+                            v64278 = _oid_(v88616);
                             } 
-                          (v1285->arg = v1286);} 
-                        add_I_property(Kernel.instances,Language._If,11,_oid_(v10264));
-                        (v10264->other = Kernel.cfalse);
-                        v1284 = _oid_(v10264);
+                          (v64277->arg = v64278);} 
+                        add_I_property(Kernel.instances,Language._If,11,_oid_(v88616));
+                        (v88616->other = Kernel.cfalse);
+                        v64276 = _oid_(v88616);
                         } 
-                      (v1283->arg = v1284);} 
-                    add_I_property(Kernel.instances,Language._For,11,_oid_(v10264));
-                    v_bag = _oid_(v10264);
+                      (v64275->arg = v64276);} 
+                    add_I_property(Kernel.instances,Language._For,11,_oid_(v88616));
+                    v_bag = _oid_(v88616);
                     } 
                   GC_OID(v_bag);} 
-                ((list *) v1282)->addFast(v_bag);} 
-              (v611->args = v1282);} 
-            add_I_property(Kernel.instances,Language._Call,11,_oid_(v10264));
-            v13568 = _oid_(v10264);
+                ((list *) v64274)->addFast(v_bag);} 
+              (v63601->args = v64274);} 
+            add_I_property(Kernel.instances,Language._Call,11,_oid_(v88616));
+            v42768 = _oid_(v88616);
             } 
-          Result = (*Optimize.c_code)(v13568,
-            _oid_(v15435));
+          Result = (*Optimize.c_code)(v42768,
+            _oid_(v82395));
           } 
         } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Image_Optimize(Image *v9332)
+ClaireType * c_type_Image_Optimize(Image *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { ClaireType * v1047 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->set_arg)))));
-      range_infers_for_Variable(GC_OBJECT(Variable,v9332->var),GC_OBJECT(ClaireType,pmember_type(v1047)),v1047);
-      Result = ((((v9332->of == (NULL)) ? CTRUE : CFALSE) != CTRUE) ?
-        param_I_class(Kernel._set,GC_OBJECT(ClaireType,v9332->of)) :
-        nth_class1(Kernel._set,GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->arg))))) );
+    { ClaireType * v61575 = GC_OBJECT(ClaireType,ptype_type(OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->set_arg)))));
+      range_infers_for_Variable(GC_OBJECT(Variable,v13540->var),GC_OBJECT(ClaireType,pmember_type(v61575)),v61575);
+      Result = ((((v13540->of == (NULL)) ? CTRUE : CFALSE) != CTRUE) ?
+        param_I_class(Kernel._set,GC_OBJECT(ClaireType,v13540->of)) :
+        nth_class1(Kernel._set,GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->arg))))) );
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Select_Optimize(Select *v9332)
+ClaireType * c_type_Select_Optimize(Select *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { OID  v1047 = GC_OID((*Optimize.c_type)(GC_OID(v9332->set_arg)));
-      range_infers_for_Variable(GC_OBJECT(Variable,v9332->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047))),OBJECT(ClaireType,v1047));
-      Result = ((((v9332->of == (NULL)) ? CTRUE : CFALSE) != CTRUE) ?
-        param_I_class(Kernel._set,GC_OBJECT(ClaireType,v9332->of)) :
-        nth_class1(Kernel._set,GC_OBJECT(ClaireType,pmember_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->set_arg))))))) );
+    { OID  v61575 = GC_OID((*Optimize.c_type)(GC_OID(v13540->set_arg)));
+      range_infers_for_Variable(GC_OBJECT(Variable,v13540->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575))),OBJECT(ClaireType,v61575));
+      Result = ((((v13540->of == (NULL)) ? CTRUE : CFALSE) != CTRUE) ?
+        param_I_class(Kernel._set,GC_OBJECT(ClaireType,v13540->of)) :
+        nth_class1(Kernel._set,GC_OBJECT(ClaireType,pmember_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->set_arg))))))) );
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_Lselect_Optimize(Lselect *v9332)
+ClaireType * c_type_Lselect_Optimize(Lselect *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    { OID  v1047 = GC_OID((*Optimize.c_type)(GC_OID(v9332->set_arg)));
-      range_infers_for_Variable(GC_OBJECT(Variable,v9332->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v1047))),OBJECT(ClaireType,v1047));
-      Result = ((((v9332->of == (NULL)) ? CTRUE : CFALSE) != CTRUE) ?
-        param_I_class(Kernel._list,GC_OBJECT(ClaireType,v9332->of)) :
-        nth_class1(Kernel._list,GC_OBJECT(ClaireType,pmember_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v9332->set_arg))))))) );
+    { OID  v61575 = GC_OID((*Optimize.c_type)(GC_OID(v13540->set_arg)));
+      range_infers_for_Variable(GC_OBJECT(Variable,v13540->var),GC_OBJECT(ClaireType,pmember_type(OBJECT(ClaireType,v61575))),OBJECT(ClaireType,v61575));
+      Result = ((((v13540->of == (NULL)) ? CTRUE : CFALSE) != CTRUE) ?
+        param_I_class(Kernel._list,GC_OBJECT(ClaireType,v13540->of)) :
+        nth_class1(Kernel._list,GC_OBJECT(ClaireType,pmember_type(GC_OBJECT(ClaireType,OBJECT(ClaireType,(*Optimize.c_type)(GC_OID(v13540->set_arg))))))) );
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-ClaireType * c_type_While_Optimize(While *v9332)
+ClaireType * c_type_While_Optimize(While *v13540)
 { GC_BIND;
   { ClaireType *Result ;
-    Result = infers_from_type2(GC_OBJECT(ClaireType,return_type_any(GC_OID(v9332->arg))),_oid_(v9332));
+    Result = infers_from_type2(GC_OBJECT(ClaireType,return_type_any(GC_OID(v13540->arg))),_oid_(v13540));
     GC_UNBIND; return (Result);} 
   } 
 
-OID  c_code_While_Optimize(While *v9332,ClaireClass *v15435)
+OID  c_code_While_Optimize(While *v13540,ClaireClass *v82395)
 { GC_BIND;
   { OID Result = 0;
-    { ClaireBoolean * v15418 = Optimize.OPT->protection;
+    { ClaireBoolean * v82378 = Optimize.OPT->protection;
       (Optimize.OPT->protection = CFALSE);
-      { While * v15434;
-        { { While * v10264 = ((While *) GC_OBJECT(While,new_object_class(Language._While)));
-            (v10264->test = c_boolean_any(GC_OID(v9332->test)));
-            (v10264->arg = (*Optimize.c_code)(GC_OID(v9332->arg),
+      { While * v82394;
+        { { While * v88616 = ((While *) GC_OBJECT(While,new_object_class(Language._While)));
+            (v88616->test = c_boolean_any(GC_OID(v13540->test)));
+            (v88616->arg = (*Optimize.c_code)(GC_OID(v13540->arg),
               _oid_(Kernel._void)));
-            (v10264->other = v9332->other);
-            add_I_property(Kernel.instances,Language._While,11,_oid_(v10264));
-            v15434 = v10264;
+            (v88616->other = v13540->other);
+            add_I_property(Kernel.instances,Language._While,11,_oid_(v88616));
+            v82394 = v88616;
             } 
-          GC_OBJECT(While,v15434);} 
+          GC_OBJECT(While,v82394);} 
         if ((Optimize.OPT->protection == CTRUE) && 
             (0 <= Optimize.OPT->loop_index))
          (Optimize.OPT->loop_gc = CTRUE);
-        (Optimize.OPT->protection = ((Optimize.OPT->protection == CTRUE) ? CTRUE : ((v15418 == CTRUE) ? CTRUE : CFALSE)));
-        if ((v15435 != Kernel._void) && 
-            (v15435 != Kernel._any))
-         { { Compile_to_C * v10264 = ((Compile_to_C *) GC_OBJECT(Compile_to_C,new_object_class(Optimize._to_C)));
-            (v10264->arg = _oid_(v15434));
-            (v10264->set_arg = v15435);
-            add_I_property(Kernel.instances,Optimize._to_C,11,_oid_(v10264));
-            Result = _oid_(v10264);
+        (Optimize.OPT->protection = ((Optimize.OPT->protection == CTRUE) ? CTRUE : ((v82378 == CTRUE) ? CTRUE : CFALSE)));
+        if ((v82395 != Kernel._void) && 
+            (v82395 != Kernel._any))
+         { { Compile_to_C * v88616 = ((Compile_to_C *) GC_OBJECT(Compile_to_C,new_object_class(Optimize._to_C)));
+            (v88616->arg = _oid_(v82394));
+            (v88616->set_arg = v82395);
+            add_I_property(Kernel.instances,Optimize._to_C,11,_oid_(v88616));
+            Result = _oid_(v88616);
             } 
           } 
-        else Result = _oid_(v15434);
+        else Result = _oid_(v82394);
           } 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  Iterate_I_Iteration(Iteration *v9332)
+OID  Iterate_I_Iteration(Iteration *v13540)
 { GC_BIND;
   { OID Result = 0;
-    Result = restriction_I_property(Language.Iterate,list::alloc(3,_oid_(set::alloc(1,GC_OID(v9332->set_arg))),
-      _oid_(set::alloc(1,GC_OID(_oid_(v9332->var)))),
+    Result = restriction_I_property(Language.Iterate,list::alloc(3,_oid_(set::alloc(1,GC_OID(v13540->set_arg))),
+      _oid_(set::alloc(1,GC_OID(_oid_(v13540->var)))),
       _oid_(Kernel._any)),CTRUE);
     GC_UNBIND; return (Result);} 
   } 
 
-OID  iterate_Interval(Interval *v15440,Variable *v15438,OID v15421)
+OID  iterate_Interval(Interval *v82400,Variable *v82398,OID v82381)
 { GC_RESERVE(1);  // HOHO v3.0.55 optim !
   { OID Result = 0;
-    { OID  v15438 = GC_OID(eval_any2(v15440->arg1,Core._Interval));
-      Cint  v3143 = eval_any2(v15440->arg2,Core._Interval);
+    { OID  v82398 = GC_OID(eval_any2(v82400->arg1,Core._Interval));
+      Cint  v56503 = eval_any2(v82400->arg2,Core._Interval);
       { OID gc_local;
         Result= _oid_(CFALSE);
-        while ((v15438 <= v3143))
+        while ((v82398 <= v56503))
         { GC_LOOP;
-          ;GC__OID(v15438 = (*Core._plus)(v15438,
+          ;GC__OID(v82398 = (*Core._plus)(v82398,
             1), 1);
           GC_UNLOOP;} 
         } 
@@ -2170,15 +2170,15 @@ OID  iterate_Interval(Interval *v15440,Variable *v15438,OID v15421)
     GC_UNBIND; return (Result);} 
   } 
 
-OID  iterate_array(OID *v15440,Variable *v15438,OID v15421)
+OID  iterate_array(OID *v82400,Variable *v82398,OID v82381)
 { { OID Result = 0;
-    { Cint  v1037 = 1;
-      OID * v1028 = v15440;
-      Cint  v3143 = v1028[0];
+    { Cint  v61564 = 1;
+      OID * v61556 = v82400;
+      Cint  v56503 = v61556[0];
       { Result= _oid_(CFALSE);
-        while ((v1037 <= v3143))
-        { { OID  v15438 = nth_array(v1028,v1037);
-            ;++v1037;
+        while ((v61564 <= v56503))
+        { { OID  v82398 = nth_array(v61556,v61564);
+            ;++v61564;
             } 
           } 
         } 
@@ -2186,37 +2186,37 @@ OID  iterate_array(OID *v15440,Variable *v15438,OID v15421)
     return (Result);} 
   } 
 
-OID  Iterate_class(ClaireClass *v15440,Variable *v15438,OID v15421)
+OID  Iterate_class(ClaireClass *v82400,Variable *v82398,OID v82381)
 { { OID Result = 0;
-    { ITERATE(v11659);
+    { ITERATE(v65019);
       Result= Kernel.cfalse;
-      for (START(v15440->descendents); NEXT(v11659);)
-      { ClaireBoolean * v11660;
-        { OID v7538;{ ITERATE(v15438);
-            v7538= Kernel.cfalse;
-            for (START(OBJECT(ClaireClass,v11659)->instances); NEXT(v15438);)
+      for (START(v82400->descendents); NEXT(v65019);)
+      { ClaireBoolean * v65020;
+        { OID v55170;{ ITERATE(v82398);
+            v55170= Kernel.cfalse;
+            for (START(OBJECT(ClaireClass,v65019)->instances); NEXT(v82398);)
             ;} 
           
-          v11660=OBJECT(ClaireBoolean,v7538);} 
-        if (v11660 == CTRUE)
-         { Result = _oid_(v11660);
+          v65020=OBJECT(ClaireBoolean,v55170);} 
+        if (v65020 == CTRUE)
+         { Result = _oid_(v65020);
           break;} 
         } 
       } 
     return (Result);} 
   } 
 
-OID  Iterate_any1(OID v15440,Variable *v15438,OID v15421)
+OID  Iterate_any1(OID v82400,Variable *v82398,OID v82381)
 { GC_RESERVE(1);  // HOHO v3.0.55 optim !
   { OID Result = 0;
-    { OID  v15438 = GC_OID(OPT_EVAL((*(OBJECT(Call,v15440)->args))[1]));
-      OID  v3143 = GC_OID(OPT_EVAL((*(OBJECT(Call,v15440)->args))[2]));
+    { OID  v82398 = GC_OID(OPT_EVAL((*(OBJECT(Call,v82400)->args))[1]));
+      OID  v56503 = GC_OID(OPT_EVAL((*(OBJECT(Call,v82400)->args))[2]));
       { OID gc_local;
         Result= _oid_(CFALSE);
-        while (((OBJECT(ClaireBoolean,(*Kernel._inf_equal)(v15438,
-          v3143))) == CTRUE))
+        while (((OBJECT(ClaireBoolean,(*Kernel._inf_equal)(v82398,
+          v56503))) == CTRUE))
         { GC_LOOP;
-          ;GC__OID(v15438 = (*Core._plus)(v15438,
+          ;GC__OID(v82398 = (*Core._plus)(v82398,
             1), 1);
           GC_UNLOOP;} 
         } 
@@ -2224,86 +2224,86 @@ OID  Iterate_any1(OID v15440,Variable *v15438,OID v15421)
     GC_UNBIND; return (Result);} 
   } 
 
-OID  Iterate_Lselect(Lselect *v15440,Variable *v15438,OID v15421)
+OID  Iterate_Lselect(Lselect *v82400,Variable *v82398,OID v82381)
 { GC_BIND;
   { OID Result = 0;
     { OID gc_local;
-      ITERATE(v15438);
+      ITERATE(v82398);
       Result= Kernel.cfalse;
-      bag *v15438_support;
-      v15438_support = GC_OBJECT(bag,enumerate_any(GC_OID(eval_any(GC_OID(v15440->set_arg)))));
-      for (START(v15438_support); NEXT(v15438);)
+      bag *v82398_support;
+      v82398_support = GC_OBJECT(bag,enumerate_any(GC_OID(eval_any(GC_OID(v82400->set_arg)))));
+      for (START(v82398_support); NEXT(v82398);)
       { GC_LOOP;
-        if (boolean_I_any(eval_any(GC_OID(substitution_any(v15440->arg,v15440->var,v15438)))) == CTRUE)
+        if (boolean_I_any(eval_any(GC_OID(substitution_any(v82400->arg,v82400->var,v82398)))) == CTRUE)
          ;GC_UNLOOP;} 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  Iterate_Select(Select *v15440,Variable *v15438,OID v15421)
+OID  Iterate_Select(Select *v82400,Variable *v82398,OID v82381)
 { GC_BIND;
   { OID Result = 0;
     { OID gc_local;
-      ITERATE(v15438);
+      ITERATE(v82398);
       Result= Kernel.cfalse;
-      bag *v15438_support;
-      v15438_support = GC_OBJECT(bag,enumerate_any(GC_OID(eval_any(GC_OID(v15440->set_arg)))));
-      for (START(v15438_support); NEXT(v15438);)
+      bag *v82398_support;
+      v82398_support = GC_OBJECT(bag,enumerate_any(GC_OID(eval_any(GC_OID(v82400->set_arg)))));
+      for (START(v82398_support); NEXT(v82398);)
       { GC_LOOP;
-        if (boolean_I_any(eval_any(GC_OID(substitution_any(v15440->arg,v15440->var,v15438)))) == CTRUE)
+        if (boolean_I_any(eval_any(GC_OID(substitution_any(v82400->arg,v82400->var,v82398)))) == CTRUE)
          ;GC_UNLOOP;} 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  Iterate_Collect(Collect *v15440,Variable *v15438,OID v15421)
+OID  Iterate_Collect(Collect *v82400,Variable *v82398,OID v82381)
 { GC_RESERVE(1);  // HOHO v3.0.55 optim !
   { OID Result = 0;
     { OID gc_local;
-      ITERATE(v9804);
+      ITERATE(v100316);
       Result= Kernel.cfalse;
-      bag *v9804_support;
-      v9804_support = GC_OBJECT(bag,enumerate_any(GC_OID(eval_any(GC_OID(v15440->set_arg)))));
-      for (START(v9804_support); NEXT(v9804);)
+      bag *v100316_support;
+      v100316_support = GC_OBJECT(bag,enumerate_any(GC_OID(eval_any(GC_OID(v82400->set_arg)))));
+      for (START(v100316_support); NEXT(v100316);)
       { GC_LOOP;
-        { OID  v15438 = GC_OID(eval_any(GC_OID(substitution_any(v15440->arg,v15440->var,v9804))));
+        { OID  v82398 = GC_OID(eval_any(GC_OID(substitution_any(v82400->arg,v82400->var,v100316))));
           ;} 
         GC_UNLOOP;} 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  Iterate_any2(OID v15440,Variable *v15438,OID v15421)
+OID  Iterate_any2(OID v82400,Variable *v82398,OID v82381)
 { GC_BIND;
   { OID Result = 0;
     { OID gc_local;
-      ITERATE(v15438);
+      ITERATE(v82398);
       Result= Kernel.cfalse;
-      bag *v15438_support;
-      v15438_support = GC_OBJECT(bag,enumerate_any(GC_OID(OPT_EVAL((*(OBJECT(Call,v15440)->args))[1]))));
-      for (START(v15438_support); NEXT(v15438);)
+      bag *v82398_support;
+      v82398_support = GC_OBJECT(bag,enumerate_any(GC_OID(OPT_EVAL((*(OBJECT(Call,v82400)->args))[1]))));
+      for (START(v82398_support); NEXT(v82398);)
       { GC_LOOP;
-        if (equal(v15438,OPT_EVAL((*(OBJECT(Call,v15440)->args))[2])) != CTRUE)
+        if (equal(v82398,OPT_EVAL((*(OBJECT(Call,v82400)->args))[2])) != CTRUE)
          ;GC_UNLOOP;} 
       } 
     GC_UNBIND; return (Result);} 
   } 
 
-OID  Iterate_any3(OID v15440,Variable *v15438,OID v15421)
+OID  Iterate_any3(OID v82400,Variable *v82398,OID v82381)
 { GC_BIND;
   { OID gc_local;
-    ITERATE(v15438);
-    bag *v15438_support;
-    v15438_support = GC_OBJECT(bag,enumerate_any(GC_OID(OPT_EVAL((*(OBJECT(Call,v15440)->args))[1]))));
-    for (START(v15438_support); NEXT(v15438);)
+    ITERATE(v82398);
+    bag *v82398_support;
+    v82398_support = GC_OBJECT(bag,enumerate_any(GC_OID(OPT_EVAL((*(OBJECT(Call,v82400)->args))[1]))));
+    for (START(v82398_support); NEXT(v82398);)
     ;} 
   { OID Result = 0;
     { OID gc_local;
-      ITERATE(v15438);
+      ITERATE(v82398);
       Result= Kernel.cfalse;
-      bag *v15438_support;
-      v15438_support = GC_OBJECT(bag,enumerate_any(GC_OID(OPT_EVAL((*(OBJECT(Call,v15440)->args))[2]))));
-      for (START(v15438_support); NEXT(v15438);)
+      bag *v82398_support;
+      v82398_support = GC_OBJECT(bag,enumerate_any(GC_OID(OPT_EVAL((*(OBJECT(Call,v82400)->args))[2]))));
+      for (START(v82398_support); NEXT(v82398);)
       ;} 
     GC_UNBIND; return (Result);} 
   } 

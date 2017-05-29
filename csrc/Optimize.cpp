@@ -1,5 +1,5 @@
 /***** CLAIRE Compilation of file Optimize.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:59 2017 *****/
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:46 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -157,40 +157,40 @@ void OptimizeClass::metaLoad() {
   Optimize.c_status_call = property::make("c_status_call",Optimize.it);
   
   // instructions from module sources
-  { global_variable * v10264 = (Optimize.srange = (global_variable *) Core._global_variable->instantiate("srange",Compile.it));
-    (v10264->range = Kernel.emptySet);
-    (v10264->value = _oid_(Kernel.srange));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.srange = (global_variable *) Core._global_variable->instantiate("srange",Compile.it));
+    (v88616->range = Kernel.emptySet);
+    (v88616->value = _oid_(Kernel.srange));
+    close_global_variable(v88616);
     } 
   
-  { global_variable * v10264 = (Language.typing = (global_variable *) Core._global_variable->instantiate("typing",iClaire.it));
-    (v10264->range = Kernel.emptySet);
-    (v10264->value = _oid_(Kernel.typing));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Language.typing = (global_variable *) Core._global_variable->instantiate("typing",iClaire.it));
+    (v88616->range = Kernel.emptySet);
+    (v88616->value = _oid_(Kernel.typing));
+    close_global_variable(v88616);
     } 
   
-  { global_variable * v10264 = (Optimize.status = (global_variable *) Core._global_variable->instantiate("status",Compile.it));
-    (v10264->range = Kernel.emptySet);
-    (v10264->value = _oid_(Kernel.status));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.status = (global_variable *) Core._global_variable->instantiate("status",Compile.it));
+    (v88616->range = Kernel.emptySet);
+    (v88616->value = _oid_(Kernel.status));
+    close_global_variable(v88616);
     } 
   
-  { global_variable * v10264 = (Optimize.tmatch_ask = (global_variable *) Core._global_variable->instantiate("tmatch?",Compile.it));
-    (v10264->range = Kernel.emptySet);
-    (v10264->value = _oid_(Core.tmatch_ask));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.tmatch_ask = (global_variable *) Core._global_variable->instantiate("tmatch?",Compile.it));
+    (v88616->range = Kernel.emptySet);
+    (v88616->value = _oid_(Core.tmatch_ask));
+    close_global_variable(v88616);
     } 
   
-  { global_variable * v10264 = (Optimize.pname = (global_variable *) Core._global_variable->instantiate("pname",Compile.it));
-    (v10264->range = Kernel.emptySet);
-    (v10264->value = _oid_(Core.pname));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.pname = (global_variable *) Core._global_variable->instantiate("pname",Compile.it));
+    (v88616->range = Kernel.emptySet);
+    (v88616->value = _oid_(Core.pname));
+    close_global_variable(v88616);
     } 
   
-  { global_variable * v10264 = (Optimize.if_write = (global_variable *) Core._global_variable->instantiate("if_write",Compile.it));
-    (v10264->range = Kernel.emptySet);
-    (v10264->value = _oid_(Kernel.if_write));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.if_write = (global_variable *) Core._global_variable->instantiate("if_write",Compile.it));
+    (v88616->range = Kernel.emptySet);
+    (v88616->value = _oid_(Kernel.if_write));
+    close_global_variable(v88616);
     } 
   
   Optimize.home->addMethod(list::domain(1,Kernel._void),Kernel._string,
@@ -252,45 +252,45 @@ void OptimizeClass::metaLoad() {
     CL_ADD_SLOT(Optimize._meta_compiler,Optimize_meta_compiler,Optimize.optimize_ask,optimize_ask,Kernel._boolean,Kernel.cfalse);
     } 
   
-  { global_variable * v10264 = (Optimize.claire_options = (global_variable *) Core._global_variable->instantiate("claire_options",claire.it));
-    (v10264->range = Kernel._string);
-    (v10264->value = _string_(CSTRING("/w0 /zq")));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.claire_options = (global_variable *) Core._global_variable->instantiate("claire_options",claire.it));
+    (v88616->range = Kernel._string);
+    (v88616->value = _string_(CSTRING("/w0 /zq")));
+    close_global_variable(v88616);
     } 
   
-  { global_variable * v10264 = (Optimize.claire_lib = (global_variable *) Core._global_variable->instantiate("claire_lib",claire.it));
-    (v10264->range = Kernel._string);
-    (v10264->value = _string_(CSTRING("")));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.claire_lib = (global_variable *) Core._global_variable->instantiate("claire_lib",claire.it));
+    (v88616->range = Kernel._string);
+    (v88616->value = _string_(CSTRING("")));
+    close_global_variable(v88616);
     } 
   
-  { global_variable * v10264 = (Optimize.claire_modules = (global_variable *) Core._global_variable->instantiate("claire_modules",claire.it));
-    (v10264->range = Kernel._list);
-    { global_variable * v3303 = v10264; 
-      OID  v3304;
-      { list * v4932;{ bag *v_list; OID v_val;
-          OID v15440,CLcount;
+  { global_variable * v88616 = (Optimize.claire_modules = (global_variable *) Core._global_variable->instantiate("claire_modules",claire.it));
+    (v88616->range = Kernel._list);
+    { global_variable * v66295 = v88616; 
+      OID  v66296;
+      { list * v74548;{ bag *v_list; OID v_val;
+          OID v82400,CLcount;
           v_list = list::alloc(4,_string_(CSTRING("Kernel")),
             _string_(CSTRING("Core")),
             _string_(CSTRING("Language")),
             _string_(CSTRING("Reader")));
-           v4932 = v_list->clone();
+           v74548 = v_list->clone();
           for (CLcount= 1; CLcount <= v_list->length; CLcount++)
-          { v15440 = (*(v_list))[CLcount];
-            v_val = value_string(string_v(v15440));
+          { v82400 = (*(v_list))[CLcount];
+            v_val = value_string(string_v(v82400));
             
-            (*((list *) v4932))[CLcount] = v_val;} 
+            (*((list *) v74548))[CLcount] = v_val;} 
           } 
         
-        v3304=_oid_(v4932);} 
-      (v3303->value = v3304);} 
-    close_global_variable(v10264);
+        v66296=_oid_(v74548);} 
+      (v66295->value = v66296);} 
+    close_global_variable(v88616);
     } 
   
   { (Optimize.compiler = (Optimize_meta_compiler *) Optimize._meta_compiler->instantiate("compiler",claire.it));
-    (Optimize.compiler->external = CSTRING("MS VC++"));
-    (Optimize.compiler->env = CSTRING("ntv"));
-    (Optimize.compiler->version = _float_(5.0));
+    (Optimize.compiler->external = CSTRING("g++"));
+    (Optimize.compiler->env = CSTRING("unix"));
+    (Optimize.compiler->version = _float_(5.01));
     (Optimize.compiler->source = CSTRING(""));
     (Optimize.compiler->headers_dir = CSTRING(""));
     (Optimize.compiler->libraries = list::alloc(Kernel._string,1,_string_(CSTRING("Kernel"))));
@@ -298,9 +298,9 @@ void OptimizeClass::metaLoad() {
       Optimize.compiler,
       19,
       Kernel._object,
-      _oid_(list::alloc(Kernel._any,3,_string_(CSTRING("-c /O2 /Oi")),
-        _string_(CSTRING("-c /Zi")),
-        _string_(CSTRING("-c /Zi")))));
+      _oid_(list::alloc(Kernel._any,3,_string_(CSTRING("-DCLUNIX -DCLNOCODE -DCL64 -fwritable-strings -O -w")),
+        _string_(CSTRING("-DCLUNIX -DCLNOCODE -DCL64 -fwritable-strings -g -w")),
+        _string_(CSTRING("-DCLUNIX -DCLNOCODE -DCL64 -fwritable-strings -g -w")))));
     ;} 
   
   { (Optimize.c_type = property::make("c_type",3,claire.it,Kernel._any,0));
@@ -1079,10 +1079,10 @@ void OptimizeClass::metaLoad() {
   Optimize.c_type->addMethod(list::domain(1,Language._If),Kernel._type,
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(c_type_If_Optimize,"c_type_If_Optimize"));
   
-  { global_variable * v10264 = (Optimize.PENIBLE = (global_variable *) Core._global_variable->instantiate("PENIBLE",claire.it));
-    (v10264->range = Kernel._boolean);
-    (v10264->value = Kernel.cfalse);
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.PENIBLE = (global_variable *) Core._global_variable->instantiate("PENIBLE",claire.it));
+    (v88616->range = Kernel._boolean);
+    (v88616->value = Kernel.cfalse);
+    close_global_variable(v88616);
     } 
   
   Optimize.c_code->addMethod(list::domain(2,Language._If,Kernel._class),Kernel._any,
@@ -1229,10 +1229,10 @@ void OptimizeClass::metaLoad() {
   Optimize.c_type->addMethod(list::domain(1,Language._Definition),Kernel._type,
   	0,_function_(c_type_Definition_Optimize,"c_type_Definition_Optimize"));
   
-  { global_variable * v10264 = (Optimize._starname_star = (global_variable *) Core._global_variable->instantiate("*name*",Compile.it));
-    (v10264->range = Kernel._symbol);
-    (v10264->value = _oid_(symbol_I_string2(CSTRING("_CL_obj"))));
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize._starname_star = (global_variable *) Core._global_variable->instantiate("*name*",Compile.it));
+    (v88616->range = Kernel._symbol);
+    (v88616->value = _oid_(symbol_I_string2(CSTRING("_CL_obj"))));
+    close_global_variable(v88616);
     } 
   
   Optimize.c_code->addMethod(list::domain(2,Language._Definition,Kernel._class),Kernel._any,
@@ -1253,10 +1253,10 @@ void OptimizeClass::metaLoad() {
   Optimize.c_code->addMethod(list::domain(2,Language._Defclass,Kernel._class),Kernel._any,
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(c_code_Defclass_Optimize,"c_code_Defclass_Optimize"));
   
-  { global_variable * v10264 = (Optimize.SHIT = (global_variable *) Core._global_variable->instantiate("SHIT",claire.it));
-    (v10264->range = Kernel._any);
-    (v10264->value = 1);
-    close_global_variable(v10264);
+  { global_variable * v88616 = (Optimize.SHIT = (global_variable *) Core._global_variable->instantiate("SHIT",claire.it));
+    (v88616->range = Kernel._any);
+    (v88616->value = 1);
+    close_global_variable(v88616);
     } 
   
   Optimize.c_type->addMethod(list::domain(1,Language._Defmethod),Kernel._type,

@@ -1,5 +1,5 @@
-/***** CLAIRE Compilation of file e:\claire\v3.5\src\meta\object.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:55 2017 *****/
+/***** CLAIRE Compilation of file /Users/ycaseau/claire/v3.5/src/meta/object.cl 
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:41 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -204,7 +204,7 @@ void  push_debug_property(property *prop,Cint arity,Cint start)
           else if (ClEnv->count_trigger == _oid_(Core.spy))
            update_property(Kernel.spy_I,
             ClEnv,
-            18,
+            16,
             Kernel._object,
             GC_OID(_oid_(_at_property1(Core.spy,Kernel._void))));
           else (ClEnv->verbose = ClEnv->count_trigger);
@@ -1209,7 +1209,7 @@ OID  tformat_string(char *self,Cint i,list *l)
   { { OID Result = 0;
       { ClairePort * p = (use_as_output_port(ClEnv->ctrace));
         format_string(self,l);
-        Result = ClAlloc->import(Kernel._port,(int *) use_as_output_port(p));
+        Result = ClAlloc->import(Kernel._port,(Cint *) use_as_output_port(p));
         } 
       return (Result);} 
      } 
@@ -1259,4 +1259,4 @@ void  contradiction_I_void()
 
 
 // v0.01
-// end of file
+// end of file

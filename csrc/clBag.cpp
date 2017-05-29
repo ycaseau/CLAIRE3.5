@@ -1,13 +1,3 @@
-/** @package 
-
-        clBag.cpp
-        
-        Copyright(c) self 2000
-        
-        Author: YVES CASEAU
-        Created: YC  24/01/2006 07:29:49
-        Last Change: YC  24/01/2006 07:29:49
-*/
 /***********************************************************************/
 /**   microCLAIRE                                       Yves Caseau    */
 /**   clBag.cpp                                                        */
@@ -53,13 +43,13 @@
 // internal static functions that operate on Cmemory
 // sort using the hash code order
 // should be made available in CLAIRE !
-void bag::quickSort(OID *a, int n, int m)
-{int x,y;
+void bag::quickSort(OID *a, Cint n, Cint m)
+{Cint x,y;
  if (m > n)                                     // sort memory zone from l + n to m
      {x = a[n]; y = hash_order(x);          // use x as pivot
       if (m == (n + 1)) {if (hash_order(a[m]) < y)                // two pieces
                             {a[n] = a[m]; a[m] = x;}} // swap
-      else {int q = n, p = (m + n) >> 1;        // new in v3.0.20
+      else {Cint q = n, p = (m + n) >> 1;        // new in v3.0.20
             x = a[p]; y = hash_order(x);
             if (p != n) a[p] = a[n];            // move pivot to first place
             for (p = n + 1; p <= m; p++)        // sort around pivot
@@ -75,8 +65,8 @@ void bag::quickSort(OID *a, int n, int m)
 // note that equal(x,y) => hash(x) = hash(y)
 // at any point a[1 .. j] is cleaned and we have examined a[1 .. i]
 // u is the index of the last strict increase in hash_order
-int bag::quickClean(OID *a, int m)
-{int i = 1, j = 1, x = a[1], u = 1, y = hash_order(x);
+Cint bag::quickClean(OID *a, Cint m)
+{Cint i = 1, j = 1, x = a[1], u = 1, y = hash_order(x);
   while (i + 1 <= m)
      {OID x2 = a[i + 1], y2 = hash_order(x2), keep = 1, k;       // do we keep x2 ?
       // printf("hash de %d -> %d [%d,%d]\n",x2,y2,x,y);
@@ -98,7 +88,7 @@ list *bag::clone()
 list *bag::clone(ClaireType *t)
 {  if (length == 0) return list::empty(t);        // v3.2.38 -> moved up thanks to FXJ
    list *obj = list::make();
-   int i;
+   Cint i;
    OID *x = ClAlloc->makeContent(length);
    for (i = 1; i <= length; i++) x[i] = CNULL;    // for GC protection
    obj->content = x;
@@ -110,7 +100,7 @@ list *bag::clone(ClaireType *t)
 // API functions ------------------------------------------------------------
 // copy a bag - in v0.01, we cannot opy nil or {} we return a generic empty
 bag *copy_bag(bag *l)
-{int i;
+{Cint i;
  if (Kernel.nil == l) return list::empty();
  else if (l == Kernel.emptySet) return set::empty();
  else {
@@ -128,7 +118,7 @@ bag *copy_bag(bag *l)
 
 // new in v3.1.16: create an empty copy  
 bag *empty_bag(bag *l)
-{int i;
+{Cint i;
  bag *obj = (bag *) ClAlloc->makeAny(4);
  obj->isa = l->isa;
  obj->content = NULL;
@@ -142,7 +132,7 @@ bag *empty_bag(bag *l)
 // removes the first occurrence of val in l; works for bags !
 // we could still do better with a set if desired ...
 bag *delete_bag(bag *l, OID val)
-{int i,j, m = l->length;
+{Cint i,j, m = l->length;
  OID *x = l->content;
  if ( m == 0 ) return(l);                   // v3.2.22
  if IDENTIFIED(val)
@@ -230,21 +220,23 @@ list *list::makeStack(OID val1, OID val2)
    return obj; }     */
 
 // creates a list
-list *list::alloc(int n,...)
+list *list::alloc(Cint n,...)
 {va_list ap;
  int i;
  list *obj = list::make();
  obj->of = Kernel.emptySet;                 // v3.2
  OID *x = ClAlloc->makeContent(n);
    va_start(ap,n);
-   for (i = 1; i <= n; i++) x[i] = va_arg(ap, OID);
+   for (i = 1; i <= n; i++)
+       {x[i] = va_arg(ap, OID);
+        if (VERB > 0) printf("list alloc read %llx for [%d]\n",x[i],i);}
    obj->length = n;
    obj->content = x;
    va_end(ap);
    return obj;}
 
 // creates a typed list
-list *list::alloc(ClaireType *t, int n,...)
+list *list::alloc(ClaireType *t, Cint n,...)
 {va_list ap;
  int i;
  ClAlloc->currentType = t;                    // v3.3.34: a method to avoid protecting the type - v3.3.42
@@ -260,14 +252,14 @@ list *list::alloc(ClaireType *t, int n,...)
    return obj;}
 
 // this is pure sugar but nice
-list *list::domain(int n, ...)
+list *list::domain(Cint n, ...)
 {va_list ap;
- int i;
+ Cint i;
  list *obj = list::make();
  OID *x = ClAlloc->makeContent(n);
    va_start(ap,n);
    for (i = 1; i <= n; i++)
-     {int z = va_arg(ap, int);
+     {Cint z = va_arg(ap, Cint);
       x[i] = _oid_(((ClaireAny *) z));}
    obj->length = n;
    obj->content = x;
@@ -280,19 +272,21 @@ list *list::domain(int n, ...)
 
 // add a new element to a list (without checking the type)
 list *list::addFast(OID x)
-{int i, m = length;
+{// printf("WTF call  addFast on %x ===\n",this);
+
+{Cint i, m = length;
  if (m + 1 == (*this)[0])    // the memory zone is full
     {OID *y = ClAlloc->makeContent(m + 1);
         if (length) memcpy(y+1, content+1, sizeof(OID) * length); //<sb> v3.3.33
         content = y;}
  length = m + 1;
  (*this)[m + 1] = x;        // add the element
- return this;}
+ return this;}}
 
 
 // equality on lists
 ClaireBoolean *list::equalList(list *l2)
-{int i, m = length;
+{Cint i, m = length;
   if ( l2->length != m ) return(CFALSE);
   else {for ( i = 1; i <= m ; i++)
             if (equal((*this)[i],(*l2)[i]) == CFALSE) return(CFALSE);
@@ -326,7 +320,7 @@ list *add_I_list(list *l, OID val)
 /* create a list with car = val and cdr = l ; l must be a list 999 */
 list *cons_any(OID val, list *l)
 {  list *obj = list::make();
-   int i;
+   Cint i;
    OID *x = ClAlloc->makeContent(l->length + 1);
      x[1] = val;
      // for (i = 1; i <= l->length; i++) x[i + 1] = (*l)[i];
@@ -339,10 +333,10 @@ list *cons_any(OID val, list *l)
      return obj;}
 
 // allocate a list with n members equal to m
-list *make_list_integer(int n, OID m)
+list *make_list_integer(Cint n, OID m)
 {  if ( n < 0 ) n = 0;
    list *obj = list::make();
-   int i;
+   Cint i;
    if (n > 0)
       {OID *x = ClAlloc->makeContent(n);
        for (i = 1; i <= n; i++) x[i] = m;
@@ -353,15 +347,15 @@ list *make_list_integer(int n, OID m)
    return obj;}
 
 // returns the position of val in the list l (use fast iteration)
-int index_list (list *l, OID val)
-{int i = 1;
+Cint index_list (list *l, OID val)
+{Cint i = 1;
  ITERATE(j);
   for (START(l); NEXT(j); i++)  if (equal(j,val) == CTRUE) return(i);
   return(0);}
 
 // add a second list into a first (destructive - equivalent of LISP nconc)
 list *add_star_list(list *l1, list *l2)
-{int i = l1->length + 1,k;
+{Cint i = l1->length + 1,k;
  ITERATE(j);
  if (l1->of != NULL)
     for (START(l2) ;NEXT(j) ;)
@@ -381,7 +375,7 @@ list *append_list(list *l1, list *l2)
  if (l1->length == 0) return l2;
  else if (l2->length == 0) return l1;
  else {list *obj = list::make();
-       int n =l1->length + l2->length,j = 1;
+       Cint n =l1->length + l2->length,j = 1;
        OID *x = ClAlloc->makeContent(n);
          //for (START(l1); NEXT(k);)  x[j++] = k;
          //for (START(l2); NEXT(k);) x[j++] = k;
@@ -394,8 +388,8 @@ list *append_list(list *l1, list *l2)
 
 
 // insert after a member, works only for a list
-list *add_at_list(list *l, int n, OID val)
-{int i,j,m = l->length;
+list *add_at_list(list *l, Cint n, OID val)
+{Cint i,j,m = l->length;
  if (l->of == NULL || l->of->contains(val) == CFALSE )        // v3.3.24
      Cerror(17,val,_oid_(l));
  if (n <= 0 || n > m + 1) Cerror(5,n,_oid_(l));                                 // v3.2.24 !
@@ -412,8 +406,8 @@ list *add_at_list(list *l, int n, OID val)
 
 // removes the nth member of a list
 // TODO write rmlast using delete_at
-list *delete_at_list (list *l, int n)
-{int j, m = l->length;
+list *delete_at_list (list *l, Cint n)
+{Cint j, m = l->length;
   if ((n < 1) || (n > m)) Cerror(5,n,_oid_(l));    // v3.2.44 : same error as 2.5
   // for (j= n; j < m; j++) (*l)[j] = (*l)[j+1];
   if (m - n) memmove(l->content+n, l->content + n + 1, sizeof(OID) * (m - n));  //<sb> v3.3.33
@@ -421,19 +415,19 @@ list *delete_at_list (list *l, int n)
   return l;}
 
  // remove the n first elements of a list
-list *skip_list(list *l, int n)
-{int i, m = l->length;
+list *skip_list(list *l, Cint n)
+{Cint i, m = l->length;
     if (n < 0) Cerror(7,_oid_(l),n);
     if (m <= n) l->length = 0;
     else {// for (i = n + 1; i <= m; i++) (*l)[i-n] = (*l)[i];
-    	  int len = m - n;
+    	  Cint len = m - n;
           if (len) memmove(l->content + 1, l->content + 1 + n, sizeof(OID) * len);  //<sb> v3.3.33
           l->length = m - n;}
    return l; }
 
 // old LISP cdr ....
 list *cdr_list(list *l)
-{int i,m = l->length;
+{Cint i,m = l->length;
   if (m == 0) {Cerror(8,0,0); return NULL;}
   else { list *obj = list::make();
          OID *x = ClAlloc->makeContent(m - 1);
@@ -446,7 +440,7 @@ list *cdr_list(list *l)
 
 // shrinks a list (keep the same allocation)
 // v3.2.20 : also works for a bag !
-bag *shrink_list (bag *l, int n)
+bag *shrink_list (bag *l, Cint n)
 {if (n < 0) Cerror(7,_oid_(l),n);
  if (n < l->length) l->length = n;
  return l;}
@@ -490,9 +484,9 @@ inline set *set::make()
   return obj;}
 
 // creates a set
-set *set::alloc(int n,...)
+set *set::alloc(Cint n,...)
 {va_list ap;
- int i;
+ Cint i;
  set *obj = set::empty();
  obj->of = Kernel.emptySet;                 // v3.2
    va_start(ap,n);
@@ -501,9 +495,9 @@ set *set::alloc(int n,...)
    return obj;}
 
 // creates a typed set
-set *set::alloc(ClaireType *t, int n,...)
+set *set::alloc(ClaireType *t, Cint n,...)
 {va_list ap;
- int i;
+ Cint i;
  set *obj = set::empty(t);
    va_start(ap,n);
    for (i = 1; i <= n; i++) obj->addFast(va_arg(ap, OID));
@@ -518,7 +512,7 @@ set *set::alloc(ClaireType *t, int n,...)
 set *set::addFast(OID val)
 { if (IDENTIFIED(val) || (contain_ask_set(this,val) == CFALSE))    // otherwise nothing to do !
   {OID *x = content;                // array= chunk
-   int m = length, i = 1, j = m,NEW;
+   Cint m = length, i = 1, j = m,NEW;
    while ((i + 1) < j)              // dichotomic research for the insertion point [i,j]
      {NEW = ((i + j) >> 1);         // NEW is neither l or j
       if (x[NEW] == val) return this;
@@ -555,7 +549,7 @@ set *set::addFast(OID val)
 
 // equality on lists
 ClaireBoolean *set::equalSet(set *l2)
-{int i,direct = 0;                            // direct = 0 <=> fast mode since all members are identified (=> same position)
+{Cint i,direct = 0;                            // direct = 0 <=> fast mode since all members are identified (=> same position)
   if (length != l2->length) return CFALSE;
   for (i=1; i <= length ; i++)
         {OID x = (*this)[i]; 
@@ -570,10 +564,10 @@ ClaireBoolean *set::equalSet(set *l2)
 // generic contains function
 ClaireBoolean *contain_ask_set(set *s,OID val)
  {OID *x = s->content;                // array= chunk
-  int j, m = s->length;
+  Cint j, m = s->length;
   if (m == 0) return CFALSE;
   if IDENTIFIED(val)
-    {int i = 1, j = m, k;
+    {Cint i = 1, j = m, k;
      while ((i + 1) < j)            // dichotomic search
       {k = ((i + j) >> 1);           // k is neither l or j
        if (x[k] == val) return CTRUE;
@@ -595,7 +589,7 @@ set *add_I_set(set *l, OID val)
 // intersection of two sets
 set *_exp_set(set *l1, set *l2)
 {set *s = set::empty();
- int m1 = l1->length, m2 = l2->length, newl = m1,i1,i2,j = 1;
+ Cint m1 = l1->length, m2 = l2->length, newl = m1,i1,i2,j = 1;
  if (newl > m2) newl = m2;                    // min of 2 length (if needed)
  for ((i1 = 1,i2 = 1); ((i1 <= m1) && (i2 <= m2));)
       {OID x1 = (*l1)[i1], x2 = (*l2)[i2];
@@ -618,12 +612,12 @@ set *_exp_set(set *l1, set *l2)
 
 // union of two sets: merge of sorted lists (sort_of) */
 set *append_set (set *l1, set *l2)
-{int m1 = l1->length, m2 = l2->length;
+{Cint m1 = l1->length, m2 = l2->length;
   if (m1 == 0) return (set *) copy_bag(l2);
   if (m2 == 0) return (set *) copy_bag(l1);
   set *s = set::make();
   OID *x = ClAlloc->makeContent(m1 + m2);
-  int i1,i2,k,j = 1;
+  Cint i1,i2,k,j = 1;
   for ((i1 =1, i2 = 1); (i1 <= m1 && i2 <= m2);)       // merge of l1 and l2
     {OID x1 = (*l1)[i1], x2 = (*l2)[i2];
       {if (x1 == x2) {i1++; i2++; x[j++] = x1;}
@@ -659,7 +653,7 @@ set *set_I_bag (bag *l)
   else {set *obj = (set *) copy_bag(l);
         obj->isa = Kernel._set;
         bag::quickSort(obj->content,1,obj->length);     // <yc> sort by hash code */
-        // see("------------------------  after quickSort ",_oid_(obj));
+        //see("------------------------  after quickSort ",_oid_(obj));
         obj->length = bag::quickClean(obj->content,obj->length);
         return obj;}}
 
@@ -670,10 +664,10 @@ list *list_I_set (set *l)
    return obj;}
 
 // returns a nice sequence of consecutive numbers */
-set *sequence_integer(int n, int m)
+set *sequence_integer(Cint n, Cint m)
 { if (m < n) return set::empty();
   else {if (n == m) return set::alloc(Kernel._integer,1,n);
-        else {int i;
+        else {Cint i;
               set *x = set::make();
               x->content = ClAlloc->makeContent(m-n+3);
               x->isa = Kernel._set;
@@ -710,9 +704,9 @@ tuple *tuple::empty()
    return obj;}
    
 // creates a tuple
-tuple *tuple::alloc(int n,...)
+tuple *tuple::alloc(Cint n,...)
 {va_list ap;
- int i;
+ Cint i;
  tuple *obj = tuple::make();
  OID *x = ClAlloc->makeContent(n);
    va_start(ap,n);
@@ -726,9 +720,9 @@ tuple *tuple::alloc(int n,...)
 // v3.2.26 - stack allocation is only for tuples
 // v3.2.58 - since -> copyIfNeeded is used all the time in the interpreted mode we do not
 // need to protect the zone from another eval-push :-)
-tuple *tuple::allocStack(int n,...)
+tuple *tuple::allocStack(Cint n,...)
 {va_list ap;
- int i;
+ Cint i;
  OID *adr = &(ClEnv->stack[ClEnv->index]);
  tuple *obj = (tuple *) adr;
    va_start(ap,n);
@@ -781,24 +775,24 @@ tuple *tuple::copyIfNeeded()
 // copy an array onto another
 // note that a[-2] = EOL if step = 1 and a[-2] = size if step = 2
 OID *copy_array(OID *a)
-{int i,m = ARRAYLENGTH(a);
+{Cint i,m = ARRAYLENGTH(a);
  ClaireType *t = ARRAYTYPE(a);
  OID *b = ClAlloc->makeArray(m,t);
- int n = ((t == Kernel._float) ? (2 * m) + 1 : m);     // v3.2.44
+ Cint n = ((t == Kernel._float) ? (2 * m) + 1 : m);     // v3.2.44
    for (i = 1; i <= n ; i++) b[i] = a[i];
    return b;}
 
 // returns the length of the array (to be removed later)
 // the length is always at *a[0]
-int length_array(OID *a) {return (int) a[0];}
+Cint length_array(OID *a) {return (Cint) a[0];}
 
 // returns the type the array
 ClaireType  *of_array(OID *a) {return  ARRAYTYPE(a);}
 
 // creates a new array
-OID *make_array_integer(int n, ClaireType *t, OID v)
+OID *make_array_integer(Cint n, ClaireType *t, OID v)
   { if (t->contains(v) == CFALSE) Cerror(42,_oid_(t),v);
-    int i;
+    Cint i;
     OID *a = ClAlloc->makeArray(n,t);
     if (t != Kernel._float)
        {for (i = 1; i <= n ; i++) a[i] = v;}
@@ -807,20 +801,20 @@ OID *make_array_integer(int n, ClaireType *t, OID v)
     return a;}
 
 // return the nth element of the array
-OID nth_get_array(OID *a, int n)
+OID nth_get_array(OID *a, Cint n)
 { // return  (ARRAYFLOAT(a) ? _float_( ((double *) a)[n]) : a[n]); }
   if ARRAYFLOAT(a)
       return _float_( ((double *) a)[n]);
   else return a[n];}
 
 // sets the nth element of the array
-void nth_put_array(OID *a, int n, OID y)
+void nth_put_array(OID *a, Cint n, OID y)
    {if ARRAYFLOAT(a) ((double *) a)[n] = OBJECT(ClaireFloat,y)->value;
     else a[n] = y;}
 
 // creates a list copy of the array
 list *list_I_array(OID *a)
-{ int i,n = ARRAYLENGTH(a);
+{ Cint i,n = ARRAYLENGTH(a);
   list *obj = list::make();
   OID *x = ClAlloc->makeContent(n);
    obj->of = ARRAYTYPE(a);                 // v3.2.8
@@ -835,7 +829,7 @@ list *list_I_array(OID *a)
 
 // creates an array from a list and a type
 OID *array_I_list(list *l)
-{ int i,n = l->length;
+{ Cint i,n = l->length;
   OID *a = ClAlloc->makeArray(n,((l->of == NULL) ? Kernel._any : l->of));
   ARRAYLENGTH(a) = n;
   for (i = 1; i <= n ; i++)
@@ -845,7 +839,7 @@ OID *array_I_list(list *l)
   return a;}
 
 ClaireBoolean *contain_ask_array(OID *a,OID val)
-{ int i,n = ARRAYLENGTH(a);
+{ Cint i,n = ARRAYLENGTH(a);
   if (ARRAYTYPE(a) != Kernel._float)
      {for (i = 1; i <= n ; i++) if (equal(val, a[i]) == CTRUE) return CTRUE;}
   else for (i = 1; i <= n; i++)         // MOST DISGRACEFUL, TRULY ABJECT

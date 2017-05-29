@@ -36,7 +36,7 @@ class ClairePrimitive : public ClaireAny {};
 // imports are for extensibility
 class ClaireImport : public ClairePrimitive
 { public:
-  int value;};                           // the 32 bits address of the thing that we import
+  Cint value;};                           // the 32 bits address of the thing that we import
 
 // same thing for floats but in CLAIRE 2.9 we use a 64bits double
 class ClaireFloat: public ClairePrimitive
@@ -47,7 +47,7 @@ class ClaireFloat: public ClairePrimitive
 // Functions are object-pointer to C functions
 class ClaireFunction: public ClairePrimitive
  {public:
-  int value;
+  Cint value;
   char* name;};
 
 // arrays are imported that are allocated in a special way so that their tail is a memory
@@ -64,17 +64,17 @@ class ClaireArray: public ClaireImport { };
 // was the original intent)
 class ClairePort
 {public:
- int status;                            // used to keep some info
- int firstc;                            // used in the nextc/firstc mode
- int getNext();                         // we use the int representation of char
+ Cint status;                            // used to keep some info
+ Cint firstc;                            // used in the nextc/firstc mode
+ Cint getNext();                         // we use the int representation of char
 
  static ClairePort *make(FILE *f);      // used for stdio ....
  virtual char get();
  virtual void put(char c) ;
- virtual void put(int n);
+ virtual void put(Cint n);
  virtual void put(double x);
  virtual void prettyp(double x);        // v3.2.54
- virtual void putFormat(double x,int i);        // v3.3.42 
+ virtual void putFormat(double x,Cint i);        // v3.3.42
  virtual void flush();
  virtual void pclose();
  };                  //  v3.3.40 remove debugSee
@@ -108,15 +108,15 @@ class property;
 class bag: public ClaireType
 {
   public:
-  int length;
+  Cint length;
   ClaireType *of;
   OID* content;
 
-  inline OID &operator[](int i);     // TODO : make inline !!!
-  static void quickSort(OID *a, int i, int m);
-  static int quickClean(OID *a, int m);
-  list *bag::clone();                      // v3.2: needed for Collect
-  list *bag::clone(ClaireType *t);         // v3.2
+  inline OID &operator[](Cint i);     // TODO : make inline !!!
+  static void quickSort(OID *a, Cint i, Cint m);
+  static Cint quickClean(OID *a, Cint m);
+  list *clone();                      // v3.2: needed for Collect
+  list *clone(ClaireType *t);         // v3.2
 
  };
 
@@ -129,13 +129,13 @@ class list: public bag
  static list *make(OID x);                     // constructor for list(x)
  static list *make(OID x, OID y);              // list(x,y)
 // static list *makeStack(OID x, OID y);         // list(x,y) allocated on the stack
- static list *alloc(int n,...);                // create a list with variable num of args
- static list *alloc(ClaireType *t, int n,...);
- static list *domain(int n, ...);              // sugar for list of types
+ static list *alloc(Cint n,...);                // create a list with variable num of args
+ static list *alloc(ClaireType *t, Cint n,...);
+ static list *domain(Cint n, ...);              // sugar for list of types
 
  list *addFast(OID x);         // add x at the end of l
  ClaireBoolean *equalList(list *l2);
- ClaireBoolean *list::memq(OID val);
+ ClaireBoolean *memq(OID val);
 // virtual ClaireBoolean *isEqual(OID x2);
  };
 
@@ -146,8 +146,8 @@ class set: public bag
    static set *empty();
    static set *empty(ClaireType *t);
 
-   static set *alloc(int n,...);              // creates a set with variable number of args
-   static set *alloc(ClaireType *t, int n,...);
+   static set *alloc(Cint n,...);              // creates a set with variable number of args
+   static set *alloc(ClaireType *t, Cint n,...);
 
    set *addFast(OID val);
 // virtual ClaireBoolean *isEqual(OID x2);
@@ -158,9 +158,9 @@ class set: public bag
 class tuple: public bag
 {public:
    static inline tuple *make();          // contructors
-   static tuple *alloc(int n,...);              // creates a set with variable number of args
+   static tuple *alloc(Cint n,...);              // creates a set with variable number of args
    static tuple *empty();
-   static tuple *allocStack(int n,...);           // for dynamic tuples
+   static tuple *allocStack(Cint n,...);           // for dynamic tuples
    tuple *addFast(OID x);         // add x at the end of l
    tuple *copyIfNeeded();
  
@@ -181,11 +181,11 @@ class ClaireClass: public ClaireType
   list *ancestors;
   set *descendents;
   ClaireFunction *evaluate;
-  int open;                     // tells the degree of evolvability (cf.clReflect )
+  Cint open;                     // tells the degree of evolvability (cf.clReflect )
   list *instances;
   list *prototype;
   list *params;
-  int code;                     // lattice encoding
+  Cint code;                     // lattice encoding
   list *dictionary;             // dictionary (defined in CLAIRE !)
   ClaireBoolean *ident_ask;     // true <=> ( = <=> identical)
   OID if_write;                 // new in 3.0 : rules on instantiation !
@@ -194,17 +194,17 @@ class ClaireClass: public ClaireType
   static ClaireClass *make(ClaireAny *x);  // make a class (simple version without alloc) for bootstrap
   static ClaireClass *make(char *n);    // same with a name
   static ClaireClass *make(char *name, ClaireClass *c2, module *def);   // regular constructor
-  ClaireObject *instantiate(int n);      // very crude instantiation (only the zone)
+  ClaireObject *instantiate(Cint n);      // very crude instantiation (only the zone)
   ClaireObject *instantiate();           // use the prototype list as the pattern
   thing *instantiate(char *n, module *def);  // same for named objects
   void genealogy();                                 // creates the genealogy
-  slot *addSlot(property *p,ClaireType *t,OID def,int ix); // add a slot
+  slot *addSlot(property *p,ClaireType *t,OID def,Cint ix); // add a slot
 //  slot *addSlotNew(property *p,ClaireType *t,OID def,int ix); // add a slot
-  int nBits(int n);  // number of bits that are necessary to encode n children
-  int totalBits();   // number of bits used for encoding
+  Cint nBits(Cint n);  // number of bits that are necessary to encode n children
+  Cint totalBits();   // number of bits used for encoding
   void encode();   // incremental encoding
-  void recode(int n);
-  void nodeCode(int cx,int n,int m,int i);
+  void recode(Cint n);
+  void nodeCode(Cint cx,Cint n,Cint m,Cint i);
   ClaireObject *operator() (OID arg1);                        // replaces item1
   ClaireObject *operator() (OID arg1, OID arg2);                        // replaces item2
   ClaireObject *operator() (OID arg1, OID arg2, OID arg3);              // replaces OF(L_p,...)
@@ -235,7 +235,7 @@ class symbol: public SystemObject
 // we create out 256 chars as objects - stored in the ClRes __ table
 class ClaireChar: public SystemObject
 {public:
-int ascii;
+Cint ascii;
 
 static void init();
 };
@@ -247,10 +247,10 @@ class ClaireError: public ClaireException {};
 
 class system_error: public ClaireError {
 public:
-    int index;
+    Cint index;
     OID value;
     OID arg;
-    static system_error *make(int a, OID i, OID j);
+    static system_error *make(Cint a, OID i, OID j);
         };
 
 // restrictions (slots & methods) are system objects
@@ -269,7 +269,7 @@ class slot: public restriction {
  public:
   ClaireClass *srange;               // sort for the slot's range: list(method) or type(slot)
   OID DEFAULT;                  // default value
-  int index;                    // position in the class structure
+  Cint index;                    // position in the class structure
 };
 
 // a method
@@ -307,24 +307,24 @@ public:
   OID if_write;                         // a list, a Function or CNULL
   ClaireBoolean *store_ask;             // defeasible updates
   ClaireRelation *inverse;              // inverse or NULL
-  int open;                             // the degree of evolvability
+  Cint open;                             // the degree of evolvability
   ClaireObject *multivalued_ask;        // list, true or false
 };
 
 // a property is a collection of restrictions that share the same selector
 class property: public ClaireRelation {
 public:
-  int trace_I;                               // trace status
+  Cint trace_I;                               // trace status
   list *restrictions;
   list *definition;
   ClaireObject *dictionary;                  // FALSE or list
   ClaireObject *reified;                     // boolean or a PRcount
-  int dispatcher;                            // new in v3.1 : index for the fast dispatch
+  Cint dispatcher;                            // new in v3.1 : index for the fast dispatch
 
   static property *make(char *name, module *m);               // create a property
-  static property *make(char *name, int op, module *m);       // create a property
-  static property *make(char *name, int op, module *m, int i);// create a property
-  static property *make(char *name, int op, module *m, ClaireClass *c, int i);// create a property
+  static property *make(char *name, Cint op, module *m);       // create a property
+  static property *make(char *name, Cint op, module *m, OID i);// create a property
+  static property *make(char *name, Cint op, module *m, ClaireClass *c, Cint i);// create a property
   OID operator() (OID arg1);                                  // replaces OF(L_p,...)
   OID operator() (OID arg1, OID arg2);                        // replaces OF(L_p,...)
   OID operator() (OID arg1, OID arg2, OID arg3);              // replaces OF(L_p,...)
@@ -363,15 +363,15 @@ public:
                   OID arg9, OID arg10, OID arg11, OID arg12, OID arg13, OID arg14, OID arg15,
                   OID arg16, OID arg17, OID arg18, OID arg19, OID arg20);
    // v3.2.24 inline fcall
-  inline int fcall (int a1);
-  inline int fcall (int a1, int a2);
-  inline int fcall (int a1, int a2, int a3);
-  inline int fcall (int a1, int a2, int a3, int a4);
+  inline OID fcall (OID a1);
+  inline OID fcall (OID a1, OID a2);
+  inline OID fcall (OID a1, OID a2, OID a3);
+  inline OID fcall (OID a1, OID a2, OID a3, OID a4);
 
-  OID stack_apply(int i);                             // apply to args in stack
-  OID super(ClaireClass *c,int size);                 // used by compiler
-  method *addMethod(list *dom, ClaireType *ran, int sta, ClaireFunction *f);  // add method
-  method *addFloatMethod(list *dom, ClaireType *ran, int sta, ClaireFunction *f,
+  OID stack_apply(Cint i);                             // apply to args in stack
+  OID super(ClaireClass *c,Cint size);                 // used by compiler
+  method *addMethod(list *dom, ClaireType *ran, Cint sta, ClaireFunction *f);  // add method
+  method *addFloatMethod(list *dom, ClaireType *ran, Cint sta, ClaireFunction *f,
                          ClaireFunction *f2);  // add method for floats
 
   } ;
@@ -380,8 +380,8 @@ public:
 class operation: public property {
 public:
   int precedence;
-  static operation *make(char *name, int op, module *m, int p);        // create an operation
-  static operation *make(char *name, module *m, int p);        // create an operation
+  static operation *make(char *name, Cint op, module *m, Cint p);        // create an operation
+  static operation *make(char *name, module *m, Cint p);                // create an operation
   } ;
 
 
@@ -392,8 +392,8 @@ public:
   OID params;                  // integer, or pair of integer
   OID DEFAULT;                 // default value
 
-  int expand(OID x);
-  int insertHash(list *l, OID x, OID val);
+  Cint expand(OID x);
+  Cint insertHash(list *l, OID x, OID val);
 };
 
 // modules are regular objects in 2.9 (no more integer IDs)
@@ -406,12 +406,12 @@ public:
     list *uses;                 // other modules that are used
     char *source;               // directory where the sources can be found
     list *made_of;
-    int status;                 // new (0:default, 1:loaded, 2 compiled, 3:c+loaded, 4:c+l+traced)
+    Cint status;                 // new (0:default, 1:loaded, 2 compiled, 3:c+loaded, 4:c+l+traced)
     ClaireFunction *evaluate;   // function
     char *external;             // external of the module: .lib library
    
     static module *make(char *s, module *sup);          // constructor
-    unsigned hash(char *s);                             // classical has function
+    unsigned Cint hash(char *s);                             // classical has function
     symbol *lookup(char *name);                         // symbol lookup
     symbol *getSymbol(char *name, module *def);
 
@@ -421,43 +421,43 @@ public:
 class ClaireEnvironment: public SystemObject
 {public:
   // --- this part is visible from CLAIRE through a meta-description ---------------
-  int verbose;                          // verbosity level
+  Cint verbose;                          // verbosity level
   ClaireException* exception_I;         // the last error
   module* module_I;                     // current module we are in
   char *name;                          // external name
   double version;                      // note the real float !
   ClairePort *ctrace;                   // current trace port
   ClairePort *cout;                     // current out port
-  int index;                            // eval stack index (top of stack)
-  int base;
-  int debug_I;                          // debug
-  int trace_I;                          // for tracing
-  int step_I;
-  int last_debug;                       // last value of the debug index
-  int last_index;                       // last value of the top of eval stack
+  Cint index;                            // eval stack index (top of stack)
+  Cint base;
+  Cint debug_I;                          // debug
+  Cint trace_I;                          // for tracing
+  Cint step_I;
+  Cint last_debug;                       // last value of the debug index
+  Cint last_index;                       // last value of the top of eval stack
   ClaireObject * spy_I;                 // store the spy method if any
-  int count_call;                       // count the numbers of call
-  int count_level;                      // level at which something happens ...
+  Cint count_call;                       // count the numbers of call
+  Cint count_level;                      // level at which something happens ...
   OID count_trigger;                    // what should happen
   list *params;                         // list of arguments v2.4.07
-  int close;                            // c: do not touch,   p:read only (-1)
-  int ABSTRACT;                         // c: no more instances           (0)
-  int FINAL;                            // c: no more subclasses          (1)
-  int DEFAULT;                          //                                (2)
-  int open;                             // p: open property (extensible)  (3)
-  int ephemeral;                        // c:ephemeral objects            (4)
+  Cint close;                            // c: do not touch,   p:read only (-1)
+  Cint ABSTRACT;                         // c: no more instances           (0)
+  Cint FINAL;                            // c: no more subclasses          (1)
+  Cint DEFAULT;                          //                                (2)
+  Cint open;                             // p: open property (extensible)  (3)
+  Cint ephemeral;                        // c:ephemeral objects            (4)
 
   // --- this part is only accessible through the Kernel -------------------------
-  int abortOnError;                     // 0: OK, 1: stop if error (useful for debug)
+  Cint abortOnError;                     // 0: OK, 1: stop if error (useful for debug)
   ClaireAny* moduleStack;                  // stack for begin/end (NEW)
   jmp_buf *handlers;                    // stack of handlers
-  int cHandle;                          // the current level of handler
-  int *stack;                           // evaluation stack
-  int tIndex;                           // time counter index /* time counters                      */
-  int tStack[10];                       // stack of time counters
+  Cint cHandle;                          // the current level of handler
+  OID *stack;                           // evaluation stack
+  Cint tIndex;                           // time counter index /* time counters                      */
+  Cint tStack[10];                       // stack of time counters
   char buffer[MAXBUF];                  // a local buffer for string creation
-  int bLength;                          // its length
-  int gensym;                           // a seed for symbol generation
+  Cint bLength;                          // its length
+  Cint gensym;                           // a seed for symbol generation
 
   // methods
   void init();
@@ -466,7 +466,7 @@ class ClaireEnvironment: public SystemObject
   inline void pushChar(char c);         // prints a char in the string buffer
   inline void put(char c);              // prints a char on the current port
   char *bufferCopy();                   // makes a string from the buffer
-  void pushInteger(int n);              // prints an integer in the string buffer
+  void pushInteger(Cint n);              // prints an integer in the string buffer
   char *localString(char* s);           // make sure that a string is local
 
 };
@@ -481,24 +481,24 @@ extern ClaireEnvironment *ClEnv;
 // === objects ==============================================================
 extern ClaireObject *copy_object(ClaireObject *x);
 extern ClaireBoolean *equal(OID n, OID m);
-extern OID slot_get_object(ClaireObject *x, int y, ClaireClass *s);
+extern OID slot_get_object(ClaireObject *x, Cint y, ClaireClass *s);
 extern ClaireBoolean *belong_to(OID oself, OID ens);
-extern int hash_list(list *l, OID x);
-extern int Cerror(int n, OID a, OID b);
+extern Cint hash_list(list *l, OID x);
+extern Cint Cerror(Cint n, OID a, OID b);
 extern ClaireBoolean *boolean_I_ClaireAny(ClaireAny *x);
 extern ClaireBoolean *boolean_I_any(OID n);
 
 // === class & properties ===================================================
-extern void add_slot_class(ClaireClass *c, property *p, ClaireType *t, OID def,int i);
+extern void add_slot_class(ClaireClass *c, property *p, ClaireType *t, OID def,Cint i);
 // extern void add_slot_classNew(ClaireClass *c, property *p, ClaireType *t, OID def, int i);
 extern ClaireClass *sort_I_class(ClaireClass *c);
 extern method *add_method_property(property *p, list *dom, ClaireType *r,
-                                   int status, OID f);
+                                   Cint status, OID f);
 extern ClaireObject *new_object_class(ClaireClass *c);
 extern thing *new_thing_class(ClaireClass *c, symbol *s);
 
-extern int index_table(table *a, OID x);
-extern int index_table2(table *a, OID x, OID y);
+extern Cint index_table(table *a, OID x);
+extern Cint index_table2(table *a, OID x, OID y);
 extern ClaireClass *class_I_symbol(symbol *s, ClaireClass *c2);
 
 // === bags =================================================================
@@ -512,15 +512,15 @@ extern bag *cast_I_bag(bag *l, ClaireType *x);
 extern list *add_list(list *l, OID val);
 extern list *add_I_list(list *l, OID val);
 extern list *cons_any(OID val, list *l);
-extern list *make_list_integer(int n, OID m);
-extern int index_list (list *l, OID val);
+extern list *make_list_integer(Cint n, OID m);
+extern Cint index_list (list *l, OID val);
 extern list *add_star_list(list *l1, list *l2);
 extern list *append_list(list *l1, list *l2);
-extern list *add_at_list(list *l, int n, OID val);
-extern list *delete_at_list (list *l, int n);
-extern list *skip_list(list *l, int n);
+extern list *add_at_list(list *l, Cint n, OID val);
+extern list *delete_at_list (list *l, Cint n);
+extern list *skip_list(list *l, Cint n);
 extern list *cdr_list(list *l);
-extern bag *shrink_list (bag *l, int n);
+extern bag *shrink_list (bag *l, Cint n);
 extern ClaireBoolean *contain_ask_list(list *l,OID x);
 extern tuple *tuple_I_list(list *l);
 extern list *list_I_tuple(tuple *l);
@@ -533,16 +533,16 @@ extern set *_exp_set(set *l1, set *l2);
 extern set *append_set (set *l1, set *l2);
 extern set *set_I_bag (bag *l);
 extern list *list_I_set (set *l);
-extern set *sequence_integer(int n, int m);
+extern set *sequence_integer(Cint n, Cint m);
 extern ClaireBoolean *contain_ask_set(set *l,OID x);
 
 // === array ==================================================================
 extern OID *copy_array(OID *a);
-extern int length_array(OID *a);
+extern Cint length_array(OID *a);
 extern ClaireType  *of_array(OID *a);
-extern OID *make_array_integer(int n, ClaireType *t, OID v);
-extern OID nth_get_array(OID *a, int n);
-extern void nth_put_array(OID *a, int n, OID y);
+extern OID *make_array_integer(Cint n, ClaireType *t, OID v);
+extern OID nth_get_array(OID *a, Cint n);
+extern void nth_put_array(OID *a, Cint n, OID y);
 extern list *list_I_array(OID *a);
 extern OID *array_I_list(list *l);
 extern ClaireBoolean *contain_ask_array(OID *a, OID val);
@@ -553,22 +553,22 @@ extern ClaireBoolean *equal_string(register char *s1, register char *s2);
 extern void princ_string(char *ss);
 extern void self_print_string(char *ss);
 extern char *append_string(char *ss1, char *ss2);
-extern int integer_I_string(char *s);
-extern char *substring_string(char *ss, int n, int m);
-extern int get_string(char *ss, ClaireChar *c);
+extern Cint integer_I_string(char *s);
+extern char *substring_string(char *ss, Cint n, Cint m);
+extern Cint get_string(char *ss, ClaireChar *c);
 extern ClaireBoolean *_less_string(char *s1, char *s2);
-extern int included_string(char *s1, char *s2,ClaireBoolean *p);
-extern ClaireChar *nth_string (char *ss, int n);
-extern void nth_set_string (char *ss, int n, ClaireChar *c);
-extern char *shrink_string(char *ss, int n);
+extern Cint included_string(char *s1, char *s2,ClaireBoolean *p);
+extern ClaireChar *nth_string (char *ss, Cint n);
+extern void nth_set_string (char *ss, Cint n, ClaireChar *c);
+extern char *shrink_string(char *ss, Cint n);
 extern OID value_string(char *name);
 extern OID value_module(module *m, char *name);
 extern OID get_symbol_module(module *m, char *name);
 extern symbol *symbol_I_string(char *s,module *m);
 extern ClaireFunction *make_function_string(char *s);
-extern char *date_I_integer(int i);
+extern char *date_I_integer(Cint i);
 extern char* getenv_string(char *s);
-extern char* skip_string(char *ss, int n);
+extern char* skip_string(char *ss, Cint n);
 
 // ==== modules & symbols =====================================================
 extern void begin_module (module *x);
@@ -581,33 +581,33 @@ extern symbol *gensym_string (char *s);
 extern OID get_symbol (symbol *s);
 extern OID put_symbol(symbol *s, OID x);
 extern char* string_I_symbol(symbol *s);
-extern int integer_I_symbol(symbol *s);
+extern Cint integer_I_symbol(symbol *s);
 
 
 // === integer & floats =======================================================
-// extern int _integer_(int n);
+// extern int _integer_(Cint n);
 // extern OID _float_(double v);
 
-extern int ch_sign(int n);
-extern int mod_integer(int n, int m);
-extern int _7_integer(int n, int m);
-extern int _exp_integer(int n, int m);
-extern int exp2_integer(int n);
-extern ClaireChar *char_I_integer(int n);
-extern char *string_I_integer (int n);
-extern char *make_string_integer(int n, ClaireChar *c);
-extern int random_integer(int n);
-extern int times_integer(int m, int n);
-extern void princ_integer(int n);
+extern Cint ch_sign(Cint n);
+extern Cint mod_integer(Cint n, Cint m);
+extern Cint _7_integer(Cint n, Cint m);
+extern Cint _exp_integer(Cint n, Cint m);
+extern Cint exp2_integer(Cint n);
+extern ClaireChar *char_I_integer(Cint n);
+extern char *string_I_integer (Cint n);
+extern char *make_string_integer(Cint n, ClaireChar *c);
+extern Cint random_integer(Cint n);
+extern Cint times_integer(Cint m, Cint n);
+extern void princ_integer(Cint n);
 
-extern double to_float (int n);
-extern OID to_float_(int n);
-extern int integer_I_float(double n);
+extern double to_float (Cint n);
+extern OID to_float_(Cint n);
+extern Cint integer_I_float(double n);
 extern ClaireBoolean *_inf_float(double n, double m);
 extern ClaireBoolean *_inf_equal_float(double n, double m);
 extern ClaireBoolean *_sup_float(double n, double m);
 extern ClaireBoolean *_sup_equal_float(double n, double m);
-extern int integer_I_float_(OID n);
+extern Cint integer_I_float_(OID n);
 extern ClaireBoolean *_inf_float_(OID n, OID m);
 extern ClaireBoolean *_inf_equal_float_(OID n, OID m);
 extern ClaireBoolean *_sup_float_(OID n, OID m);
@@ -616,7 +616,7 @@ extern void princ_float(double x);
 extern void princ_float_(OID x);
 extern void print_float(double x);
 extern void print_float_(OID x);
-extern void print_format_float(double x,int i);
+extern void print_format_float(double x,Cint i);
 extern void print_format_float_(OID x, OID i);
 
 // === ports ==================================================================
@@ -631,12 +631,12 @@ extern ClairePort *port_I_void();
 extern ClairePort *port_I_string(char *s);
 extern char *string_I_port(ClairePort *p);
 extern OID length_port(ClairePort *p);
-extern void set_length_port(ClairePort *p, int m);
+extern void set_length_port(ClairePort *p, Cint m);
 extern char *read_string_port(ClairePort *p);
 extern OID read_ident_port(ClairePort *p);
 extern OID read_number_port(ClairePort *p);
 extern OID read_thing_port(ClairePort *p, module *app, ClaireChar *cur, module *def);
-extern void pushback_port(ClairePort *p,int n);
+extern void pushback_port(ClairePort *p,Cint n);
 extern void free_I_port(ClairePort *p);
 
 // === char & system ==========================================================
@@ -647,70 +647,70 @@ extern void c_princ_symbol(symbol *s);
 extern OID claire_mem(OID n);
 extern void claire_stat();
 extern ClaireBoolean *alpha_char (ClaireChar *cx);
-extern int integer_I_char(ClaireChar *c);
+extern Cint integer_I_char(ClaireChar *c);
 
 
 // === system functions =======================================================
 extern OID close_exception(ClaireException *x);
 extern OID safe_exception(ClaireException *x);
-extern OID reset_stack(OID x, int n);
-extern void stack_add(int x);
+extern OID reset_stack(OID x, Cint n);
+extern void stack_add(Cint x);
 extern OID fcall1(ClaireFunction *f,ClaireClass *s1,OID a1,ClaireClass *s);
 extern OID fcall2(ClaireFunction *f,ClaireClass *s1,OID a1,ClaireClass *s2, OID a2,
                   ClaireClass *s);
 extern OID fcall3(ClaireFunction *f,ClaireClass *s1,OID a1,ClaireClass *s2, OID a2,
                   ClaireClass *s3, OID a3, ClaireClass *s);
-extern OID stack_apply_function(ClaireFunction *f, list *l, int n, int m);
+extern OID stack_apply_function(ClaireFunction *f, list *l, Cint n, Cint m);
 extern void fastcall_any(OID x, OID y, OID z);
 extern char *string_I_function(ClaireFunction *f);
-extern OID store_list(list *l, int n, OID y, ClaireBoolean *b);
-extern OID store_array(OID* a, int n, OID y, ClaireBoolean *b);
-extern OID store_object(ClaireObject *x, int n, ClaireClass *s, OID y, ClaireBoolean *b);
+extern OID store_list(list *l, Cint n, OID y, ClaireBoolean *b);
+extern OID store_array(OID* a, Cint n, OID y, ClaireBoolean *b);
+extern OID store_object(ClaireObject *x, Cint n, ClaireClass *s, OID y, ClaireBoolean *b);
 extern list *store_add(list *l,OID y);
 extern void world_push();
 extern void world_pop();
 extern void world_remove();
 extern void world_slaughter();
-extern int world_number();
-extern int world_get_id();
+extern Cint world_number();
+extern Cint world_get_id();
 extern void claire_gc();
 extern void restore_state_void();
 extern ClaireAny *GC_OBJ_F(ClaireAny *x);  // v3.3.36
 extern OID GC_OID(OID x);
-extern void GC__OID(OID x, int m);
+extern void GC__OID(OID x, Cint m);
 extern char *GC_STRING(char *s);
-extern void GC__STRING(char *s,int n);
+extern void GC__STRING(char *s,Cint n);
 extern OID *GC_ARRAY(OID *a);
-extern void GC_RESERVE(int n);
-extern int GC_DEBUG(int n);
+extern void GC_RESERVE(Cint n);
+extern Cint GC_DEBUG(Cint n);
 extern void kill_I_any(OID n);
 extern void claire_shell(char *s);
 extern void time_set_void();
-extern int time_get_void();
-extern int time_read_void();
+extern Cint time_get_void();
+extern Cint time_read_void();
 extern void time_show_void();
 
 // for debug
-extern int CL_Address(OID x);
-extern char *CL_Oid(int x) ;
+extern Cint CL_Address(OID x);
+extern char *CL_Oid(Cint x) ;
 extern OID CL_Oid_inv(char *s) ;
-extern void CL_exit(int i);
+extern void CL_exit(Cint i);
 extern void CL_system(char *s);
-extern void *CL_alloc(int n);
+extern void *CL_alloc(Cint n);
 extern void checkOID(OID n);
 
 
 // interface with outside env
-extern int InspectLoop(list * l);
+extern Cint InspectLoop(list * l);
 extern void DebugLoop();
-extern int StepLoop();
+extern Cint StepLoop();
 extern char *CommandLoopVoid();
 
 
 // DEBUG: to remove (needed for the testI.exe version)
 extern void see(OID x);
-extern void see(OID x, int i);
-extern void see(char *c,OID x,int i);
+extern void see(OID x, Cint i);
+extern void see(char *c,OID x,Cint i);
 extern void see(char *c,OID x);
 
 
@@ -959,14 +959,14 @@ extern void default_main();                         // v3.2.50
 
 
 // definitions from <marie.h> that are needed for inline methods
-#define getADR(A) ((((int) A - (int) &Cmemory[0]) >> 2) - 1)  // gets the ADR from the object - DEBUG, fixed in 3.4
-typedef int (*fptr1) (int);
-typedef int (*fptr2) (int,int);
-typedef int (*fptr3) (int,int,int);
-typedef int (*fptr4) (int,int,int,int);
+#define getADR(A) ((((Cint) A - (Cint) &Cmemory[0]) >> 3) - 1)  // gets the ADR from the object - DEBUG, fixed in 3.4
+typedef OID (*fptr1) (OID);
+typedef OID (*fptr2) (OID,OID);
+typedef OID (*fptr3) (OID,OID,OID);
+typedef OID (*fptr4) (OID,OID,OID,OID);
 
 //to add when inline
-inline OID &bag::operator[](int i)  {
+inline OID &bag::operator[](Cint i)  {
 #ifdef CLDEBUG
    if (ClEnv->verbose > 12) printf("BAG:~%x [%d] -> %x (%d)\n",this,i,content[i],getADR(content) + i);
    return ((i <= length) ? content[i] : (Cerror(41,_oid_(this),i), content[1]));
@@ -977,22 +977,22 @@ inline OID &bag::operator[](int i)  {
 
 
 // v3.2.24 inline fcall
-inline int property::fcall(int a1)
+inline OID property::fcall(OID a1)
     {ClaireClass *c = ((ClaireObject *) a1)->isa;
      return ((fptr1) OBJECT(ClaireFunction,
               ((list *) (c->dispatcher))->content[dispatcher])->value)(a1);}
 
-inline int property::fcall(int a1,int a2)
+inline OID property::fcall(OID a1,OID a2)
     {ClaireClass *c = ((ClaireObject *) a1)->isa;
      return ((fptr2) OBJECT(ClaireFunction,
              ((list *) (c->dispatcher))->content[dispatcher])->value)(a1,a2);}
 
-inline int property::fcall(int a1, int a2, int a3)
+inline OID property::fcall(OID a1, OID a2, OID a3)
     {ClaireClass *c = ((ClaireObject *) a1)->isa;
      return ((fptr3) OBJECT(ClaireFunction,
              ((list *) (c->dispatcher))->content[dispatcher])->value)(a1,a2,a3);}
 
-inline int property::fcall(int a1, int a2, int a3, int a4)
+inline OID property::fcall(OID a1, OID a2, OID a3, OID a4)
     {ClaireClass *c = ((ClaireObject *) a1)->isa;
      return ((fptr4) OBJECT(ClaireFunction,
              ((list *) (c->dispatcher))->content[dispatcher])->value)(a1,a2,a3,a4);}
@@ -1013,7 +1013,7 @@ inline OID _float_(double v)
    return _oid_(obj);}
 
 // makes a oid from an integer
-inline OID _integer_(int n)
+inline OID _integer_(Cint n)
 {  if INTEGERP(n) return n; else Cerror(19,0,0); return 1;}
 
 

@@ -1,5 +1,5 @@
-/***** CLAIRE Compilation of file e:\claire\v3.5\src\meta\control.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:56 2017 *****/
+/***** CLAIRE Compilation of file /Users/ycaseau/claire/v3.5/src/meta/control.cl 
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:43 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -1401,7 +1401,7 @@ OID  self_eval_Trace(Trace *self)
           ((INHERIT(OWNER(i),Kernel._integer)) && (i <= ClEnv->verbose)))
        { OID  p = GC_OID(get_property(Kernel.ctrace,ClEnv));
         if (p != CNULL)
-         p= GC_OID(ClAlloc->import(Kernel._port,(int *) use_as_output_port(EXPORT((ClairePort *),p))));
+         p= GC_OID(ClAlloc->import(Kernel._port,(Cint *) use_as_output_port(EXPORT((ClairePort *),p))));
         format_string(string_v(a2),GC_OBJECT(list,skip_list(l,2)));
         if (p != CNULL)
          use_as_output_port(EXPORT((ClairePort *),p));
@@ -1469,4 +1469,4 @@ OID  self_eval_Branch(Branch *self)
   } 
 
 
-// end of file
+// end of file

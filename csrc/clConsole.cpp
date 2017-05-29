@@ -1,13 +1,4 @@
-/** @package 
 
-        clConsole.cpp
-        
-        Copyright(c) self 2000
-        
-        Author: Yves Caseau
-        Created: YC  17/01/2009 17:32:18
-	Last change: YC 17/01/2009 17:40:50
-*/
 /***********************************************************************/
 /**  microCLAIRE                                       Yves Caseau     */
 /**  testiClaire.cpp                                                   */
@@ -50,7 +41,7 @@ extern void call_main();
 
 /* creates a protected list of arguments */
 list *C_to_Claire(int argc, char *argv[])
-{int i;
+{Cint i;
  list *l;
   GC_BIND;
   l = list::empty();
@@ -97,18 +88,18 @@ int main(int argc, char *argv[])
 // system
 
 // exit
-void CL_exit(int i) { exit(i);}
+void CL_exit(Cint i) { exit(i);}
 
 // call to system
 void CL_system(char *s) {system(s);}
 
 // allocate a block of size n * size(OID) if possible
-void *CL_alloc(int n)
-{int *x;
-  x = (int *) malloc( (size_t) (n * sizeof(OID)));
+void *CL_alloc(Cint n)
+{Cint *x;
+  x = (Cint *) malloc( (size_t) (n * sizeof(OID)));
   if (x == NULL)
   {printf("There is not enough memory for CLAIRE, try claire -s 0 0\n");
-   for (n = 1; n < 20000000; n++ ) x = (int *) n;
+   for (n = 1; n < 20000000; n++ ) x = (Cint *) n;
    exit(0);}
   return x;}
 
@@ -118,13 +109,13 @@ void *CL_alloc(int n)
 /**    3. console top level                                          */
 /*********************************************************************/
 
-int NBEVAL = 0,MODE = 0;
+Cint NBEVAL = 0,MODE = 0;
 list *STACK;                // history stack of commands in inspect mode
 #define TOP 0               // 3 modes for top level
 #define DEBUG 1
 #define INSPECT 2
 
-int store_i,store_b,store_d;
+Cint store_i,store_b,store_d;
 void loadInit();
 
 /* top-level loop */
@@ -133,7 +124,7 @@ void topLevel(meta_reader *r)
   while (res != stop)
      { princ_string(((MODE == TOP) ? 
                      string_I_symbol(ClEnv->module_I->name) :
-                    ((MODE == DEBUG) ? "debug" : "inspect")));
+                    ((MODE == DEBUG) ? CSTRING("debug") : CSTRING("inspect"))));
        princ_string("> ");
        ClaireHandler c = ClaireHandler();
        if ERROR_IN { GC_BIND;
@@ -175,7 +166,7 @@ void topLevel(meta_reader *r)
   exit(1); }
         
 /* starts an inspector */
-int InspectLoop(list *l)
+Cint InspectLoop(list *l)
 {STACK = l;
  if (MODE == DEBUG) (ClEnv->trace_I = 1);
  MODE = INSPECT; 
@@ -200,15 +191,15 @@ void DebugLoop()
  
 
 /*reads a character on the keyboard */
-int StepLoop()
-{int c;
-  c = (int) getc(stdin);
+Cint StepLoop()
+{Cint c;
+  c = (Cint) getc(stdin);
   if (c != 10) getc(stdin);
   return c;}       
 
 /*reads a string on the keyboad */
 char *CommandLoopVoid()
-{int i = 0;
+{Cint i = 0;
  char c;
  static char buff[100];
    fflush(stdin);
@@ -224,7 +215,7 @@ char *CommandLoopVoid()
 // default main
 void default_main()
 {list *larg = ClEnv->params;
- int i = index_list(larg,_string_("-f"));
+ Cint i = index_list(larg,_string_("-f"));
  if (i > 0)
      { ClaireHandler c_handle = ClaireHandler();
       if ERROR_IN 
@@ -244,12 +235,12 @@ void default_main()
 /*********************************************************************/
 
 // for debug
-#define getADR(A) (((int) A - (int) &Cmemory[0]) >> 2)  // gets the ADR from the object
+#define getADR(A) ((CCAST(A) - CCAST(&Cmemory[0])) >> 2)  // gets the ADR from the object
 #define ADR(A) (A & ADR_MASK)         /* the address                   */
 
 
 // printf an object with nested level of detail dp
-void see(OID n,int dp)
+void see(OID n,Cint dp)
 { if (n == CNULL)        printf("CNULL");
   else if (n == NOTHING) printf("NOTHING");
   else if (CTAG(n) == NIET_CODE)
@@ -295,7 +286,7 @@ void see(OID n,int dp)
 
 void see(OID x) {see(x,0);}
 
-void see(char *s, OID x, int i)
+void see(char *s, OID x, Cint i)
 {if (ClEnv->verbose >= 10)
    {printf("%s: ",s);
     see(x,i);

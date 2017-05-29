@@ -1,5 +1,5 @@
-/***** CLAIRE Compilation of file e:\claire\v3.5\src\meta\function.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:55 2017 *****/
+/***** CLAIRE Compilation of file /Users/ycaseau/claire/v3.5/src/meta/function.cl 
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:41 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -42,10 +42,10 @@ void  print_in_string_void()
     (Core.pretty->cprevious = n);
     (Core.pretty->cpretty = p1);
     if (equal(_oid_(Core.pretty->cpstack),Core.nil->value) == CTRUE)
-     (Core.pretty->cpstack = list::alloc(Kernel._port,2,GC_OID(ClAlloc->import(Kernel._port,(int *) p2)),GC_OID(ClAlloc->import(Kernel._port,(int *) p1))));
-    else { ((*(Core.pretty->cpstack))[n]=ClAlloc->import(Kernel._port,(int *) p2));
+     (Core.pretty->cpstack = list::alloc(Kernel._port,2,GC_OID(ClAlloc->import(Kernel._port,(Cint *) p2)),GC_OID(ClAlloc->import(Kernel._port,(Cint *) p1))));
+    else { ((*(Core.pretty->cpstack))[n]=ClAlloc->import(Kernel._port,(Cint *) p2));
         if (n == Core.pretty->cpstack->length)
-         GC_OBJECT(list,Core.pretty->cpstack)->addFast(GC_OID(ClAlloc->import(Kernel._port,(int *) p1)));
+         GC_OBJECT(list,Core.pretty->cpstack)->addFast(GC_OID(ClAlloc->import(Kernel._port,(Cint *) p1)));
         } 
       } 
   GC_UNBIND;} 
@@ -1154,8 +1154,8 @@ void  printFDigit_float(double x,Cint i)
    { princ_string(CSTRING("-"));
     printFDigit_float((-x),i);
     } 
-  else { double  frac = ((x-to_float(integer_I_float((x+1e-010))))+1e-010);
-      princ_integer(integer_I_float((x+1e-010)));
+  else { double  frac = ((x-to_float(integer_I_float((x+1e-10))))+1e-10);
+      princ_integer(integer_I_float((x+1e-10)));
       princ_string(CSTRING("."));
       printFDigit_integer(integer_I_float((frac*_exp_float(10.0,to_float(i)))),i);
       princ_string(CSTRING(""));
@@ -1572,4 +1572,4 @@ ClaireBoolean * random_boolean(ClaireBoolean *b)
   } 
 
 
-// three methods that are useful for debugging !
+// three methods that are useful for debugging !

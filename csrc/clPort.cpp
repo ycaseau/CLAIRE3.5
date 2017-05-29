@@ -1,17 +1,7 @@
-/** @package 
-
-        clPort.cpp
-        
-        Copyright(c) self 2000
-        
-        Author: YVES CASEAU
-        Created: YC  23/01/2006 06:32:52
-	Last change: YC 24/01/2006 05:55:31
-*/
 /***********************************************************************/
 /**   microCLAIRE                                       Yves Caseau    */
 /**   clPort.cpp                                                       */
-/**  Copyright (C) 1998-2003 Yves Caseau. All Rights Reserved.         */
+/**  Copyright (C) 1998-2016 Yves Caseau. All Rights Reserved.         */
 /**  cf claire.h                                                       */
 /***********************************************************************/
 
@@ -57,15 +47,19 @@ class CPFile: public ClairePort {
      {return getc(value);};
     virtual void put(char c)
       {  putc(c, value);};
-    virtual void put(int n) {fprintf(value,"%d",n);};
+#ifdef CL64
+    virtual void put(Cint n) {fprintf(value,"%lld",n);};
+#else
+    virtual void put(Cint n) {fprintf(value,"%d",n);};
+#endif
     virtual void put(double x) {fprintf(value,"%#g",x);};          // v3.3.42 : regular -> back to normal
     virtual void prettyp(double x)                               // v3.2.54 : pretty
      {double y = floor(x);
          if (x > CLMINFLOAT & x < CLMAXFLOAT & y == x) fprintf(value,"%#.1f",x); // v3.2.54 thanks to B Martin
          else if (y == 0.0 || ( (x - y) / y > 1e-5 && DECIMAL(x)))         // v3.2.54
-               fprintf(value,"%g",x);               // easy print is OK
+               fprintf(value,"%g",x);                // easy print is OK
         else fprintf(value,"%#0.10g",x);};           // v3.2.24 : show 10 decimals
-    virtual void putFormat(double x,int i)          // v3.3.42 : print with a given number of decimals
+    virtual void putFormat(double x,Cint i)          // v3.3.42 : print with a given number of decimals
         {char fmt[9] = "%#0.99g";
            if (i < 0 || i > 20) i =6;
            sprintf(&fmt[4],"%dg",i);
@@ -95,7 +89,7 @@ class CPStringOut: public ClairePort {
     virtual void put(char c) {
          buffer[index++] = c;
          if (index > MAXBUF) Cerror(16,0,0);};
-    virtual void put(int n)
+    virtual void put(Cint n)
        { sprintf(&buffer[index],"%d",n);
          for ( ;buffer[index] != '\0'; index++) ;
          if (index > MAXBUF)  Cerror(16,0,0);};
@@ -136,16 +130,16 @@ class CPGUI: public ClairePort {
 // default definition
 char ClairePort::get() {return EOF;}
 void ClairePort::put(char c) {}
-void ClairePort::put(int n) {}
+void ClairePort::put(Cint n) {}
 void ClairePort::put(double x) {}
 void ClairePort::prettyp(double x) {}
-void ClairePort::putFormat(double x, int n) {}
+void ClairePort::putFormat(double x, Cint n) {}
 void ClairePort::flush() {}
 void ClairePort::pclose() {}
 
 // this is the buffered read mode,
-int ClairePort::getNext()
-  {firstc = (int) get();
+Cint ClairePort::getNext()
+  {firstc = (Cint) get();
    return firstc;}
 
 // this is an internal version -> uses new !
@@ -218,7 +212,7 @@ ClairePort *port_I_string(char *s)
   p->firstc = 32;
   return p;}
 
-void pushback_port(ClairePort *p, int n) {p->firstc = n;}
+void pushback_port(ClairePort *p, Cint n) {p->firstc = n;}
 
 // returns the string associated to the port
 char *string_I_port(ClairePort *p)
@@ -236,7 +230,7 @@ OID length_port(ClairePort *p)
 
 // sets the buffer length to a certain number
 // this is crucial to reuse a string port for multiple use !
-void set_length_port(ClairePort *p, int m)
+void set_length_port(ClairePort *p, Cint m)
 { if (p->status == 2 && (m >= 0) && (m <=  ((CPStringOut *) p)->index ))
      ((CPStringOut *) p)->index = m;}
 
@@ -278,7 +272,7 @@ char *read_string_port(ClairePort *p)
 
 // reading an ident, which is either a symbol, a number or a special case
 OID read_ident_port(ClairePort *p)
-{int cur = p->firstc;
+{Cint cur = p->firstc;
  p->getNext();
  if ((cur == '-') && (('0' <= p->firstc) && ('9' >= p->firstc)))
     {OID value = read_number_port(p);
@@ -302,7 +296,7 @@ OID read_number_port(ClairePort *p)
      {res = (res * 10.0) + (double) (p->firstc - '0');
       p->getNext();}
  if ((p->firstc != '.') && (p->firstc != 'e'))
-    {if (res >= CLMINFLOAT && res <= CLMAXFLOAT) return ((int) res);     // rean an int
+    {if (res >= CLMINFLOAT && res <= CLMAXFLOAT) return ((Cint) res);     // rean an int
      else return _float_(res);}                                         // overflow -> float (v3.0.70)
  else {double possible = res;                  // read a float (saw a e or a .)
          if (p->firstc == '.')                 // read the decimal part
@@ -430,7 +424,7 @@ void c_princ_symbol(symbol *s)
        ClEnv->cout->put('_');}
    c_princ_string(s->name);}
 
-int integer_I_char(ClaireChar *c)
+Cint integer_I_char(ClaireChar *c)
 {return c->ascii;}
 
 /*********************************************************************/
@@ -443,13 +437,13 @@ void time_set_void()
   msec(ClEnv->tStack[ClEnv->tIndex]);}
 
 // shows the elaped time
-int time_get_void()
-{int now;
+Cint time_get_void()
+{Cint now;
    msec(now);
    if (ClEnv->tIndex <= 0) Cerror(26,ClEnv->tIndex,0);
    return (now - ClEnv->tStack[ClEnv->tIndex--]);}
 
-int time_read_void()
+Cint time_read_void()
 {int now;
    msec(now);
    if (ClEnv->tIndex <= 0) Cerror(26,ClEnv->tIndex,0);
@@ -475,14 +469,14 @@ void claire_shell(char *s)
 
 // profiler methods (ClaireProfile -> KernelProfile)
 PRcount *PRstart(PRcount *p)
-{int x = 0;
+{Cint x = 0;
   if (p->rdepth == 0) {p->rstart = clock();}  // v3.2.58 : more precision ....
   p->rdepth++; p->rnum++;
   return p;}
 
 // fixed bugs in v3.0.53 thanks to FXJ
 void PRend(PRcount *p)
-{int x = 0;
+{Cint x = 0;
   p->rdepth--;
   if (p->rdepth == 0) {p->rtime += (clock() - p->rstart);}}
 

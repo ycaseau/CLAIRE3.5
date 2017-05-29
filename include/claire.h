@@ -1,17 +1,7 @@
-/** @package 
-
-        claire.h
-        
-        Copyright(c) Hewlett-Packard Company 2000
-        
-        Author: YVES CASEAU
-        Created: YC  03/07/2016 11:13:59
-	Last change: YC 07/07/2016 06:45:34
-*/
 /***********************************************************************/
 /**   microCLAIRE                                       Yves Caseau    */
 /**   claire.h                                                         */
-/**  Copyright (C) 1998-99 Yves Caseau. All Rights Reserved.           */
+/**  Copyright (C) 1998-2016 Yves Caseau. All Rights Reserved.         */
 /**  Redistribution and use in source and binary forms are permitted   */
 /**  provided that source distribution retains this entire copyright   */
 /**  notice and comments.                                              */
@@ -47,13 +37,21 @@
 // * PART 1: Constants and OID structure                                     *
 // ***************************************************************************
 
-#define OID int                            /* to be changed if needed */
-#define Cint int                           /* same: supports 32/64 bits */
+#ifdef CL64
+#define OID long                             /* to be changed if needed     */
+#define Cint long                            /* v3.5 - integers for Claire  */
+#else
+#define OID int                             /* to be changed if needed     */
+#define Cint int                            /* v3.5 - integers for Claire  */
+#endif
 
-// the CL64 flag changes definition of OIDs
-// in 32 bits  we represent OIDs using 30bits of value and 2 bits of tags
-// with CL64 we user 62 bits of value and 2 bits of tags
+// special for macOS (int) x is not allowed by the compiler - v3.4.02
+#define ccast(x)  ((long)(size_t) x)        // to remove
+#define CCAST(x)  ((long)(size_t) x)        // return the pointer as a long
+#define CSTRING(x)  ((char *) x)
 
+// we represent OIDs using 30bits of value and 2 bits of tags
+// if CL64, we represent OI using 62 bits of value  and 2 bits of tags
 // There are only two types of OID:
 //  integer (TAG 0,1,2,3 & C,D,E,F), object (identifiable) and Primitive
 //  object, which is used both for primitive and instantiated entities
@@ -62,25 +60,30 @@
 //             functions (external)      |
 
 #ifdef CL64
+#define OBJ_CODE     0x4000000000000000LL    /* objects                           */
+#define NIET_CODE    0x8000000000000000LL    /* things that DO NOT belong         */
 
-#else
-#define OBJ_CODE     0x40000000    /* objects                           */
-#define NIET_CODE    0x80000000    /* things that DO NOT belong         */
-#define ADR_MASK  0x0FFFFFFF       /* the bit mask to get the address        */
-#define TAG_MASK  0xF0000000       /* the bit mask to get the tag            */
-#define INT_MASK  0xC0000000       /* the first 2 bits */
+#define ADR_MASK  0x0FFFFFFFFFFFFFFFLL  /* the bit mask to get the address        */
+#define TAG_MASK  0xF000000000000000LL  /* the bit mask to get the tag            */
+#define INT_MASK  0xC000000000000000LL  /* the first 2 bits */
+
 // we need one value that is NOT a valid OID not the adress of a class
-#define NOTHING    0x80000001      /* end of list                       */
-// note that LTRUE, LFALSE and LUNKNOWN are replaced by claire.true, claire.false, claire.unknown
+#define NOTHING   0x8000000000000001LL      /* end of list  
+                     */
+#else
+#define OBJ_CODE  0x40000000    /* objects                           */
+#define NIET_CODE 0x80000000    /* things that DO NOT belong         */
+#define ADR_MASK  0x0FFFFFFF  /* the bit mask to get the address        */
+#define TAG_MASK  0xF0000000  /* the bit mask to get the tag            */
+#define INT_MASK  0xC0000000  /* the first 2 bits */
+#define NOTHING   0x80000001  /* end of list                       */
 #endif
+
+// note that LTRUE, LFALSE and LUNKNOWN are replaced by claire.true, claire.false, claire.unknown
 
 #define MAXBUF 50000          // v3.2.04
 
 /** OID macros ---------------------------------------------------------*/
-
-#define _oid_(A) (OBJ_CODE + (((int) A - (int) &Cmemory[0]) >> 2) - 1)
-#define _array_(A) (OBJ_CODE + (((int) A - (int) &Cmemory[0]) >> 2) - 3)
-#define _char_(c) (ClRes->ascii[(c & 0x000001FF)])     // NOT AN  OID !!
 
 #define CTAG(x) (x & TAG_MASK)
 #define INTEGERP(x) ((INT_MASK & x) != OBJ_CODE)            // assumes no niet !
@@ -89,17 +92,25 @@
 #define EXPORT(A,B) (A ((ClaireImport *) &Cmemory[(B & ADR_MASK) + 1])->value)
 #define IDENTIFIED(x) (((x & TAG_MASK) != OBJ_CODE) ||\
                        (OBJECT(ClaireAny,x)->isa->ident_ask == CTRUE))
+#ifdef CL64
+#define _oid_(A) (OBJ_CODE + ((ccast(A) - ccast(&Cmemory[0])) >> 3) - 1)
+#define _array_(A) (OBJ_CODE + ((ccast(A) - ccast(&Cmemory[0])) >> 3) - 3)
+#define _char_(c) (ClRes->ascii[(c & 0x00000000000001FFLL)])     // NOT AN  OID !!
+#else
+#define _oid_(A) (OBJ_CODE + ((ccast(A) - ccast(&Cmemory[0])) >> 2) - 1)
+#define _array_(A) (OBJ_CODE + ((ccast(A) - ccast(&Cmemory[0])) >> 2) - 3)
+#define _char_(c) (ClRes->ascii[(c & 0x000001FF)])     // NOT AN  OID !!
+#endif
+
 #define _void_(x) (x,1)
 #define _function_(f,s) ClAlloc->makeFunction((fptr) f, s)
-#define _string_(x) ClAlloc->import(Kernel._string,(int *) x)
+#define _string_(x) ClAlloc->import(Kernel._string,(OID *) x)
 
 #define float_v(n) (OBJECT(ClaireFloat,n)->value)
 #define char_v(n) ((char) OBJECT(ClaireChar,n)->ascii)
 #define string_v(B) ((char *) OBJECT(ClaireImport,B)->value)
 #define array_v(A) ((OID *) &Cmemory[(A & ADR_MASK) + 3])
 
-// v3.5 - g++ compiler add the const to strings
-#define CSTRING(s) ((char *) s)
 
 // these constant are used for the method status
 // note that they are bitvectors whereas in CLAIRE they are indices
@@ -116,9 +127,9 @@
 
 /* declare function pointers for functions with arbitrary args */
 #ifdef CLPC
-typedef int (*fptr) (int);
+typedef OID (*fptr) (OID);
 #else
-typedef int (*fptr) (...);
+typedef OID (*fptr) (...);
 #endif
 
 // forward definitions
@@ -139,7 +150,7 @@ class bag;
 class list;
 class symbol;
 
-extern int Cerror(int n, OID a, OID b);
+extern Cint Cerror(Cint n, OID a, OID b);
 
 // ***************************************************************************
 // * PART 2: CLAIRE system resources                                         *
@@ -151,29 +162,29 @@ extern int Cerror(int n, OID a, OID b);
 class ClaireResource
 {public:
    ClaireChar* *ascii;
-   int   iBase;                         // start of current world in stack
-   int   iIndex;                        // top of stack
-   int*  *haiStack;                     // address part of the stack
-   int   *hviStack;                     // value part of the stack
-   int   oBase;                         // start of current world in stack
-   int   oIndex;                        // top of stack
-   int*  *haoStack;                     // address part of the stack
+   Cint   iBase;                         // start of current world in stack
+   Cint   iIndex;                        // top of stack
+   OID*  *haiStack;                     // address part of the stack
+   OID   *hviStack;                     // value part of the stack
+   Cint   oBase;                         // start of current world in stack
+   Cint   oIndex;                        // top of stack
+   OID*  *haoStack;                     // address part of the stack
    ClaireObject*  *hvoStack;            // value part of the stack
-   int   fBase;                         // start of current world in stack
-   int   fIndex;                        // top of stack
-   int*   *hafStack;                    // address part of the stack
+   Cint   fBase;                         // start of current world in stack
+   Cint   fIndex;                        // top of stack
+   OID*   *hafStack;                    // address part of the stack
    double *hvfStack;                    // value part of the stack
-   int   cWorld;                        // current world number
-   int   cWorldId;                      // v3.2.04: a unique ID for each world
+   Cint   cWorld;                        // current world number
+   Cint   cWorldId;                      // v3.2.04: a unique ID for each world
    symbol* *sTable;                     // symbol hash table
-   int magicCode[36][8];                // resource for tree encoding
-   int magicNbits[8];                   // num of children that we can code with n bits
+   Cint magicCode[36][8];                // resource for tree encoding
+   Cint magicNbits[8];                   // num of children that we can code with n bits
 
  static void run();
  void init();
  void magicInit();
- int makeCode(int n, int i, int m);
- int hashOid(int mask, OID x);
+ Cint makeCode(Cint n, Cint i, Cint m);
+ Cint hashOid(Cint mask, OID x);
 
  };
    
@@ -181,12 +192,12 @@ class ClaireResource
 // each handler is represented by a structure that contains the "environment" that
 // must be restored
 class ClaireHandler {
-  int sIndex;          // keep the stack index
-  int sBase;           // keep the stack base
-  int debug;           // keep the debug info ????
-  int trace;           // keep the trace info
-  int gIndex;          // keep the gc stack index
-  int gBase;           // keep the gc stack base
+  Cint sIndex;          // keep the stack index
+  Cint sBase;           // keep the stack base
+  Cint debug;           // keep the debug info ????
+  Cint trace;           // keep the trace info
+  Cint gIndex;          // keep the gc stack index
+  Cint gBase;           // keep the gc stack base
 
   public:
   ClaireHandler();     // constructor (use C++ alloc)
@@ -194,26 +205,25 @@ class ClaireHandler {
   };
 
 
-
 // C++ allocator
 class ClaireAllocation
 {// private stuff
- int entryList[28];                     // keep track of free chunks by size
+ Cint entryList[28];                     // keep track of free chunks by size
 
- int newChunk(int n);         // chunk allocation
- int newShort(int n);            // short object allocation
- int newLong(int n);
- int freeChunk(int n);           // free an unused chunk
- int freeLoop(int n);
- int freeSimple(int n,int size);
- int mergeRight(int a, int b, int size);
- int mergeLeft(int a, int b, int size);
- void freeObject(int n);
+ Cint newChunk(Cint n);         // chunk allocation
+ Cint newShort(Cint n);            // short object allocation
+ Cint newLong(Cint n);
+ Cint freeChunk(Cint n);           // free an unused chunk
+ Cint freeLoop(Cint n);
+ Cint freeSimple(Cint n,Cint size);
+ Cint mergeRight(Cint a, Cint b, Cint size);
+ Cint mergeLeft(Cint a, Cint b, Cint size);
+ void freeObject(Cint n);
  void freeString(char *s);
 
  void markHash();                // mark the content of the hash table
  void markStack();               // mark the items in the various stacks
- void markPushed(int i);
+ void markPushed(Cint i);
  void mark(OID n);               // marks anything seen
  void markAny(ClaireAny *x);
  void markObject(ClaireObject *x);
@@ -225,30 +235,30 @@ class ClaireAllocation
  void sweepObject();
 
  public:
- int statusGC;                          // 0:normal, 1:dump, 2:noGC
- int numGC;                             // num of calls to garbage collector
+ Cint statusGC;                          // 0:normal, 1:dump, 2:noGC
+ Cint numGC;                             // num of calls to garbage collector
  ClaireAny *probe;                      // for debuging purposes
- int maxStack, maxHist, maxEnv,         // parameters for memory allocation
-     maxGC, maxHash,maxList,maxSize;
- int hashMask;                          // hashing mask for symbol table
- int logList;                           // log size of chunk zone
- int usedCells;                         // book-keeping
- int firstFree;                         // current start of long free zone
- int alertFree;                         // current start of long free zone
- int nextFree;                          // start of the small object chain
+ Cint maxStack, maxHist, maxEnv,         // parameters for memory allocation
+      maxGC, maxHash,maxList,maxSize;
+ Cint hashMask;                          // hashing mask for symbol table
+ Cint logList;                           // log size of chunk zone
+ Cint usedCells;                         // book-keeping
+ Cint firstFree;                         // current start of long free zone
+ Cint alertFree;                         // current start of long free zone
+ Cint nextFree;                          // start of the small object chain
  ClaireAny* *gcStack;                   // stack for protecting variable's content
- int index,base;                        // stack management variables
+ Cint index,base;                        // stack management variables
  ClairePort *stdIn,*stdOut,*stdErr;
  ClaireObject *currentNew;              // pointer to what is currently allocated
  ClaireObject *currentType;             // pointer to the type of a bag which is currently allocated
                                         // a nice bug fix proposed by Sylvain Benilan
  // memory management
- static int log2up(int n);              // log - test in v3.2.38 use static methods properly ....
- ClaireAny *makeStatic(int n);          // static object allocation
- char *makeString (int n);              // string (char*) allocation
- OID *makeArray (int n, ClaireType *t); // array allocation
- OID *makeContent (int n);              // bag's content allocation (NOT THE BAG itself)
- ClaireAny *makeAny(int n);             // simple allocation for an object
+ static Cint log2up(Cint n);              // log - test in v3.2.38 use static methods properly ....
+ ClaireAny *makeStatic(Cint n);          // static object allocation
+ char *makeString (Cint n);              // string (char*) allocation
+ OID *makeArray (Cint n, ClaireType *t); // array allocation
+ OID *makeContent (Cint n);              // bag's content allocation (NOT THE BAG itself)
+ ClaireAny *makeAny(Cint n);             // simple allocation for an object
  OID import(ClaireClass *c,OID *n);     // imports into a claire OID
  // ClaireImport *makeImportString(char *s); // create a Claire String (an imported object)
  ClaireFloat *makeFloat();                       // allocates the memory for a ClaireFloat
@@ -287,7 +297,7 @@ extern ClaireBoolean *CFALSE;
 extern OID CNULL;
 extern ClaireResource *ClRes;
 extern ClaireAllocation *ClAlloc;     // Alloc object
-extern OID *Cmemory;                  // memory zone
+extern OID *Cmemory;                  // memory zone - v3.5:OID
 
 
 // ***************************************************************************
@@ -303,7 +313,7 @@ extern OID gc_error();
 #define CLREAD(A,B,C) ((class A *) B)->C
 #define OWNER(x) (((INT_MASK & x) != OBJ_CODE) ? Kernel._integer : OBJECT(ClaireAny,x)->isa)
 #define OPT_EVAL(x) (((INT_MASK & x) == OBJ_CODE) ? \
-      ((fptr) OBJECT(ClaireAny,x)->isa->evaluate->value)((int) OBJECT(ClaireAny,x)) : x)
+      ((fptr) OBJECT(ClaireAny,x)->isa->evaluate->value)(CCAST(OBJECT(ClaireAny,x))) : x)
 
 // OTRUEP(x) works on an OID and TRUEP(x) on a ClaireAny
 #define TRUEP(x) (boolean_I_ClaireAny(x) == CTRUE)
@@ -311,7 +321,7 @@ extern OID gc_error();
 #define FALSEP(x) (boolean_I_ClaireAny(x) == CFALSE)
 
 #ifdef CLDEBUG
-#define ASSERT(x) ((x) ? (int) NULL : Cerror(-2,(int) __FILE__,__LINE__))
+#define ASSERT(x) ((x) ? (Cint) NULL : Cerror(-2,(Cint) __FILE__,__LINE__))
 #else
 #define ASSERT(x) NULL
 #endif
@@ -335,7 +345,7 @@ extern OID gc_error();
 #define GC_BIND ((ClAlloc->index < ClAlloc->maxGC) ? \
           (ClAlloc->gcStack[GC_DEBUG(ClAlloc->index)] = (ClaireAny *) ClAlloc->base, ClAlloc->base = ClAlloc->index++) \
            : gc_error())
-#define GC_UNBIND  (ClAlloc->base = (int) ClAlloc->gcStack[(ClAlloc->index = ClAlloc->base)])
+#define GC_UNBIND  (ClAlloc->base = ccast(ClAlloc->gcStack[(ClAlloc->index = ClAlloc->base)]))
 
 
 // GC_ANY is used to protect assignment -> does not return a typed value
@@ -389,7 +399,7 @@ extern OID gc_error();
 #define STOREI(x,y) ((x != y) ? ((ClRes->cWorld != 0) ? \
         ((ClRes->iIndex++ <= ClAlloc->maxHist) ? \
          (x = (ClRes->hviStack[ClRes->iIndex] = \
-                  *(ClRes->haiStack[ClRes->iIndex] = ((int *) &(x))), y)) : \
+                  *(ClRes->haiStack[ClRes->iIndex] = ((Cint *) &(x))), y)) : \
           Cerror(37,0,0)) : \
           (x = y)) : 0 )
 
@@ -397,7 +407,7 @@ extern OID gc_error();
 #define STOREO(x,y) ((x != y) ? ((ClRes->cWorld != 0) ? \
         ((ClRes->oIndex++ <= ClAlloc->maxHist) ? \
          (x = (ClRes->hvoStack[ClRes->oIndex] = (ClaireObject *) \
-                  *(ClRes->haoStack[ClRes->oIndex] = ((int *) &(x))), y)) : \
+                  *(ClRes->haoStack[ClRes->oIndex] = ((Cint *) &(x))), y)) : \
           (Cerror(37,0,0),y)) : \
           (x = y)) : y )
 
@@ -405,13 +415,13 @@ extern OID gc_error();
 #define STOREF(x,y) ((x != y) ? ((ClRes->cWorld != 0) ? \
         ((ClRes->fIndex++ <= ClAlloc->maxHist) ? \
          (x = (ClRes->hvfStack[ClRes->fIndex] = \
-                  *( (double *) (ClRes->hafStack[ClRes->fIndex] = ((int *) &(x)))), y)) : \
+                  *( (double *) (ClRes->hafStack[ClRes->fIndex] = ((Cint *) &(x)))), y)) : \
           Cerror(37,0,0)) : \
           (x = y)) : y )
 
 // new in v3.2: give the address of a slot
-extern int *CL_dummy;
-#define CL_IDX(c,s) (1 + ((((int) &(((c *) CL_dummy)->s)) - (int) CL_dummy) / sizeof(OID)))  
+extern Cint *CL_dummy;
+#define CL_IDX(c,s) (1 + ((ccast(&(((c *) CL_dummy)->s)) - ccast(CL_dummy)) / sizeof(OID)))
 #define CL_ADDSLOT(c,CC,p,r,v) c->addSlot(p,r,v,CL_IDX(CC,p))  
 #define CL_ADD_SLOT(c,CC,p,PP,r,v) c->addSlot(p,r,v,CL_IDX(CC,PP))    
 
@@ -420,6 +430,8 @@ extern int *CL_dummy;
 
 extern void symbolDebug(symbol *s);
 extern void seeIt(char *s, OID x);
+
+extern int VERB;
 
 // macros for reading
 #define CHANGE(x,y) ((x != y) ? ((x = y), 1) : 0)

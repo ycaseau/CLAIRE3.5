@@ -1,5 +1,5 @@
-/***** CLAIRE Compilation of file e:\claire\v3.5\src\meta\types.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:55 2017 *****/
+/***** CLAIRE Compilation of file /Users/ycaseau/claire/v3.5/src/meta/types.cl 
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:41 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -1909,4 +1909,4 @@ ClaireType * list_I_set_type(ClaireType *l)
   } 
 
 
-// new in v3.0.60 : second-order type for copy
+// new in v3.0.60 : second-order type for copy

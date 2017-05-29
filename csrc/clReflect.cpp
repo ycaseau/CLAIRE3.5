@@ -1,17 +1,7 @@
-/** @package 
-
-        clReflect.cpp
-        
-        Copyright(c) self 2000
-        
-        Author: YVES CASEAU
-        Created: YC  24/01/2006 07:35:14
-        Last Change: YC  24/01/2006 07:35:14
-*/
 /***********************************************************************/
 /**   microCLAIRE                                       Yves Caseau    */
 /**   clReflect.cpp                                                    */
-/**  Copyright (C) 1998-2003 Yves Caseau. All Rights Reserved.         */
+/**  Copyright (C) 1998-2016 Yves Caseau. All Rights Reserved.         */
 /**  cf claire.h                                                       */
 /***********************************************************************/
 
@@ -45,20 +35,21 @@ ClaireBoolean *ClaireCollection::contains(OID oself)
   else if (isa == Kernel._set) return contain_ask_set((set *) this, oself);
   else {method  *m = OBJECT(method, (*Kernel.member_ask->definition)[1]);
         return ( (ClaireBoolean*)
-                 ( ((fptr2) (m->functional->value))(oself, (int) this)));  }}
+                 ( ((fptr2) (m->functional->value))(oself, ccast(this))));  }}
 
 // ---------------------- API functions ----------------------------------------
 
 // copy an object (or an item) */
 ClaireObject *copy_object(ClaireObject *x)
-{int i,m = *SLOTADR(x,0);
+{Cint i,m = *SLOTADR(x,0);
  ClaireObject *y = (ClaireObject *) ClAlloc->makeAny(m);
  for (i = 1; i<= m; i++) *SLOTADR(y,i) = *SLOTADR(x,i);
  return y;}
 
 // logical equality
 ClaireBoolean *equal(OID n, OID m)
-{  if (n == m) return CTRUE;
+{  if (VERB > 0) printf("equal %llx and %llx \n",n,m);
+   if (n == m) return CTRUE;
    else if (IDENTIFIED(n) || IDENTIFIED(m)) return CFALSE;
    else {ClaireAny *x = OBJECT(ClaireAny,n);
          ClaireAny *y = OBJECT(ClaireAny,m);
@@ -75,10 +66,10 @@ ClaireBoolean *equal(OID n, OID m)
 
 // reading a value in a slot
 // new in v2.5: floats
-OID slot_get_object(ClaireObject *x, int y, ClaireClass *s)
+OID slot_get_object(ClaireObject *x, Cint y, ClaireClass *s)
 {if (s == Kernel._float)
     {return _float_(*( (double *) SLOTADR(x,y) )); }
- else {int z = *SLOTADR(x,y);
+ else {Cint z = *SLOTADR(x,y);
         // if (ClEnv->verbose > 10) printf("read slot[%d] of %d -> %d\n",y,x,z);
         return ((z == 0) ? (((s == Kernel._integer) | (s == Kernel._any)) ? 0 : CNULL) :
                  ((z == CNULL) ? CNULL : CLAIREOID(z,s)));}}
@@ -92,8 +83,8 @@ ClaireBoolean *belong_to(OID oself, OID ens)
    else return OBJECT(ClaireCollection,ens)->contains(oself);}
 
 // hashing for a generic list of length 2^n - 2
-int hash_list(list *l, OID x)
-{int i = ClRes->hashOid(l->content[0] - 1,x);
+Cint hash_list(list *l, OID x)
+{Cint i = ClRes->hashOid(l->content[0] - 1,x);
    if (i < l->length) return (i + 1);
    else return (1 + (i % l->length));}
 
@@ -111,9 +102,9 @@ ClaireBoolean *boolean_I_any(OID n)
 
 
 // ---- three debugging functions which are quite useful ------------------------------------
-int CL_Address(OID x) {return ADR(x);}
+Cint CL_Address(OID x) {return ADR(x);}
 
-char *CL_Oid(int x)
+char *CL_Oid(Cint x)
 {char *s = make_string_integer(15,ClRes->ascii[32]);
   sprintf(s,"%d",x);  return s;}
 
@@ -146,25 +137,25 @@ class align_field : ClaireObject {int pad1; int pad2; double d;};
 
 // simple instantiation for objects with OID slots (exceptions)
 ClaireObject *ClaireClass::operator() (OID arg1)
-{int n = prototype->length;
+{Cint n = prototype->length;
  ClaireObject *o = instantiate(n);
- int rep = ADR(_oid_(o)) + 2;
+ Cint rep = ADR(_oid_(o)) + 2;
  Cmemory[rep++] = arg1;
  return o;}
 
 ClaireObject *ClaireClass::operator() (OID arg1, OID arg2)
-{int n = prototype->length;
+{Cint n = prototype->length;
  ClaireObject *o = instantiate(n);
- int rep = ADR(_oid_(o)) + 2;
+ Cint rep = ADR(_oid_(o)) + 2;
  Cmemory[rep++] = arg1;
  Cmemory[rep++] = arg2;
  return o;}
 
 
 ClaireObject *ClaireClass::operator() (OID arg1, OID arg2, OID arg3)
-{int n = prototype->length;
+{Cint n = prototype->length;
  ClaireObject *o = instantiate(n);
- int rep = ADR(_oid_(o)) + 2;
+ Cint rep = ADR(_oid_(o)) + 2;
  Cmemory[rep++] = arg1;
  Cmemory[rep++] = arg2;
  Cmemory[rep++] = arg3;
@@ -175,7 +166,8 @@ ClaireObject *ClaireClass::operator() (OID arg1, OID arg2, OID arg3)
 // first classes
 ClaireClass *ClaireClass::make(ClaireAny *x)
 {ClaireClass *c = (ClaireClass *) x;
-   // if (ClEnv->verbose > 11) printf("=== class::make allocates a class @ %x \n",(int) c);
+   if (VERB > 0) printf("=== class::make allocates a class @ %x \n",(Cint) c);
+   
    c->ancestors = list::empty();
    c->slots = list::empty();
    c->instances = list::empty();
@@ -193,11 +185,15 @@ ClaireClass *ClaireClass::make(ClaireAny *x)
 
 // same with a name
 ClaireClass *ClaireClass::make(char *n)
-{ClaireClass *c = make( ClAlloc->makeStatic(18)) ;
+{if (VERB > 0) printf("--- call make(%s) \n",n);
+ ClaireClass *c = make( ClAlloc->makeStatic(18)) ;
  symbol *s = symbol::make(n,claire.it,ClEnv->module_I);
  s->value = _oid_(c);
  c->name = s;
  c->comment = n;
+ /*printf("before add fast class->instances > %x\n",Kernel._class->instances);
+ printf("call with argument %x\n",_oid_(c));
+ printf("list of length %x\n",Kernel._class->instances->length); */
  Kernel._class->instances->addFast(_oid_(c));
  return c;}
 
@@ -227,7 +223,7 @@ ClaireClass *ClaireClass::make(char *name, ClaireClass *c2, module *def)
    return c;}
 
 // instantiation methods from simple to more complex
-ClaireObject *ClaireClass::instantiate(int n)
+ClaireObject *ClaireClass::instantiate(Cint n)
 {ClaireObject *o = (ClaireObject *) ClAlloc->makeAny(n);
  o->isa = this;
  return o;}
@@ -245,26 +241,37 @@ ClaireObject *ClaireClass::instantiate(int n)
 // object allocation (2) addSlot respects the parity of the position of the float default value
 // in the prototype
 ClaireObject *ClaireClass::instantiate()
-{int i, n = prototype->length;
+{Cint i, n = prototype->length;
  ClaireObject *o = instantiate(n);
  ClAlloc->currentNew = o;                           // protect the object but NOT the content !
- int u = _oid_(o), rep = ADR(_oid_(o)) + 2;
+ Cint u = _oid_(o), rep = ADR(_oid_(o)) + 2;
  // <debug for alignment> printf("alloc object size %d -> rep = %d @ %d\n",n,rep, &o);
  for (i= 2; i<=n ; i++)
     {int look = rep - ADR(_oid_(o));
      OID v = (*prototype)[i];                          // value in the prototype
+     if (VERB > 0) {printf("inner instantiate{%d} -> %llx\n",i,v);
+                    printf("CTAG(v) = %llx versus %llx\n",CTAG(v),OBJ_CODE);}
+
      ClaireClass *c = OWNER(v);                        // owner(v)
+     if (VERB > 0) printf("OWNER(v) = %d versus %d(NULL)\n",c,NULL);
      if (c == Kernel._float)                           // implies a range float !
          { // <debug for alignment> printf("rep = %d, i = %d, & = %x v = %g\n",rep,i,&Cmemory[rep],float_v(v));
            *((double *) &Cmemory[rep]) = float_v(v);
-           rep += 2; i += 1;}                      // v3.0.68 ! i changes => v changes
+#ifdef CL64
+           rep += 2;
+#else
+          rep++;
+#endif
+          i += 1;}                      // v3.0.68 ! i changes => v changes
      else if ((c == Kernel._set) || (c == Kernel._list))
-             {// printf("--- put a copy of %x into C[%d]\n",v,rep + 1);
-              Cmemory[rep++] = (int) copy_bag(OBJECT(bag,v)); }       // copy may cause GC!
+             {if (VERB > 0) printf("--- put a copy of list %x into C[%d]\n",v,rep + 1);
+              Cmemory[rep++] = ccast(copy_bag(OBJECT(bag,v))); }       // copy may cause GC!
      else if (CTAG(v) == OBJ_CODE && v != CNULL)
          {if (v == _oid_(Kernel.NoDefault)) Cmemory[rep++] = CNULL;  // NEW in V3.0.41
-          else  Cmemory[rep++] = (int) OBJECT(ClaireAny,v);}
-     else Cmemory[rep++] = v;}
+          if (VERB > 0) printf("Object copy from prototype\n");
+          else  Cmemory[rep++] = ccast(OBJECT(ClaireAny,v));}
+     else {if (VERB > 0) printf("[direct write at %d into object]\n",i);
+           Cmemory[rep++] = v;}}
 #ifdef CLDEBUG
  if (ClEnv->verbose > 11) printf("<<< instantiate returns %x at adress %d [-> %d]\n",o,getADR(o),rep - 1);
  checkOID(u); // debug !
@@ -277,6 +284,7 @@ ClaireObject *ClaireClass::instantiate()
 // is taken as the current module
 thing *ClaireClass::instantiate(char *n, module *m)
 {symbol *s = symbol::make(n,m,ClEnv->module_I);
+   if (VERB > 0) printf("call instantiate on %s \n",n);
    if (s->value != CNULL && CTAG(s->value) == OBJ_CODE)
       {thing *o = OBJECT(thing,s->value);
         if (o->isa != this)
@@ -312,12 +320,15 @@ extern void print_any(OID x);
 // v3.2: this method is modified so that it may receive ix = the position of 
 // the slot (obtained through a macro) in the C++ object [warning: ix may
 // also be provided directly by the interpreter, thus the safety check on parity]
-slot *ClaireClass::addSlot(property *p,ClaireType *t,OID def,int ix)
+slot *ClaireClass::addSlot(property *p,ClaireType *t,OID def,Cint ix)
 {slot *s = (slot *) instantiate(9);
+ if (VERB > 0) {printf("--- create a slot for %s\n",p->name->name);
+                printf("def = %016lx\n", def);}
+ 
  ClAlloc->currentNew = s;                // v3.3.34 - protection proposed by Sylvain
  ClaireClass *c1 = class_I_type(t);
  ClaireClass *s1 = sort_I_class(c1);     // sort: range for the slot
- int i = slots->length;                  // v3.2: number of existing slots
+ Cint i = slots->length;                  // v3.2: number of existing slots
     s->isa = Kernel._slot;
     Kernel._slot->instances->addFast(_oid_(s));
     s->domain = list::alloc(Kernel._type,1,_oid_(this));
@@ -338,6 +349,8 @@ slot *ClaireClass::addSlot(property *p,ClaireType *t,OID def,int ix)
         (p->multivalued_ask == Kernel._list && c1 != Kernel._list))
        Cerror(28,_oid_(p),_oid_(s));        // v3.1.08
     p->restrictions->addFast(_oid_(s));
+    #ifdef CL64             // nothing to do
+    #else
     if (c1 == Kernel._float && ix % 2 == 0) {  // some architecture requires even float indexes
        if (ALIGN_FIELD ||                      // v3.3.36 -> new solution from Sylvain
              (ALIGN_STRUCT &&
@@ -346,8 +359,11 @@ slot *ClaireClass::addSlot(property *p,ClaireType *t,OID def,int ix)
                 OBJECT(ClaireClass,(*(OBJECT(slot,(*slots)[i])->domain))[1]) != this))
           ix++;}
     // was previously : if (c1 == Kernel._float && ix % 2 == CL_FLOAT_PARITY) ix++;
+    #endif
     // change the default representation that will be stored in the prototype
     //  copied_default = object (for object) + float (for float) + integer (for all) + NULL for objects
+    {ClaireClass *c = OWNER(def);
+     if (VERB > 0) printf("OWNER(def) = %x\n");}
     if (s1 == Kernel._object || OWNER(def) == Kernel._integer || c1 == Kernel._float) ; // nothing (store def)
     else if (s1 == Kernel._any || s1 == Kernel._integer) 
        {if (def != CNULL) def = _oid_(Kernel.NoDefault);}    // this is the case that wa cannot handle
@@ -359,7 +375,7 @@ slot *ClaireClass::addSlot(property *p,ClaireType *t,OID def,int ix)
          // compute the index for slot s (needed for the interpreter :-( )
          if (ix > 1) 
             {slot * sprev = OBJECT(slot,slots->content[slots->length - 1]);
-             int i = sprev->index + ((sprev->srange == Kernel._float) ? 2 : 1);
+             Cint i = sprev->index + ((sprev->srange == Kernel._float) ? 2 : 1);
              if (i != ix)                 // alignment constraint: ix was add +1 !
                 prototype->addFast(0);}   // maintain length(proto) = size(object)
           s->index = ix;}                 // ix is given by the interpreter or the C++ compiler !
@@ -380,14 +396,14 @@ slot *ClaireClass::addSlot(property *p,ClaireType *t,OID def,int ix)
     
     
 // number of bits that are necessary to encode n children
-int ClaireClass::nBits(int n)
+Cint ClaireClass::nBits(Cint n)
 { return ((n < 4) ? n : ((n < 7) ? 4 : ((n < 11) ? 5 : ((n < 21) ? 6 : ((n < 36) ? 7 :
           (Cerror(101,n,0), 1))))));}
 
 
 // returns the number of bits used for coding the class c
-int  ClaireClass::totalBits()
-{ int  n = 0;
+Cint  ClaireClass::totalBits()
+{ Cint  n = 0;
   // see("enter totalbit",_oid_(this),0);
   // see("ancestor is ",_oid_(ancestors),1);
   ITERATE(c2);
@@ -410,14 +426,14 @@ code = 0;  // ??
 }
 
 // new partial encoding: recode all children of this class
-void ClaireClass::recode(int n)
+void ClaireClass::recode(Cint n)
 {int i = 1, m = nBits(subclass->length);
  ITERATE(c2);
  for (START(subclass); NEXT(c2);)
     OBJECT(ClaireClass,c2)->nodeCode(code,n,m,i++);}
 
 // gives the new code for this node (a child of c)
-void ClaireClass::nodeCode(int cx,int n,int m,int i)
+void ClaireClass::nodeCode(Cint cx,Cint n,Cint m,Cint i)
 { if ((n + m) > 29) Cerror(102,0,0);
   code = cx + ClRes->makeCode(n,i,m);
   // printf("--- nodeCode %s -> %x\n",comment,code);
@@ -428,7 +444,7 @@ void ClaireClass::nodeCode(int cx,int n,int m,int i)
 // create a slot
 //void add_slot_class(ClaireClass *c, property *p, ClaireType *t, OID def) 
 //;  {c->addSlot(p,t,def);}
-void add_slot_class(ClaireClass *c, property *p, ClaireType *t, OID def, int ix) 
+void add_slot_class(ClaireClass *c, property *p, ClaireType *t, OID def, Cint ix)
   {c->addSlot(p,t,def,ix);}
 
 //void add_slot_classNew(ClaireClass *c, property *p, ClaireType *t, OID def, int ix) 
@@ -465,24 +481,27 @@ property *property::make(char *name, module *m)
   ob->comment = name;               // for debug
   ob->range = Kernel._any;
   ob->open = 1;
+  if (VERB > 0) {printf("AHA prototype !!! 15: %d 16: %d\n",
+                 (*Kernel._property->prototype)[15],
+                 (*Kernel._property->prototype)[16]);}
   // if (ClEnv->verbose > 10) printf("--- create property %s @ %d\n",ob->comment,getADR(ob));
   return ob;}
 
 // same with a status
-property *property::make(char *name, int op, module *m)
+property *property::make(char *name, Cint op, module *m)
 {property *ob = make(name,m);
   ob->open = op;
   return ob;}
 
 // temporaty
-property *property::make(char *name, int op, module *m, int i)
+property *property::make(char *name, Cint op, module *m, Cint i)
 {property *ob = make(name,m);
   ob->open = op;
   ob->dispatcher = i;
   return ob;}
 
 // new (v3.1) same with a dispatcher index !
-property *property::make(char *name, int op, module *m,ClaireClass *c, int i)
+property *property::make(char *name, Cint op, module *m,ClaireClass *c, Cint i)
 {property *ob = make(name,m);
   ob->open = op;
   ob->dispatcher = i;
@@ -490,7 +509,7 @@ property *property::make(char *name, int op, module *m,ClaireClass *c, int i)
   return ob;}
 
 // constructor for operations
-operation *operation::make(char *name, module *m, int p)
+operation *operation::make(char *name, module *m, Cint p)
 {operation *ob = (operation *) Kernel._operation->instantiate(name,m);
   ob->comment = name;               // for debug
   ob->range = Kernel._any;
@@ -499,7 +518,7 @@ operation *operation::make(char *name, module *m, int p)
   return ob;}
   
 // constructor for operations that supports an  open status 
-operation *operation::make(char *name, int op, module *m, int p)
+operation *operation::make(char *name, Cint op, module *m, Cint p)
 {operation *ob = (operation *) Kernel._operation->instantiate(name,m);
   ob->comment = name;               // for debug
   ob->range = Kernel._any;
@@ -514,7 +533,8 @@ OID property::operator() (OID arg1)
  return stack_apply(1);}
    
 OID property::operator() (OID arg1, OID arg2)
-{   PUSH(arg1); PUSH(arg2); return stack_apply(2); }
+{   if (VERB > 0) printf("stack call %llx %llx\n",arg1,arg2);
+    PUSH(arg1); PUSH(arg2); return stack_apply(2); }
 
 OID property::operator() (OID arg1, OID arg2, OID arg3)
 {PUSH(arg1); PUSH(arg2); PUSH(arg3); return stack_apply(3); }
@@ -631,19 +651,19 @@ OID property::operator() (OID arg1, OID arg2, OID arg3, OID arg4, OID arg5,
  return stack_apply(20); }
 
 // this is used by the compiler
-OID property::super(ClaireClass *c,int size)
-{int j = ClEnv->index, i = j - size;
+OID property::super(ClaireClass *c,Cint size)
+{Cint j = ClEnv->index, i = j - size;
  return eval_message_property(this, find_which_class(c,definition,i,j),i,CFALSE);}
 
 
-OID property::stack_apply(int size)
-{int i = ClEnv->index - size;
+OID property::stack_apply(Cint size)
+{Cint i = ClEnv->index - size;
  return eval_message_property(this,
               find_which_property(this,i,OWNER(ClEnv->stack[i])), i, CFALSE);}
 
 
 // how to create a new method
-method *property::addMethod(list *dom, ClaireType *ran, int sta, ClaireFunction *f)
+method *property::addMethod(list *dom, ClaireType *ran, Cint sta, ClaireFunction *f)
 {method *m = (method *) Kernel._method->instantiate();
    Kernel._method->instances->addFast(_oid_(m));
    m->selector = this;
@@ -654,19 +674,22 @@ method *property::addMethod(list *dom, ClaireType *ran, int sta, ClaireFunction 
    m->functional = f;
    m->evaluate = f;
    m->status = sta;
+   if (VERB > 0) printf("=== compute the list of sorts\n");
    // computes the list of sorts
    {list* l = list::empty(Kernel._class);
+   if (VERB > 0) see("=== dom =",_oid_(dom));
     ITERATE(z);
     for (START(dom); NEXT(z);)
          l->addFast(_oid_(sort_I_class(class_I_type(OBJECT(ClaireType,z)))));
     l->addFast(_oid_(sort_I_class(class_I_type(ran))));
     m->srange = l;}
+   if (VERB > 0) printf("=== create method m=%llx for property=%llx\n",m,this);
    insert_definition_property(this,m);
    return m;}
 
 
 // special case for a float method
-method *property::addFloatMethod(list *dom, ClaireType *ran, int sta, ClaireFunction *f,
+method *property::addFloatMethod(list *dom, ClaireType *ran, Cint sta, ClaireFunction *f,
                                  ClaireFunction *f2)
 {method *m = addMethod(dom,ran,sta,f);
   m->evaluate = f2;
@@ -680,7 +703,7 @@ method *method::inlineDef(char *def)
 // --------------------- API method -------------------------------------------
 
 method *add_method_property(property *p, list *dom, ClaireType *r,
-                   int status, OID f)
+                   Cint status, OID f)
  { return p->addMethod(dom,r,status,
                        ((f == CNULL) ? NULL : OBJECT(ClaireFunction,f)));}
 
@@ -692,21 +715,21 @@ method *add_method_property(property *p, list *dom, ClaireType *r,
 
 // expand the alist (hash table) and then creates the item
 // the size is 2^n - 4 (even)
-int table::expand(OID x)
+Cint table::expand(OID x)
 {list *old = (list *) graph;
- int i, j = old->content[0];             // j = chunk size
+ Cint i, j = old->content[0];             // j = chunk size
  list *NEW = make_list_integer(2 * (*old)[0] - 4,CNULL);
    for (i=1; i < j - 4; i = i+2)
        if ((*old)[i] != CNULL) insertHash(NEW,(*old)[i],(*old)[i + 1]);
    graph = NEW;
    if (ClRes->cWorld != 0 && store_ask == CTRUE)      // new from 2.5
-     STOREOBJ(((int *) &graph),(ClaireObject *) old);
+     STOREOBJ(((OID *) &graph),(ClaireObject *) old);
    return index_table(this,x);}
 
 // insert a new bucket in a alist without problem. This only works for
 // buckets !
-int table::insertHash (list *l, OID x, OID val)
-{int i,chsize = l->content[0],end = chsize - 4,
+Cint table::insertHash (list *l, OID x, OID val)
+{Cint i,chsize = l->content[0],end = chsize - 4,
      mask = (chsize >> 1) - 1, entry = (ClRes->hashOid(mask,x) << 1) + 1;
      for (i = entry; i < end; i = i + 2)
         if ((*l)[i] == CNULL) {(*l)[i] = x; (*l)[i+1] = val; return 1;}
@@ -719,9 +742,9 @@ int table::insertHash (list *l, OID x, OID val)
 // add an item in an association list (of size 2^n - 3, full of unknown)
 // uses a hash insertion in a list (use the cardinal to find is a new list
 // must be allocated). Returns the position in the list
-int index_table(table *a, OID x)
+Cint index_table(table *a, OID x)
 {list *l = (list *) a->graph;
- int i, chsize = (*l)[0], end = chsize - 4,
+ Cint i, chsize = (*l)[0], end = chsize - 4,
      mask = (chsize >> 1) - 1, entry = (ClRes->hashOid(mask,x) << 1) + 1;
    for (i = entry; i < end; i = i + 2)
         if (equal((*l)[i],x) == CTRUE) return i + 1;
@@ -751,9 +774,9 @@ int index_table(table *a, OID x)
 // WARNING: this does not return the index but the value !!!!
 //          it is thus simpler, because it is only used for reading
 // v3.2.16: was completely false !!!!
-int index_table2(table *a, OID x, OID y)
+Cint index_table2(table *a, OID x, OID y)
 {list *l = (list *) a->graph;
- int i,chsize = (*l)[0], end = chsize - 4,
+ Cint i,chsize = (*l)[0], end = chsize - 4,
      mask = (chsize >> 1) - 1,
      hash2 = (ClRes->hashOid(mask,x) + ClRes->hashOid(mask,y)) & mask,
      entry = (hash2 << 1) + 1;

@@ -1,5 +1,5 @@
 /***** CLAIRE Compilation of file Core.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:55 2017 *****/
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:41 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -231,7 +231,7 @@ void CoreClass::metaLoad() {
     Kernel._object,
     Kernel._integer,
     Kernel._boolean),Kernel._any,
-  	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(eval_message_property,"eval_message_property"));
+  	NEW_ALLOC+SLOT_UPDATE+SAFE_GC,_function_(eval_message_property,"eval_message_property"));
   
   Core.noeval_message->addMethod(list::domain(2,Kernel._property,Kernel._integer),Kernel._any,
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(noeval_message_property2,"noeval_message_property2"));
@@ -387,10 +387,10 @@ void CoreClass::metaLoad() {
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(_at_property2,"@_property2"));
   
   Core.matching_ask->addMethod(list::domain(3,Kernel._list,Kernel._integer,Kernel._integer),Kernel._boolean,
-  	NEW_ALLOC,_function_(matching_ask_list,"matching?_list"));
+  	SAFE_GC,_function_(matching_ask_list,"matching?_list"));
   
   Core.vmatch_ask->addMethod(list::domain(3,Kernel._any,Kernel._any,Kernel._integer),Kernel._boolean,
-  	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(vmatch_ask_any,"vmatch?_any"));
+  	SAFE_GC,_function_(vmatch_ask_any,"vmatch?_any"));
   
   Core.tmatch_ask->addMethod(list::domain(2,Kernel._list,Kernel._list),Kernel._boolean,
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(tmatch_ask_list,"tmatch?_list"));
@@ -413,13 +413,13 @@ void CoreClass::metaLoad() {
     Kernel._integer),Kernel._object,
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(find_which_class,"find_which_class"));
   
-  { (ClEnv->version = 5.0);
+  { (ClEnv->version = 5.01);
     princ_string(CSTRING("-- CLAIRE run-time library v 3."));
-    princ_float(5.0);
+    princ_float(5.01);
     princ_string(CSTRING(" [os: "));
-    princ_string(CSTRING("ntv"));
+    princ_string(CSTRING("unix"));
     princ_string(CSTRING(", C++:"));
-    princ_string(CSTRING("MS VC++"));
+    princ_string(CSTRING("g++"));
     princ_string(CSTRING(" ] --\n"));
     } 
   
@@ -460,7 +460,7 @@ void CoreClass::metaLoad() {
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(push_debug_property,"push_debug_property"));
   
   Core.pop_debug->addMethod(list::domain(3,Kernel._property,Kernel._integer,Kernel._any),Kernel._void,
-  	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(pop_debug_property,"pop_debug_property"));
+  	0,_function_(pop_debug_property,"pop_debug_property"));
   
   Core.tr_indent->addMethod(list::domain(2,Kernel._boolean,Kernel._integer),Kernel._void,
   	0,_function_(tr_indent_boolean,"tr_indent_boolean"));
@@ -679,7 +679,7 @@ void CoreClass::metaLoad() {
   
   { global_variable * _CL_obj = (Core.claire_date = (global_variable *) Core._global_variable->instantiate("claire_date",claire.it));
     (_CL_obj->range = Kernel._string);
-    (_CL_obj->value = _string_(CSTRING("Sun May 28 08:25:55 2017\n")));
+    (_CL_obj->value = _string_(CSTRING("Sun Jul 24 08:43:41 2016\n")));
     close_global_variable(_CL_obj);
     } 
   
@@ -1079,7 +1079,7 @@ void CoreClass::metaLoad() {
   	0,_function_(length_bag,"length_bag"));
   
   (Kernel.nth->addMethod(list::domain(2,Kernel._bag,Kernel._integer),Kernel._any,
-  	0,_function_(nth_bag,"nth_bag"))->typing = _oid_(_function_(nth_bag_type,"nth_bag_type")));
+  	RETURN_ARG,_function_(nth_bag,"nth_bag"))->typing = _oid_(_function_(nth_bag_type,"nth_bag_type")));
   
   Kernel.nth_get->addMethod(list::domain(2,Kernel._bag,Kernel._integer),Kernel._any,
   	0,_function_(nth_get_bag,"nth_get_bag"));

@@ -1,5 +1,5 @@
 /***** CLAIRE Compilation of file Reader.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:57 2017 *****/
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:45 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -527,7 +527,7 @@ void ReaderClass::metaLoad() {
   
   { global_variable * _CL_obj = (Reader._starfs_star = (global_variable *) Core._global_variable->instantiate("*fs*",claire.it));
     (_CL_obj->range = Kernel._string);
-    (_CL_obj->value = _string_(CSTRING("\\")));
+    (_CL_obj->value = _string_(CSTRING("/")));
     close_global_variable(_CL_obj);
     } 
   

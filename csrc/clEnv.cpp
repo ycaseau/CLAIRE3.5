@@ -64,7 +64,7 @@ void ClaireHandler::catchIt()
   ClAlloc->base = gBase;}
 
 // system error handling - C++ API ---------------------------------
-int Cerror(int n, OID a, OID b)
+Cint Cerror(Cint n, OID a, OID b)
 { if (n == -2) {ClEnv->cout = ClAlloc->stdErr;             // v3.3
                 princ_string("Assertion violation in file "); princ_string((char *) a);
                 princ_string(" [line "); princ_integer(b); princ_string(" \n");
@@ -89,7 +89,7 @@ void my_handler (int x)
 #endif
 
 // create a system_error
-system_error *system_error::make(int n, OID x, OID y)
+system_error *system_error::make(Cint n, OID x, OID y)
 {system_error *o = (system_error *) ClAlloc->makeAny(4);
   o->isa = Kernel._system_error;
   o->index = n;
@@ -168,11 +168,11 @@ void ClaireResource::magicInit()
 
 // use the previous array to return the fragment of bitcode for encoding the i-th
 // child using m bits
-int ClaireResource::makeCode(int n, int i, int m) {return (magicCode[i][m] << n);}
+Cint ClaireResource::makeCode(Cint n, Cint i, Cint m) {return (magicCode[i][m] << n);}
 
 // generic hashing function: this is the heart of powerfull alists !
 // The mask is supposed to be 0x001...1 and the result is between 0 and mask
-int ClaireResource::hashOid(int mask, OID x)
+Cint ClaireResource::hashOid(Cint mask, OID x)
 {if IDENTIFIED(x)                    // v3.1.10 -> there was a strange bug with CTAG
     return (x & mask);
  else {ClairePrimitive *z = OBJECT(ClairePrimitive,x);
@@ -186,7 +186,7 @@ int ClaireResource::hashOid(int mask, OID x)
          else if (z->isa == Kernel._cl_import)              // v3.3.22
              return (((ClaireImport *) z)->value & mask);
          else if (z->isa == Kernel._float)
-            return (((int) ((ClaireFloat *) z)->value) & mask);
+            return (((Cint) ((ClaireFloat *) z)->value) & mask);
          else return (x & mask);}
  }
 
@@ -232,14 +232,14 @@ void restore_state_void()
 // buffer functions ------------------------------------------------------------
 // makes a string from the buffer
 char *ClaireEnvironment::bufferCopy()
-{int i;
+{Cint i;
  char *NEW = ClAlloc->makeString(1 + bLength / 4);        // v3.2.01 !
    for (i = 0; i < bLength; i++) NEW[i] = buffer[i];
    NEW[i] = '\0';
    return NEW;}
 
 // prints an integer in the string buffer
-void ClaireEnvironment::pushInteger(int n)
+void ClaireEnvironment::pushInteger(Cint n)
 { sprintf(&buffer[bLength],"%d",n);
   for ( ; buffer[bLength] != '\0'; bLength++);
   if (bLength > MAXBUF) Cerror(9,_string_(bufferCopy()),0);}
@@ -256,32 +256,34 @@ char *ClaireEnvironment::localString(char* s)
 // ----------- API functions -------------------------------------------
 
 // retunrs the C value that we put in the stack (a function to avoid overNesting)
-int Cpointer(OID x, ClaireClass *c) {return CPOINTER(x,c);}
+Cint Cpointer(OID x, ClaireClass *c)
+{ if (VERB > 0) printf("CPOINTER(%llx, class %llx) -> %llx\n",x,c,CPOINTER(x,c));
+ return CPOINTER(x,c);}
 
 // reset the stack
 OID reset_stack(OID x, int n) { ClEnv->index -= n; return x;}
 
 // moves the stack pointer up by x units */
-void stack_add(int x)
+void stack_add(Cint x)
 {ClEnv->index = ClEnv->base + x;
  if (ClEnv->index >= ClAlloc->maxStack) Cerror(24,ClEnv->index,0);}
 
 // apply a function on an argument, two arguments or more
 OID fcall1(ClaireFunction *f,ClaireClass *s1,OID a1,ClaireClass *s)
-{int x;
-   x = ((fptr1) f->value)((int) CPOINTER(a1,s1));
+{Cint x;
+   x = ((fptr1) f->value)((OID) CPOINTER(a1,s1));
    return CLAIREOID(x,s);}
 
 OID fcall2(ClaireFunction *f,ClaireClass *s1, OID a1,ClaireClass *s2, OID a2,ClaireClass *s)
-{int x;
-   x = ((fptr2) f->value)((int)CPOINTER(a1,s1), (int) CPOINTER(a2,s2));
+{Cint x;
+   x = ((fptr2) f->value)((OID)CPOINTER(a1,s1), (OID) CPOINTER(a2,s2));
    return CLAIREOID(x,s);}
 
 OID fcall3(ClaireFunction *f,ClaireClass *s1, OID a1,ClaireClass *s2,
            OID a2, ClaireClass *s3, OID a3, ClaireClass *s)
-{int x;
-   x = ((fptr3) f->value)((int)CPOINTER(a1,s1), (int) CPOINTER(a2,s2),
-                          (int) CPOINTER(a2,s2));
+{Cint x;
+   x = ((fptr3) f->value)((OID) CPOINTER(a1,s1), (OID) CPOINTER(a2,s2),
+                          (OID) CPOINTER(a2,s2));
    return CLAIREOID(x,s);}
 
 
@@ -290,12 +292,16 @@ OID fcall3(ClaireFunction *f,ClaireClass *s1, OID a1,ClaireClass *s2,
 #define FAPPLY(F,f,l) (((F) f->value)l)
 
 
-// apply a function to a list of arguments placed into the stack (m to n)*/
-OID stack_apply_function(ClaireFunction *f, list *l, int n, int m)
-{int x;
+// apply a function to a list of arguments placed into the stack (m to n)
+// l is the list of classes to perform the OID to C-representation
+OID stack_apply_function(ClaireFunction *f, list *l, Cint n, Cint m)
+{Cint x;
  m = m - n;
  ClaireClass *s = OBJECT(ClaireClass,(*l)[m + 1]);
  if (ClEnv->index >= ClAlloc->maxStack) Cerror(24,ClEnv->index,0);
+ if (VERB > 0) {printf("stack_apply AR(0) = %llx\n",AR(0));
+                printf("stack_apply AR(1) = %llx\n",AR(1));}
+    
  if (m == 1) x = FAPPLY(fptr1,f,(AR(0)));
  else if (m == 2) x = FAPPLY(fptr2,f,(AR(0),AR(1)));
  else if (m == 3) x = FAPPLY(fptr3,f,(AR(0),AR(1),AR(2)));
@@ -341,8 +347,11 @@ OID stack_apply_function(ClaireFunction *f, list *l, int n, int m)
                        AR(8),AR(9),AR(10),AR(11),AR(12),AR(13),AR(14),AR(15), AR(16),
                        AR(17),AR(18),AR(19)));
  else Cerror(32,_oid_(f),m);
- if (s == Kernel._void) x = CNULL; else x = CLAIREOID(x,s);
+ if (VERB > 0) printf("FAPPLY exit with %llx\n",x);
+ if (s == Kernel._void) x = CNULL;
+ else x = CLAIREOID(x,s);
  ClEnv->index = n;
+ if (VERB > 0) printf("stack apply exit with %llx\n",x);
  return x;}
 
 // the name of a function
@@ -355,35 +364,35 @@ char *string_I_function(ClaireFunction *f)
 /*********************************************************************/
 
 // defeasible update on a list
-OID store_list(list *l, int n, OID y, ClaireBoolean *b)
-{int *z = &(l->content[n]);
+OID store_list(list *l, Cint n, OID y, ClaireBoolean *b)
+{OID *z = &(l->content[n]);
    if (b == CTRUE && ClRes->cWorld != 0) STOREOID(z,*z)
    return (*z = y);}
 
 // defeasible update on a list
-OID store_array(OID* a, int n, OID y, ClaireBoolean *b)
+OID store_array(OID* a, Cint n, OID y, ClaireBoolean *b)
 {if ARRAYFLOAT(a)
     {double *z = &(((double *) a)[n]);
      if (b == CTRUE && ClRes->cWorld != 0) STOREFLOAT(z,*z)
      return (*z = float_v(y));}
- else {int *z = &a[n];
+ else {OID *z = &a[n];
        if (b == CTRUE && ClRes->cWorld != 0) STOREOID(z,*z)
        return (*z = y);}
 }
 
 // get the value, even if it is unknown
 // we do not need to copy floats anymore since the stack has its own storage
-OID store_object(ClaireObject *x, int n, ClaireClass *s, OID y, ClaireBoolean *b)
+OID store_object(ClaireObject *x, Cint n, ClaireClass *s, OID y, ClaireBoolean *b)
 {if (s == Kernel._float)
     {double *z = (double *) SLOTADR(x,n);
      if (b == CTRUE && ClRes->cWorld != 0)  STOREFLOAT(z,*z)
      *z = float_v(y);
      return y;}
  else if (s == Kernel._any || s == Kernel._integer)
-      {int *z = SLOTADR(x,n);
+      {OID *z = SLOTADR(x,n);
        if (b == CTRUE && ClRes->cWorld != 0)  STOREOID(z,*z)
        return (*z = y);}
- else {int *z = SLOTADR(x,n);
+ else {OID *z = SLOTADR(x,n);
        if (b == CTRUE && ClRes->cWorld != 0)
           STOREOBJ(z,(ClaireObject *) *z)
        *z = ((y == CNULL) ? 0 : CPOINTER(y,s));
@@ -404,12 +413,12 @@ void world_push ()
     Cerror(37,0,0);
  ClRes->cWorld++;
  ClRes->cWorldId++;                  // v3.2.04
- ClRes->haiStack[++ClRes->iIndex] = (int *) ClRes->iBase;
+ ClRes->haiStack[++ClRes->iIndex] = (OID *) ClRes->iBase;
  ClRes->iBase = ClRes->iIndex;
- ClRes->haoStack[++ClRes->oIndex] = (int *) ClRes->oBase;
+ ClRes->haoStack[++ClRes->oIndex] = (OID *) ClRes->oBase;
  ClRes->hvoStack[ClRes->oIndex] = NULL;
  ClRes->oBase = ClRes->oIndex;
- ClRes->hafStack[++ClRes->fIndex] = (int *) ClRes->fBase;
+ ClRes->hafStack[++ClRes->fIndex] = (OID *) ClRes->fBase;
  ClRes->fBase = ClRes->fIndex;}
 
 // remove a world and perform all modifications stored in the stack
@@ -419,15 +428,15 @@ void world_pop ()
  else {int x = ClRes->iIndex + 1, y = ClRes->iBase;
        while (--x != y) {*(ClRes->haiStack[x]) = ClRes->hviStack[x];}
        ClRes->iIndex = y - 1;
-       ClRes->iBase = (int) ClRes->haiStack[y];
+       ClRes->iBase = ccast(ClRes->haiStack[y]);
        x = ClRes->oIndex + 1; y = ClRes->oBase;
-       while (--x != y) {*(ClRes->haoStack[x]) = (int) ClRes->hvoStack[x];}
+       while (--x != y) {*(ClRes->haoStack[x]) = ccast(ClRes->hvoStack[x]);}
        ClRes->oIndex = y - 1;
-       ClRes->oBase = (int) ClRes->haoStack[y];
+       ClRes->oBase = ccast(ClRes->haoStack[y]);
        x = ClRes->fIndex + 1; y = ClRes->fBase;
        while (--x != y) {*( (double *) ClRes->hafStack[x]) = ClRes->hvfStack[x];}
        ClRes->fIndex = y - 1;
-       ClRes->fBase = (int) ClRes->hafStack[y];}}
+       ClRes->fBase = ccast(ClRes->hafStack[y]);}}
 
 
 // commit: all updates are accepted but the traing info is conserved unless in world 1
@@ -436,14 +445,14 @@ void world_remove (void)
  else { ClRes->cWorld--;
         if (ClRes->cWorld == -1) ClRes->cWorld++;
         int y = ClRes->iBase;
-        ClRes->iBase = (int) ClRes->haiStack[y];       // v3.2.04: base(n - 1) is restored ...
+        ClRes->iBase = ccast(ClRes->haiStack[y]);       // v3.2.04: base(n - 1) is restored ...
         ClRes->haiStack[y] = &(ClRes->hviStack[y]);    // .. and the cell for base(n) is neutralized
         y = ClRes->oBase;
-        ClRes->oBase = (int) ClRes->haoStack[y];
-        ClRes->haoStack[y] = (int *) &(ClRes->hvoStack[y]);
+        ClRes->oBase = ccast(ClRes->haoStack[y]);
+        ClRes->haoStack[y] = (OID *) &(ClRes->hvoStack[y]);
         y = ClRes->fBase;
-        ClRes->fBase = (int) ClRes->hafStack[y];
-        ClRes->hafStack[y] = (int *) &(ClRes->hvfStack[y]);}}
+        ClRes->fBase = ccast(ClRes->hafStack[y]);
+        ClRes->hafStack[y] = (OID *) &(ClRes->hvfStack[y]);}}
        
 
 // this is the tough version that is irreversible
@@ -454,17 +463,17 @@ void world_slaughter (void)
      ClRes->fBase = 0; ClRes->fIndex = 0;}
  else  {int y = ClRes->iBase;
         ClRes->iIndex = y - 1;
-        ClRes->iBase = (int) ClRes->haiStack[y];
+        ClRes->iBase = ccast(ClRes->haiStack[y]);
         y = ClRes->oBase;
         ClRes->oIndex = y - 1;
-        ClRes->oBase = (int) ClRes->haoStack[y];
+        ClRes->oBase = ccast(ClRes->haoStack[y]);
         y = ClRes->fBase;
         ClRes->fIndex = y - 1;
-        ClRes->fBase = (int) ClRes->hafStack[y];}}
+        ClRes->fBase = ccast(ClRes->hafStack[y]);}}
 
 // give the current world
-int world_number (void)  {return ClRes->cWorld;}
+Cint world_number (void)  {return ClRes->cWorld;}
 
 // give the current world
-int world_get_id (void)  {return ClRes->cWorldId;}
+Cint world_get_id (void)  {return ClRes->cWorldId;}
 

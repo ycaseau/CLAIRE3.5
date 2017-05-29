@@ -1,17 +1,7 @@
-/** @package 
-
-        clAlloc.cpp
-        
-        Copyright(c) self 2000
-        
-        Author: YVES CASEAU
-        Created: YC  24/01/2006 07:31:18
-	Last change: YC 18/05/2006 23:03:46
-*/
 /***********************************************************************/
 /**   microCLAIRE                                       Yves Caseau    */
 /**   clAlloc.cpp                                                      */
-/**  Copyright (C) 1998-2003 Yves Caseau. All Rights Reserved.         */
+/**  Copyright (C) 1998-2016 Yves Caseau. All Rights Reserved.         */
 /**  cf claire.h                                                       */
 /***********************************************************************/
 
@@ -40,31 +30,31 @@ void checkNextFree()
 /**    5. Interface functions                                        */
 /*********************************************************************/
 
-int BadGuy = 0;      // a remettre a 0 !;
-int maxIndex = 0;
-int *CL_dummy;       // not used really
+Cint BadGuy = 0;      // a remettre a 0 !;
+Cint maxIndex = 0;
+Cint *CL_dummy;       // not used really
 
 // debug version that can be instrumented
-int GC_DEBUG(int n)
+Cint GC_DEBUG(Cint n)
   { return n;}
 
 // we use a special object to represent the allocator
 // we could use a class with static methods but this is more homogeneous
 ClaireAllocation *ClAlloc;
-int *Cmemory;
+OID *Cmemory;                  // v3.5 - 64bits
 
 // macros for this file -------------------------------------------------
 #define CAR 1
 #define FOLLOW 2
 #define PREVIOUS 3
 // x is a pointer, returns the ADR (faster than ADR(_oid_(x))
-#define POINTOADR(x) (((int) x - ((int) &Cmemory[0])) / sizeof(int))
+#define POINTOADR(x) ((ccast(x) - ccast(&Cmemory[0])) / sizeof(Cint))
 #define SIZE(n) Cmemory[ADR(n)]             // returns the size of the object
 
 #define OPTIMIZE 6          /*size of the basic object (has to be even) */
 
 #ifdef CLDEBUG              // little trick to check that values are OK
-int ISCHUNK(int n)
+Cint ISCHUNK(Cint n)
 {if (n == NOTHING || (n > 0 && n < ClAlloc->maxList)) return n;
  else return (n / 0);}
 #else
@@ -77,21 +67,23 @@ int ISCHUNK(int n)
 
 // init
 // contains all the calls to malloc for CLAIRE
+// V3.5
 void ClaireAllocation::init()
-{int i;
+{Cint i;
+// printf("<debug>  alloc::init() maxSize = %d \n",maxSize);
  ClRes = new ClaireResource;
  ClRes->sTable = (symbol **) CL_alloc(maxHash + 1);
- ClRes->ascii = (ClaireChar **) new int[512];
- ClRes->haiStack = (int **) CL_alloc(maxHist);                    // address part of the stack
- ClRes->hviStack = (int *) CL_alloc(maxHist);                     // value part of the stack
- ClRes->haoStack = (int **) CL_alloc(maxHist);                    // address part of the stack
+ ClRes->ascii = (ClaireChar **) new OID[512];
+ ClRes->haiStack = (OID **) CL_alloc(maxHist);                    // address part of the stack
+ ClRes->hviStack = (OID *) CL_alloc(maxHist);                     // value part of the stack
+ ClRes->haoStack = (OID **) CL_alloc(maxHist);                    // address part of the stack
  ClRes->hvoStack = (ClaireObject **) CL_alloc(maxHist);           // value part of the stack
- ClRes->hafStack = (int **) CL_alloc(maxHist);                    // address part of the stack
+ ClRes->hafStack = (OID **) CL_alloc(maxHist);                    // address part of the stack
  ClRes->hvfStack = (double *) CL_alloc(maxHist * 2);              // value part of the stack
 // gcStack = (ClaireAny **) new int[maxGC];                       // GC stack
 // Cmemory = new int[maxSize + 1];                                // global memory zone
  gcStack = (ClaireAny **) CL_alloc(maxGC);                        // GC stack  (v 3.2.38)
- Cmemory = (int *) CL_alloc(maxSize + 1);                         // global memory zone
+ Cmemory = (OID *) CL_alloc(maxSize + 1);                         // global memory zone
  if (Cmemory == NULL) CL_exit(0);
  #ifdef CLUNIX
  Cmemory = &(Cmemory[1]);                                         // respect alignment !
@@ -100,6 +92,7 @@ void ClaireAllocation::init()
  nextFree = NOTHING;
  firstFree = maxList + 2;    // needs to be even for alignment ! used in sweep
  alertFree = maxList + ((5 * (maxSize - maxList)) / 6);
+ // printf("---- after alloc nextFree = %d, firstFree = %d",nextFree,firstFree);
  statusGC = 0;              // we like GC, don't we ?
  for (i=0; i <= maxHash; i++) ClRes->sTable[i] = NULL;
  hashMask = ((1 << (log2up(maxHash) - 1)) - 1);
@@ -114,7 +107,7 @@ void ClaireAllocation::init()
  probe = NULL;                // v3.0.4
  ClEnv = (ClaireEnvironment *) makeStatic(sizeof(ClaireEnvironment) / 4 + 2);
  ClEnv->handlers = (jmp_buf *) CL_alloc( (size_t) (maxEnv * sizeof(jmp_buf))) ;  // v3.3.34 - a buf fix for FXJ
- ClEnv->stack = (int *) CL_alloc(maxStack);                        // eval stack
+ ClEnv->stack = (OID *) CL_alloc(maxStack);                        // eval stack
  currentNew = NULL;                                                // v3.0.60
  currentType = NULL;                                               // v3.3.42   - second protection slot
  numGC = 0;                                                        // v3.2.50
@@ -129,8 +122,8 @@ void ClaireAllocation::init()
 //       make* methods return a true pointer
 
 // roughly the logarithm of n with base 2, n = 0 is an horror !
-int ClaireAllocation::log2up(int n)
-{int value;
+Cint ClaireAllocation::log2up(Cint n)
+{Cint value;
   for (value = 1; (n != 1);) {n = n >> 1; ++value;}
   return(value);
 }
@@ -143,8 +136,8 @@ int ClaireAllocation::log2up(int n)
 //     Cmemory[x + CAR]   = NOTHING  (to know that the chunk is free)
 //     Cmemory[x + NEXT]  = address of next free chunk of same size
 //     Cmemory[x + FOLLOW] = address of the previous chunk in the chain
-int ClaireAllocation::newChunk(int n)
-{int size,value,next,i,j;
+Cint ClaireAllocation::newChunk(Cint n)
+{Cint size,value,next,i,j;
   size = log2up(n);                         /* note that 2^size is always > n */
   if (size > logList) Cerror(1,size,0);
   if (entryList[size] == NOTHING)
@@ -179,8 +172,9 @@ int ClaireAllocation::newChunk(int n)
 
 // allocation of a short object: this is much simpler and uses a chain of small blocks
 // of size OPTIMIZE
-int ClaireAllocation::newShort(int n)
-{int value;
+Cint ClaireAllocation::newShort(Cint n)
+{Cint value;
+  if (VERB > 3) printf(">>>>> call newShort(%d) nextFree =%x\n",n,nextFree);
   if (nextFree != NOTHING)                     // chain is not empty
      {value = nextFree;
       Cmemory[value] = n;
@@ -200,12 +194,13 @@ int ClaireAllocation::newShort(int n)
   if (value == BadGuy)
     printf("====== allocate bad guy \n");
   #endif
+  if (VERB > 3) printf("<<<< NewShort(%d) -> %d (nextFree = %x)\n",n,value,nextFree);
   return value;}
 
 
 // allocation of a long object is pure stacking
-int ClaireAllocation::newLong(int n)
-{int value;
+Cint ClaireAllocation::newLong(Cint n)
+{Cint value;
   value = firstFree;
   Cmemory[firstFree] = n;
   firstFree += (n + 1);
@@ -213,12 +208,12 @@ int ClaireAllocation::newLong(int n)
   return value;}
 
 // allocation of a long object is pure stacking
-ClaireAny *ClaireAllocation::makeStatic(int n)
+ClaireAny *ClaireAllocation::makeStatic(Cint n)
 {return (ClaireAny *) &Cmemory[newLong(((n < OPTIMIZE) ? OPTIMIZE : n)) + 1];}
 
 // allocator for our own use
-ClaireAny *ClaireAllocation::makeAny(int n)
-{int m = ((n < OPTIMIZE) ? newShort(n) : newChunk(n));
+ClaireAny *ClaireAllocation::makeAny(Cint n)
+{Cint m = ((n < OPTIMIZE) ? newShort(n) : newChunk(n));
  // if (ALTALK > 0) printf("ClAlloc::makeAny(%d) -> %x (ADR = %d) \n",n, ((int *) &Cmemory[m + 1]), m);
  return (ClaireAny *) &Cmemory[m + 1];
 }
@@ -228,14 +223,14 @@ ClaireAny *ClaireAllocation::makeAny(int n)
 // we allocate the string so that it looks like an imported but is is really special
 // string is an import on a char* that is itself allocated by CLAIRE (with a primitive
 // isa marking)
-char *ClaireAllocation::makeString (int n)
-{int m;
+char *ClaireAllocation::makeString (Cint n)
+{Cint m;
   if (n < OPTIMIZE) n = OPTIMIZE;
   m = newChunk(n+3);
-  Cmemory[m+1] = (int) Kernel._primitive;     // allows for a simpler string pushing
+  Cmemory[m+1] = ccast(Kernel._primitive);     // allows for a simpler string pushing
   // test that the future code will work
    {char *s = (char *) &Cmemory[m+2];
-    int x = POINTOADR(s) - 1;         // works because the class is the string marker NOTE: -1 to get the object !
+    Cint x = POINTOADR(s) - 1;         // works because the class is the string marker NOTE: -1 to get the object !
       ClaireObject *y = (ClaireObject *) &Cmemory[x];
       ClaireClass *c = y->isa;
       ASSERT(c == Kernel._primitive);}
@@ -244,16 +239,16 @@ char *ClaireAllocation::makeString (int n)
 
 // similar trick: allocation for an array
 // we allocate both the container and the contents thus
-OID *ClaireAllocation::makeArray (int n, ClaireType *t)
-{int m = newChunk(((t == Kernel._float) ? (2 * n) : n) + 4); // v3.2.34 : 4 vs. 3 is necessary for some strange reason
-  Cmemory[m+1] = (int) Kernel._array;
-  Cmemory[m+2] = (int) t;
+OID *ClaireAllocation::makeArray (Cint n, ClaireType *t)
+{Cint m = newChunk(((t == Kernel._float) ? (2 * n) : n) + 4); // v3.2.34 : 4 vs. 3 is necessary for some strange reason
+  Cmemory[m+1] = ccast(Kernel._array);
+  Cmemory[m+2] = ccast(t);
   Cmemory[m+3] = n;
   return (OID *) &Cmemory[m + 3];}
 
 // allocate a memory zone for a bag
-OID *ClaireAllocation::makeContent (int n)
-{int x;
+OID *ClaireAllocation::makeContent (Cint n)
+{Cint x;
   if (n < (OPTIMIZE - 1)) x= newShort(OPTIMIZE-1);
   else x = newChunk(n);
   return &Cmemory[x];}
@@ -261,21 +256,23 @@ OID *ClaireAllocation::makeContent (int n)
 // creates an imported object
 // notice the automatic protection, which is why the compiler does not protect constants from gc,
 // since further optimization are meant to remove the use of import
-OID ClaireAllocation::import(ClaireClass *c, int *x)
+OID ClaireAllocation::import(ClaireClass *c, OID *x)
 {if (c == Kernel._string) GC_STRING((char *) x);               // v3.2.01 -> protect the content
- int adr = newShort(3);
+ Cint adr = newShort(3);
  ClaireImport *obj = (ClaireImport *) &Cmemory[adr + 1];
    if (ClAlloc->statusGC != 2)  GC_PUSH(obj);                   // v3.1.06 -> protect the container, v3.2.30 check stack
    obj->isa = c;
-   obj->value = (int) x;
+   obj->value = ccast(x);
    return OBJ_CODE + adr;}
 
 // a function is a system object (sort = object) allocated with a special
 // method 
 ClaireFunction *ClaireAllocation::makeFunction(fptr f,char* s)
 { ClaireFunction *obj = (ClaireFunction *) &Cmemory[newShort(4) + 1];
+    if (VERB > 0) printf("=== makeFunction(%llx) with pointer %llx\n",obj,f);
     obj->isa = Kernel._function;
-    obj->value = (int) f;
+    obj->value = CCAST(f);
+    if (VERB > 0) printf("=== store %llx = %llx\n",obj->value,CCAST(f));
     obj->name = s;
     return obj;}
 
@@ -295,8 +292,8 @@ ClaireFunction *make_function_string(char *s)
 //  de-allocation of a chunk of dynamic memory,
 //  the returned value is important, it is the address of the next chunk for the
 //  sweep loop
-int ClaireAllocation::freeChunk(int n)
-{int size,l,j;
+Cint ClaireAllocation::freeChunk(Cint n)
+{Cint size,l,j;
   l = Cmemory[n];             /* real length of the allocated space */
   size = log2up(l) - 1;
   #ifdef CLDEBUG              // useful
@@ -304,7 +301,7 @@ int ClaireAllocation::freeChunk(int n)
      {printf("free ADR %d causes a bug (size = %d not a chunk)\n",n,l);}
   #endif
   usedCells -= l;
-  if (Cmemory[n + 1] == (int) Kernel._primitive || Cmemory[n + 1] == (int) Kernel._array )
+  if (Cmemory[n + 1] == ccast(Kernel._primitive) || Cmemory[n + 1] == ccast(Kernel._array) )
      for(j=2; j< l; j++) Cmemory[n+j] = 0;        // CLEAN ARRAYS OR STRINGS !
   ASSERT(l == (1 << size));
   return freeLoop(n);}
@@ -313,8 +310,8 @@ int ClaireAllocation::freeChunk(int n)
 //  if yes we do it, otherwise we just free the space
 // a twin is the adjacent chunk of the same size, which can be on the left or the
 // right
-int ClaireAllocation::freeLoop(int n)
-{int size,l;
+Cint ClaireAllocation::freeLoop(Cint n)
+{Cint size,l;
   l = Cmemory[n];             // real length of the allocated space
   size = log2up(l) - 1;
   if (((n >> size) & 1) == 0) // determines if the twin is on the right
@@ -327,7 +324,7 @@ int ClaireAllocation::freeLoop(int n)
       else return freeSimple(n,size);}}
 
 // giving back a list to the data zone
-int ClaireAllocation::freeSimple(int n, int size)
+Cint ClaireAllocation::freeSimple(Cint n, Cint size)
 { if (entryList[size] != NOTHING) Cmemory[entryList[size] + PREVIOUS] = n;
   Cmemory[n + CAR] = NOTHING;
   Cmemory[n + FOLLOW] = entryList[size];
@@ -337,7 +334,7 @@ int ClaireAllocation::freeSimple(int n, int size)
 }
 
 // merging two twins free lists , a is the new one
-int ClaireAllocation::mergeRight(int a, int b, int size)
+Cint ClaireAllocation::mergeRight(Cint a, Cint b, Cint size)
 {
   if (entryList[size] == b)    /*b is the first free of this size */
       entryList[size] = Cmemory[b+FOLLOW];
@@ -350,7 +347,7 @@ int ClaireAllocation::mergeRight(int a, int b, int size)
 }
 
 // symetrical: b is the new one
-int ClaireAllocation::mergeLeft(int a, int b, int size)
+Cint ClaireAllocation::mergeLeft(Cint a, Cint b, Cint size)
 {
   if (entryList[size] == a) /* a is the first free cell */
      entryList[size] = Cmemory[a+FOLLOW];
@@ -363,7 +360,7 @@ int ClaireAllocation::mergeLeft(int a, int b, int size)
 }
 
 //  desallocation if any need, (instruction object) of the memory zone
-void ClaireAllocation::freeObject(int n)
+void ClaireAllocation::freeObject(Cint n)
 { if (Cmemory[n] < OPTIMIZE)
      {Cmemory[n+1] = nextFree;
       Cmemory[n] = 0;
@@ -381,19 +378,19 @@ void ClaireAllocation::freeObject(int n)
 // free a string
 void ClaireAllocation::freeString(char *s)
 { if CLMEM(s)
-   {int x = POINTOADR(s) - 2;
+   {Cint x = POINTOADR(s) - 2;
     freeChunk(x);}}
 
 
 /*********************************************************************/
-/**    3. Garbage Collection                                         */
+/**    4. Garbage Collection                                         */
 /*********************************************************************/
 
 // mark a cell ! [v3.1.04 use a macro => easier to read + debug]
 #define MARKCELL(x) (Cmemory[x] = -Cmemory[x])
 
 void freeChain()
-{int i = ClAlloc->nextFree, j = 0, prev = 0;
+{Cint i = ClAlloc->nextFree, j = 0, prev = 0;
    while (i != NOTHING )
    {if (i > ClAlloc->maxSize)
       printf("[%d] Chaine buggee %d -> %d \n",j,prev,i);
@@ -414,12 +411,12 @@ void ClaireAllocation::gc(char *cause)
  if (probe != NULL) {printf("--- the probe is %d -> adr = %d ----\n",probe,getADR(probe));
                      printf("*[O] = %d, 1:%d, 2:%d\n",probe[1],probe[2],probe[3]);}
  // use_as_output_port(p);
- if (ClEnv->verbose > 0 || (numGC % 10) == 0 || 1 == 1)
+ if (ClEnv->verbose > 0 || (numGC % 10) == 0)
     {princ_string(cause); princ_string(" ["); princ_integer(numGC);
      if (statusGC == 2) princ_string("] not enough memory !\n");        // v3.2.34
      else princ_string("] Garbage Collection ... \n");}
  if (statusGC == 2) Cerror(27,0,0);                                     // v3.1.12  -> no GC allowed !
- else {int topStack = ClEnv->index;
+ else {Cint topStack = ClEnv->index;
        numGC++;
        markStack();
        markHash();
@@ -435,7 +432,7 @@ void ClaireAllocation::gc(char *cause)
 
 // marks all the object contained in the hash table.
 void ClaireAllocation::markHash()
-{int i;
+{Cint i;
  mark(_oid_(ClEnv->moduleStack));
  for (i = 0; i < 512; i++) mark(_oid_(ClRes->ascii[i]));
  for (i = 0; i < maxHash; i++)
@@ -447,7 +444,7 @@ void ClaireAllocation::markHash()
 
 // mark the items in the various stacks
 void ClaireAllocation::markStack()
-{int i;
+{Cint i;
  if (currentNew != NULL)
     {OID n = _oid_(currentNew);
         if (SIZE(n) > 0 && !INHERIT(OWNER(n),Kernel._class))  // v3.3.38: Things must be protected properly
@@ -458,7 +455,7 @@ void ClaireAllocation::markStack()
            MARKCELL(ADR(n)); }
  for (i=0; i < ClEnv->index; i++) mark(ClEnv->stack[i]);
  for (i=1; i < index; i++)
-    {if ((int) gcStack[i] > (int) &Cmemory) mark(_oid_(gcStack[i]));}
+    {if (ccast(gcStack[i]) > ccast(&Cmemory)) mark(_oid_(gcStack[i]));}
  for (i=1; i <= ClRes->oIndex; i++)
     {ClaireObject *x = ClRes->hvoStack[i];
       if (x != NULL) mark(_oid_(x));}      // v3.3.28: MARKCELL + markObject !
@@ -466,7 +463,7 @@ void ClaireAllocation::markStack()
  }
 
 // mark bags and objects recursively that ware pushed on the stack
-void ClaireAllocation::markPushed(int i)
+void ClaireAllocation::markPushed(Cint i)
 {while (i < ClEnv->index)
    {OID n = ClEnv->stack[i];
       if  (CTAG(n) == OBJ_CODE) markAny(OBJECT(ClaireAny,n));  // markAny since the cell is marked
@@ -478,7 +475,7 @@ void ClaireAllocation::mark(OID n)
 { if (CTAG(n) == OBJ_CODE)
     {if (SIZE(n) > 0)
         {MARKCELL(ADR(n));
-         if (ClEnv->index >= maxStack) Cerror(-1,(int) "Stack overflow during gc",0);
+         if (ClEnv->index >= maxStack) Cerror(-1,ccast("Stack overflow during gc"),0);
          else if INHERIT(OWNER(n),Kernel._thing) PUSH(n);
          else markAny(OBJECT(ClaireAny,n));}}
 }
@@ -497,7 +494,7 @@ void ClaireAllocation::markAny(ClaireAny *x)
 void ClaireAllocation::markObject (ClaireObject *x)
 {ITERATE(s);
  #ifdef CLDEBUG              // useful
- int badADR = ADR(_oid_(x));
+ Cint badADR = ADR(_oid_(x));
  #endif
  list *l = x->isa->slots;
  if (x == probe) princ_string("probe found and marked --\n");
@@ -505,8 +502,8 @@ void ClaireAllocation::markObject (ClaireObject *x)
  // x->isa->open++;   // DEBUG : useful to detect GC leaks
  for (START(l);
       NEXT(s) ; )
-   {int z = *SLOTADR(x, OBJECT(slot,s)->index);
-    int i = OBJECT(slot,s)->index;
+   {Cint z = *SLOTADR(x, OBJECT(slot,s)->index);
+    Cint i = OBJECT(slot,s)->index;
     if (z != 0)
      {ClaireClass *c = (ClaireClass *) OBJECT(slot,s)->srange;
        // we need to go through mark to perform the MARKCELL routine ! (v3.1.04)
@@ -514,7 +511,7 @@ void ClaireAllocation::markObject (ClaireObject *x)
        else if ( c == Kernel._any ) mark(z);
        else if ( c == Kernel._string ) markString((char *) z);
        else if ( c == Kernel._array )
-          {int  x = POINTOADR(z) - 3;              // index in Cmemory
+          {Cint  x = POINTOADR(z) - 3;              // index in Cmemory
            if (Cmemory[x] > 0)                     // avoid mark => perform test !
              {MARKCELL(x);
               markArray((OID *) z);}}}}}           // markArray does not protect !
@@ -534,7 +531,7 @@ void ClaireAllocation::markPrimitive(ClairePrimitive *x)
 
 //  mark a list or a set
 void ClaireAllocation::markBag(bag *x)
-{int i;
+{Cint i;
     if (x == probe) princ_string("bag probe found and marked --\n");
     if (x->of != NULL) mark(_oid_(x->of));                     // v3.1.04 !!!
     if (x->content != NULL)
@@ -548,16 +545,16 @@ void ClaireAllocation::markBag(bag *x)
 // by Claire and we mark it ...
 void ClaireAllocation::markString(char *s)
 {if CLMEM(s)   // a CLAIRE string
-   {int x = POINTOADR(s) - 2;                                  // index in Cmemory
+   {Cint x = POINTOADR(s) - 2;                                  // index in Cmemory
     if (Cmemory[x] > 0) MARKCELL(x);}}
 
 // mark the memory chunk allocated for an array
 void ClaireAllocation::markArray(OID* a)
-{int i;                                                          // index in Cmemory
+{Cint i;                                                          // index in Cmemory
  ClaireType *t = ARRAYTYPE(a);
  if (t != NULL) mark(_oid_(t));                                   // v3.1.04 !!!
  if (t != Kernel._float)
-    for (i = 1; i <= ((int) a[0]); i++) mark(a[i]); }
+    for (i = 1; i <= ((Cint) a[0]); i++) mark(a[i]); }
 
 
 //  go through the array of items
@@ -589,7 +586,7 @@ void ClaireAllocation::sweepObject()
         Cmemory[i] = p; p++;}
     else if (p == 0) p = OPTIMIZE;              // this is already a free cell
     else {if (i == getADR(probe)) printf("free the probe short object !\n");
-          if (Cmemory[i + 1] != (int) Kernel._function) freeObject(i);
+          if (Cmemory[i + 1] != ccast(Kernel._function)) freeObject(i);
           p++;}
     if (p < OPTIMIZE) p = OPTIMIZE;
     ASSERT(p <= 50 || i == maxList + 2);
@@ -601,7 +598,7 @@ void ClaireAllocation::sweepObject()
 // this is a small useful method for debugging
 // new in v3.0.54
 void checkOID(OID n)
-{int u = ADR(n);
+{Cint u = ADR(n);
  if (ClAlloc->numGC > 0)
    { if (Cmemory[u] == 0)
        {printf("OID %d [ADR = %d] has size 0!",n,u);
@@ -622,10 +619,10 @@ void checkOID(OID n)
 void ClaireAllocation::kill(OID n)
 {if  (CTAG(n) == OBJ_CODE)
   {ClaireAny *x = OBJECT(ClaireAny,n);
-   int i = ADR(n);
+   Cint i = ADR(n);
    ClaireClass *c = x->isa;
      if (c == Kernel._list || c == Kernel._set || c == Kernel._tuple)
-          {int u =  POINTOADR(x) - 3;
+          {Cint u =  POINTOADR(x) - 3;
             if (SIZE(u) < OPTIMIZE) freeObject(u);
             else freeChunk(u);
             freeObject(i);}
@@ -661,28 +658,28 @@ OID GC_OID(OID n)
   {if (CTAG(n) == OBJ_CODE) GC_ANY(OBJECT(ClaireObject,n));
    return n;}
 
-void GC__OID(OID n, int m)
+void GC__OID(OID n, Cint m)
    {if (CTAG(n) == OBJ_CODE) GC__ANY(OBJECT(ClaireObject,n),m);}
 
 // string
 char *GC_STRING(char *s)
 {if CLMEM(s)
- {int x = POINTOADR(s) - 1;         // works because the class is the string marker
+ {Cint x = POINTOADR(s) - 1;         // works because the class is the string marker
   ClaireObject *y = (ClaireObject *) &Cmemory[x];
   ClaireClass *c = y->isa;
   ASSERT(c == Kernel._primitive);
   GC_ANY((ClaireAny *) &Cmemory[x]);} // is Kernel._primitive
  return s;}
 
-void GC__STRING(char *s, int n)
+void GC__STRING(char *s, Cint n)
 {if CLMEM(s)
- {int x = POINTOADR(s) - 1;         // works because the class is the string marker
+ {Cint x = POINTOADR(s) - 1;         // works because the class is the string marker
   GC__ANY((ClaireAny *) &Cmemory[x], n); // is Kernel._primitive
 }}
 
 // array
 OID *GC_ARRAY(OID *a)
-{int x = POINTOADR(a) - 2;            // v3.3.0  a - 2 to get the container object (and -3 to get the object index)
+{Cint x = POINTOADR(a) - 2;            // v3.3.0  a - 2 to get the container object (and -3 to get the object index)
  GC_ANY((ClaireAny *) &Cmemory[x]);
  return a;}
 
@@ -690,9 +687,9 @@ OID *GC_ARRAY(OID *a)
 OID gc_error()  {  Cerror(27,0,0); return 1;}
 
 // reserves n slots in the garbage stack
-void GC_RESERVE(int n)
+void GC_RESERVE(Cint n)
 { if ((ClAlloc->index + n) < ClAlloc->maxGC)
-    {int i = ClAlloc->index, j = i + n + 1;
+    {Cint i = ClAlloc->index, j = i + n + 1;
       ClAlloc->gcStack[i] = (ClaireAny *) ClAlloc->base;
       ClAlloc->base = i++;
       for (; i <= j; i++) ClAlloc->gcStack[i] = NULL;
@@ -713,21 +710,21 @@ void ClaireAllocation::memStat()
   princ_string(" used cells out of "); princ_integer(maxHash);
   princ_string("\nWorld stack: "); princ_integer((*l)[4]);
   princ_string(" used cells out of "); princ_integer(maxHist);princ_string("\n");
-  {int i, useList[28];                         // start the chunk zone analysis
-   int useString = 0, useObject = 0, useOther = 0, maxFree = 0, totalList = 0;
+  {Cint i, useList[28];                         // start the chunk zone analysis
+   Cint useString = 0, useObject = 0, useOther = 0, maxFree = 0, totalList = 0;
    for (i = 1; i < logList; i++)
       {useList[i] = 0;
        if (entryList[i] != NOTHING) maxFree = i;}
    for (i = 1; i < maxList; i += Cmemory[i])
-      {int p = Cmemory[i], x = Cmemory[i + 1];
+      {Cint p = Cmemory[i], x = Cmemory[i + 1];
        if (x != NOTHING)                       // the chunk is used
-          {if (x == (int) Kernel._primitive)              // used for a string
+          {if (x == ccast(Kernel._primitive))              // used for a string
               {useString += p;
                if (ClEnv->verbose > 4)
                   {princ_string("string(");
                    princ_string((char *) &Cmemory[i + 2]);
                    princ_string(")\n");}}
-           else if (x == (int) Kernel._array)          // used for an array
+           else if (x == ccast(Kernel._array))          // used for an array
               {useOther += p;
                if (ClEnv->verbose > 4)
                   {princ_string("array("); princ_integer(p); princ_string(")\n");}}
@@ -737,7 +734,7 @@ void ClaireAllocation::memStat()
                   {princ_string("object(");
                    princ_symbol(((ClaireClass *) x)->name);
                    princ_string(")\n");}}
-           else {int size = log2up(p);                     // a bag (what else ?)
+           else {Cint size = log2up(p);                     // a bag (what else ?)
                  useList[size] += p;
                  totalList += p;
                  if (ClEnv->verbose > 4)
@@ -756,7 +753,7 @@ void ClaireAllocation::memStat()
 // private methods
 // we add a parameter (x = true -> returns the max capacity)
 list *ClaireAllocation::memList(ClaireBoolean *x)
-{int i = nextFree, nb = 0, usedSymb = 0, usedWorld = ClRes->iIndex, prev; // prev -> remove
+{Cint i = nextFree, nb = 0, usedSymb = 0, usedWorld = ClRes->iIndex, prev; // prev -> remove
  if (x == CTRUE)
      return list::alloc(4,maxList,
                           maxSize - maxList,

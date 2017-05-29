@@ -1,5 +1,5 @@
-/***** CLAIRE Compilation of file e:\claire\v3.5\src\meta\file.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:57 2017 *****/
+/***** CLAIRE Compilation of file /Users/ycaseau/claire/v3.5/src/meta/file.cl 
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:44 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -243,7 +243,7 @@ char * _7_string(char *s,char *s2)
 // closes the input port to free the associated file ! <yc>
 /* The c++ function for: mClaire/restore_state(self:meta_reader) [SLOT_UPDATE] */
 void  restore_state_meta_reader(meta_reader *self)
-{ if (equal(ClAlloc->import(Kernel._port,(int *) self->fromp),Reader.STDIN->value) != CTRUE)
+{ if (equal(ClAlloc->import(Kernel._port,(Cint *) self->fromp),Reader.STDIN->value) != CTRUE)
    fclose_port(self->fromp);
   (self->fromp = EXPORT((ClairePort *),Reader.STDIN->value));
   (self->index = 1);
@@ -544,7 +544,7 @@ OID  eload_string(char *self)
 // the last character read (and not used) is in last(reader)
 /* The c++ function for: readblock(p:port) [NEW_ALLOC] */
 OID  readblock_port(ClairePort *p)
-{ if (equal(ClAlloc->import(Kernel._port,(int *) Reader.reader->fromp),ClAlloc->import(Kernel._port,(int *) p)) == CTRUE) 
+{ if (equal(ClAlloc->import(Kernel._port,(Cint *) Reader.reader->fromp),ClAlloc->import(Kernel._port,(Cint *) p)) == CTRUE) 
   { { OID Result = 0;
       Result = nextunit_meta_reader(Reader.reader);
       return (Result);} 
@@ -574,14 +574,14 @@ OID  read_port(ClairePort *p)
 { GC_BIND;
   { OID Result = 0;
     { ClairePort * p2 = (Reader.reader->fromp);
-      if (equal(ClAlloc->import(Kernel._port,(int *) p),ClAlloc->import(Kernel._port,(int *) p2)) != CTRUE)
+      if (equal(ClAlloc->import(Kernel._port,(Cint *) p),ClAlloc->import(Kernel._port,(Cint *) p2)) != CTRUE)
        (Reader.reader->fromp = p);
       { OID  val;
         { if (skipc_meta_reader(Reader.reader) == Reader.reader->eof)
            val = _oid_(Reader.eof);
           else val = nexte_meta_reader(Reader.reader);
             GC_OID(val);} 
-        if (equal(ClAlloc->import(Kernel._port,(int *) p),ClAlloc->import(Kernel._port,(int *) p2)) != CTRUE)
+        if (equal(ClAlloc->import(Kernel._port,(Cint *) p),ClAlloc->import(Kernel._port,(Cint *) p2)) != CTRUE)
          (Reader.reader->fromp = p2);
         if ((equal(val,Reader.reader->paren) == CTRUE) || 
             ((equal(val,Reader.reader->curly) == CTRUE) || 
@@ -657,7 +657,7 @@ OID  print_exception_void()
         { c_handle.catchIt();princ_string(CSTRING("****** ERROR[121]: unprintable error has occurred.\n"));
           } 
         else PREVIOUS_HANDLER;} 
-      Result = ClAlloc->import(Kernel._port,(int *) use_as_output_port(p));
+      Result = ClAlloc->import(Kernel._port,(Cint *) use_as_output_port(p));
       } 
     GC_UNBIND; return (Result);} 
   } 

@@ -1,5 +1,5 @@
 /***** CLAIRE Compilation of file Generate.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:26:01 2017 *****/
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:47 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -147,118 +147,118 @@ void GenerateClass::metaLoad() {
   Generate.class_princ = property::make("class_princ",Generate.it);
   
   // instructions from module sources
-  { global_variable * v14361 = (Generate._star_ask_interval_star = (global_variable *) Core._global_variable->instantiate("*?_interval*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.set_I,Core._Interval)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._star_ask_interval_star = (global_variable *) Core._global_variable->instantiate("*?_interval*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.set_I,Core._Interval)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._star_dash_dash_integer_star = (global_variable *) Core._global_variable->instantiate("*--_integer*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel._dot_dot,Kernel._integer)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._star_dash_dash_integer_star = (global_variable *) Core._global_variable->instantiate("*--_integer*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel._dot_dot,Kernel._integer)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._star_plus_integer_star = (global_variable *) Core._global_variable->instantiate("*+_integer*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Core._plus,Kernel._integer)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._star_plus_integer_star = (global_variable *) Core._global_variable->instantiate("*+_integer*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Core._plus,Kernel._integer)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starnth_integer_star = (global_variable *) Core._global_variable->instantiate("*nth_integer*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.nth,Kernel._integer)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starnth_integer_star = (global_variable *) Core._global_variable->instantiate("*nth_integer*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.nth,Kernel._integer)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starnth_list_star = (global_variable *) Core._global_variable->instantiate("*nth_list*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.nth,Kernel._list)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starnth_list_star = (global_variable *) Core._global_variable->instantiate("*nth_list*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.nth,Kernel._list)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starnth_1_bag_star = (global_variable *) Core._global_variable->instantiate("*nth_1_bag*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.nth_get,Kernel._bag)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starnth_1_bag_star = (global_variable *) Core._global_variable->instantiate("*nth_1_bag*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.nth_get,Kernel._bag)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starnth_string_star = (global_variable *) Core._global_variable->instantiate("*nth_string*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.nth,Kernel._string)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starnth_string_star = (global_variable *) Core._global_variable->instantiate("*nth_string*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.nth,Kernel._string)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starnth_1_string_star = (global_variable *) Core._global_variable->instantiate("*nth_1_string*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.nth_get,Kernel._string)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starnth_1_string_star = (global_variable *) Core._global_variable->instantiate("*nth_1_string*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.nth_get,Kernel._string)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starnth_equal_list_star = (global_variable *) Core._global_variable->instantiate("*nth=_list*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.nth_equal,Kernel._list)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starnth_equal_list_star = (global_variable *) Core._global_variable->instantiate("*nth=_list*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.nth_equal,Kernel._list)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starnot_star = (global_variable *) Core._global_variable->instantiate("*not*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Core.NOT,Kernel._any)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starnot_star = (global_variable *) Core._global_variable->instantiate("*not*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Core.NOT,Kernel._any)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starknown_star = (global_variable *) Core._global_variable->instantiate("*known*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Core.known_ask,Kernel._any)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starknown_star = (global_variable *) Core._global_variable->instantiate("*known*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Core.known_ask,Kernel._any)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starunknown_star = (global_variable *) Core._global_variable->instantiate("*unknown*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Core.unknown_ask,Kernel._any)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starunknown_star = (global_variable *) Core._global_variable->instantiate("*unknown*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Core.unknown_ask,Kernel._any)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starnot_equal_star = (global_variable *) Core._global_variable->instantiate("*not_equal*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Core._I_equal,Kernel._any)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starnot_equal_star = (global_variable *) Core._global_variable->instantiate("*not_equal*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Core._I_equal,Kernel._any)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starcontain_star = (global_variable *) Core._global_variable->instantiate("*contain*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.contain_ask,Kernel._list)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starcontain_star = (global_variable *) Core._global_variable->instantiate("*contain*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.contain_ask,Kernel._list)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starmin_integer_star = (global_variable *) Core._global_variable->instantiate("*min_integer*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Core.min,Kernel._integer)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starmin_integer_star = (global_variable *) Core._global_variable->instantiate("*min_integer*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Core.min,Kernel._integer)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starmax_integer_star = (global_variable *) Core._global_variable->instantiate("*max_integer*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Core.max,Kernel._integer)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starmax_integer_star = (global_variable *) Core._global_variable->instantiate("*max_integer*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Core.max,Kernel._integer)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starlength_array_star = (global_variable *) Core._global_variable->instantiate("*length_array*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.length,Kernel._array)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starlength_array_star = (global_variable *) Core._global_variable->instantiate("*length_array*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.length,Kernel._array)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starlength_bag_star = (global_variable *) Core._global_variable->instantiate("*length_bag*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.length,Kernel._bag)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starlength_bag_star = (global_variable *) Core._global_variable->instantiate("*length_bag*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.length,Kernel._bag)));
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate._starclose_exception_star = (global_variable *) Core._global_variable->instantiate("*close_exception*",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(_at_property1(Kernel.close,Kernel._exception)));
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate._starclose_exception_star = (global_variable *) Core._global_variable->instantiate("*close_exception*",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(_at_property1(Kernel.close,Kernel._exception)));
+    close_global_variable(v109096);
     } 
   
   { (Generate._producer = ClaireClass::make("producer",Kernel._thing,Generate.it));
@@ -271,10 +271,10 @@ void GenerateClass::metaLoad() {
     CL_ADD_SLOT(Generate._producer,Generate_producer,Kernel.stat,stat,Kernel._integer,0);
     } 
   
-  { global_variable * v14361 = (Generate.PRODUCER = (global_variable *) Core._global_variable->instantiate("PRODUCER",claire.it));
-    (v14361->range = Generate._producer);
-    (v14361->value = CNULL);
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate.PRODUCER = (global_variable *) Core._global_variable->instantiate("PRODUCER",claire.it));
+    (v109096->range = Generate._producer);
+    (v109096->value = CNULL);
+    close_global_variable(v109096);
     } 
   
   Language.ident->addMethod(list::domain(1,Kernel._symbol),Kernel._void,
@@ -404,10 +404,10 @@ void GenerateClass::metaLoad() {
   Generate.c_safe->addMethod(list::domain(1,Kernel._any),Kernel._boolean,
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(c_safe_any,"c_safe_any"));
   
-  { global_variable * v14361 = (Generate.WrongMethod = (global_variable *) Core._global_variable->instantiate("WrongMethod",claire.it));
-    (v14361->range = Kernel._any);
-    (v14361->value = 1);
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate.WrongMethod = (global_variable *) Core._global_variable->instantiate("WrongMethod",claire.it));
+    (v109096->range = Kernel._any);
+    (v109096->value = 1);
+    close_global_variable(v109096);
     } 
   
   Generate.check_sort->addMethod(list::domain(1,Kernel._method),Kernel._class,
@@ -698,108 +698,108 @@ void GenerateClass::metaLoad() {
       _oid_(Core._sup_sup)));
     (Generate.C_plus_plusPRODUCER->extension = CSTRING(".cpp"));
     (Generate.C_plus_plusPRODUCER->comment = CSTRING("C++"));
-    { Generate_c_producer * v2780 = Generate.C_plus_plusPRODUCER; 
-      list * v2782;
-      { GC_ANY(v2782= list::empty(Kernel.emptySet));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("do"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("if"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("and"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("or"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("not"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("printf"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("void"))));
-        ((list *) v2782)->addFast(_oid_(Optimize._Pattern->name));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("exception"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("return"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("new"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("class"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("private"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("operator"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("default"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("Handle"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("import"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("catch"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("stdout"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("stdin"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("break"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("char"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("interface"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("EOF"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("relation"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("System"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("object"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("delete"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("boolean"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("function"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("type"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("system_thing"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("environment"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("abstract"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("final"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("system_object"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("NEW_ALLOC"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("BAG_UPDATE"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("SLOT_UPDATE"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("RETURN_ARG"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("SAFE_RESULT"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("SAFE_GC"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("collection"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("error"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("register"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("template"))));
-        ((list *) v2782)->addFast(_oid_(symbol_I_string2(CSTRING("STRING_UPDATE"))));} 
-      (v2780->bad_names = v2782);} 
-    { Generate_c_producer * v2783 = Generate.C_plus_plusPRODUCER; 
-      list * v2784;
-      { GC_ANY(v2784= list::empty(Kernel.emptySet));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("DO"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("IF"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireAnd"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireOr"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("NOT"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("PRINTF"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireVoid"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClairePattern"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireException"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("RETURN"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("NEW"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireClass"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("PRIVATE"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireOperator"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("DEFAULT"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireHandle"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireImport"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("CATCH"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("STDOUT"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("STDIN"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("BREAK"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireChar"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireInterface"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_eof"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireRelation"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("Core"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireObject"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_delete"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireBoolean"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireFunction"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireType"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("SystemThing"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireEnvironment"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ABSTRACT"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("FINAL"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("SystemObject"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_NEW_ALLOC"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_BAG_UPDATE"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_SLOT_UPDATE"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_RETURN_ARG"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_SAFE_RESULT"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_SAFE_GC"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireCollection"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireError"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireRegister"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireTemplate"))));
-        ((list *) v2784)->addFast(_oid_(symbol_I_string2(CSTRING("_STRING_UPDATE"))));} 
-      (v2783->good_names = v2784);} 
+    { Generate_c_producer * v82156 = Generate.C_plus_plusPRODUCER; 
+      list * v82157;
+      { GC_ANY(v82157= list::empty(Kernel.emptySet));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("do"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("if"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("and"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("or"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("not"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("printf"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("void"))));
+        ((list *) v82157)->addFast(_oid_(Optimize._Pattern->name));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("exception"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("return"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("new"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("class"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("private"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("operator"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("default"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("Handle"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("import"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("catch"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("stdout"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("stdin"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("break"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("char"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("interface"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("EOF"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("relation"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("System"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("object"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("delete"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("boolean"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("function"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("type"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("system_thing"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("environment"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("abstract"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("final"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("system_object"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("NEW_ALLOC"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("BAG_UPDATE"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("SLOT_UPDATE"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("RETURN_ARG"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("SAFE_RESULT"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("SAFE_GC"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("collection"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("error"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("register"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("template"))));
+        ((list *) v82157)->addFast(_oid_(symbol_I_string2(CSTRING("STRING_UPDATE"))));} 
+      (v82156->bad_names = v82157);} 
+    { Generate_c_producer * v82158 = Generate.C_plus_plusPRODUCER; 
+      list * v82159;
+      { GC_ANY(v82159= list::empty(Kernel.emptySet));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("DO"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("IF"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireAnd"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireOr"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("NOT"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("PRINTF"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireVoid"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClairePattern"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireException"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("RETURN"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("NEW"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireClass"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("PRIVATE"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireOperator"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("DEFAULT"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireHandle"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireImport"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("CATCH"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("STDOUT"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("STDIN"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("BREAK"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireChar"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireInterface"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_eof"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireRelation"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("Core"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireObject"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_delete"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireBoolean"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireFunction"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireType"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("SystemThing"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireEnvironment"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ABSTRACT"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("FINAL"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("SystemObject"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_NEW_ALLOC"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_BAG_UPDATE"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_SLOT_UPDATE"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_RETURN_ARG"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_SAFE_RESULT"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_SAFE_GC"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireCollection"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireError"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireRegister"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("ClaireTemplate"))));
+        ((list *) v82159)->addFast(_oid_(symbol_I_string2(CSTRING("_STRING_UPDATE"))));} 
+      (v82158->good_names = v82159);} 
     (Generate.C_plus_plusPRODUCER->interfaces = list::alloc(12,_oid_(Kernel._port),
       _string_(CSTRING("ClairePort *")),
       _oid_(Kernel._string),
@@ -1068,16 +1068,16 @@ void GenerateClass::metaLoad() {
     (Generate.fcall_exp->open = 3);
     ;} 
   
-  { global_variable * v14361 = (Generate.FCLimit = (global_variable *) Core._global_variable->instantiate("FCLimit",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = 3);
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate.FCLimit = (global_variable *) Core._global_variable->instantiate("FCLimit",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = 3);
+    close_global_variable(v109096);
     } 
   
-  { global_variable * v14361 = (Generate.FCALLSTINKS = (global_variable *) Core._global_variable->instantiate("FCALLSTINKS",claire.it));
-    (v14361->range = Kernel._boolean);
-    (v14361->value = Kernel.cfalse);
-    close_global_variable(v14361);
+  { global_variable * v109096 = (Generate.FCALLSTINKS = (global_variable *) Core._global_variable->instantiate("FCALLSTINKS",claire.it));
+    (v109096->range = Kernel._boolean);
+    (v109096->value = Kernel.cfalse);
+    close_global_variable(v109096);
     } 
   
   Generate.fcall_ask->addMethod(list::domain(1,Language._Call),Kernel._boolean,
@@ -1104,16 +1104,16 @@ void GenerateClass::metaLoad() {
   Generate.bitvector_I->addMethod(list::domain(2,Generate._c_producer,Kernel._any),Kernel._void,
   	NEW_ALLOC+BAG_UPDATE+SLOT_UPDATE,_function_(bitvector_I_c_producer,"bitvector!_c_producer"));
   
-  { global_variable * v14361 = (Generate.bitvectorList = (global_variable *) Core._global_variable->instantiate("bitvectorList",Compile.it));
-    (v14361->range = Kernel.emptySet);
-    (v14361->value = _oid_(list::alloc(7,_string_(CSTRING("NEW_ALLOC")),
+  { global_variable * v109096 = (Generate.bitvectorList = (global_variable *) Core._global_variable->instantiate("bitvectorList",Compile.it));
+    (v109096->range = Kernel.emptySet);
+    (v109096->value = _oid_(list::alloc(7,_string_(CSTRING("NEW_ALLOC")),
       _string_(CSTRING("BAG_UPDATE")),
       _string_(CSTRING("SLOT_UPDATE")),
       _string_(CSTRING("RETURN_ARG")),
       _string_(CSTRING("SAFE_RESULT")),
       _string_(CSTRING("SAFE_GC")),
       _string_(CSTRING("STRING_UPDATE")))));
-    close_global_variable(v14361);
+    close_global_variable(v109096);
     } 
   
   Generate.bitvectorSum->addMethod(list::domain(1,Kernel._integer),Kernel._void,

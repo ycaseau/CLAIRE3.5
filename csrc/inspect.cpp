@@ -1,5 +1,5 @@
-/***** CLAIRE Compilation of file e:\claire\v3.5\src\meta\inspect.cl 
-         [version 3.5.0 / safety 5] Sun May 28 08:25:57 2017 *****/
+/***** CLAIRE Compilation of file /Users/ycaseau/claire/v3.5/src/meta/inspect.cl 
+         [version 3.5.01 / safety 5] Sun Jul 24 08:43:44 2016 *****/
 
 #include <claire.h>
 #include <Kernel.h>
@@ -200,7 +200,7 @@ OID  trace_on_any(OID self)
      { OID  m = GC_OID(_oid_(_at_property1(Core.spy,Kernel._void)));
       if (boolean_I_any(m) == CTRUE)
        store_object(ClEnv,
-        18,
+        16,
         Kernel._object,
         m,
         CFALSE);
@@ -277,7 +277,7 @@ void  spy_listargs2_Reader(listargs *l)
 { { OID  m = _oid_(_at_property1(Core.spy,Kernel._void));
     if (boolean_I_any(m) == CTRUE)
      { store_object(ClEnv,
-        18,
+        16,
         Kernel._object,
         m,
         CFALSE);
@@ -329,7 +329,7 @@ void  trace_rule_relation(ClaireRelation *R,char *s,OID x,OID y,OID u,OID v)
   if (5 <= (Kernel.if_write->trace_I+ClEnv->verbose))
    { OID  p = GC_OID(get_property(Kernel.ctrace,ClEnv));
     if (p != CNULL)
-     p= GC_OID(ClAlloc->import(Kernel._port,(int *) use_as_output_port(EXPORT((ClairePort *),p))));
+     p= GC_OID(ClAlloc->import(Kernel._port,(Cint *) use_as_output_port(EXPORT((ClairePort *),p))));
     princ_string(CSTRING("--- the rule "));
     princ_string(s);
     princ_string(CSTRING(" is triggered for ("));
@@ -1213,4 +1213,4 @@ void  PRdepends_property(property *p,property *p2)
   ;} 
 
 
-// end of file
+// end of file
